@@ -1,0 +1,11 @@
+# Code owners for the Cedar Initiative project
+
+# All files in the repository are owned by the primary maintainers
+* @OWNER
+
+# Specific directories can have different owners
+/app/ @OWNER
+/components/ @OWNER
+/lib/ @OWNER
+/styles/ @OWNER
+/tests/ @OWNER

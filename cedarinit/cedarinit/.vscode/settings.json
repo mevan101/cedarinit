@@ -1,0 +1,22 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "prettier.requireConfig": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true
+  },
+  "git.ignoreLimitWarning": true
+}
