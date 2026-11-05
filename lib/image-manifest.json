@@ -1,0 +1,314 @@
+{
+  "hero/group-banner": {
+    "w": 1600,
+    "h": 1000,
+    "sm": true
+  },
+  "hero/circle-session": {
+    "w": 1120,
+    "h": 700,
+    "sm": true
+  },
+  "hero/circle-banner": {
+    "w": 1120,
+    "h": 700,
+    "sm": true
+  },
+  "about/who-we-are": {
+    "w": 500,
+    "h": 700
+  },
+  "about/collage": {
+    "w": 1600,
+    "h": 715,
+    "sm": true
+  },
+  "about/community-illustration": {
+    "w": 1277,
+    "h": 473,
+    "sm": true
+  },
+  "launch/circle-1": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "launch/circle-2": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "launch/press-peokoton": {
+    "w": 512,
+    "h": 640
+  },
+  "launch/01": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/02": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/03": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/04": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/05": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/06": {
+    "w": 1280,
+    "h": 872,
+    "sm": true
+  },
+  "launch/07": {
+    "w": 960,
+    "h": 1280,
+    "sm": true
+  },
+  "launch/08": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "launch/09": {
+    "w": 1280,
+    "h": 984,
+    "sm": true
+  },
+  "launch/10": {
+    "w": 1280,
+    "h": 1052,
+    "sm": true
+  },
+  "team/shahriar-azad-evan": {
+    "w": 800,
+    "h": 915
+  },
+  "team/sharafat-karim": {
+    "w": 800,
+    "h": 915
+  },
+  "team/sabbir-ahmed": {
+    "w": 800,
+    "h": 914
+  },
+  "team/naimur-rahman-durjoy": {
+    "w": 800,
+    "h": 914
+  },
+  "team/luke-palandech": {
+    "w": 800,
+    "h": 914
+  },
+  "team/saif-imtiajul": {
+    "w": 350,
+    "h": 400
+  },
+  "team/adiba-jaman": {
+    "w": 800,
+    "h": 914
+  },
+  "team/md-abdulla-redwan": {
+    "w": 800,
+    "h": 915
+  },
+  "team/sanzida-ali-tanfi": {
+    "w": 800,
+    "h": 914
+  },
+  "team/halimaa-khatun": {
+    "w": 800,
+    "h": 915
+  },
+  "join/lifetime-member": {
+    "w": 240,
+    "h": 240
+  },
+  "join/volunteer": {
+    "w": 240,
+    "h": 240
+  },
+  "join/career": {
+    "w": 240,
+    "h": 240
+  },
+  "join/regular-donor": {
+    "w": 240,
+    "h": 240
+  },
+  "sdg/strip": {
+    "w": 1120,
+    "h": 200,
+    "sm": true
+  },
+  "partners/enhanfy-global": {
+    "w": 400,
+    "h": 300
+  },
+  "partners/youth-for-nextgen": {
+    "w": 400,
+    "h": 300
+  },
+  "ushnota/cover": {
+    "w": 1600,
+    "h": 966,
+    "sm": true
+  },
+  "ushnota/distribution-cover": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "ushnota/process": {
+    "w": 1600,
+    "h": 1131,
+    "sm": true
+  },
+  "ushnota/day-1": {
+    "w": 1600,
+    "h": 900,
+    "sm": true
+  },
+  "ushnota/day-2": {
+    "w": 1600,
+    "h": 900,
+    "sm": true
+  },
+  "ushnota/day-3a": {
+    "w": 1600,
+    "h": 966,
+    "sm": true
+  },
+  "ushnota/day-3b": {
+    "w": 1600,
+    "h": 941,
+    "sm": true
+  },
+  "ushnota/day-4a": {
+    "w": 1280,
+    "h": 720,
+    "sm": true
+  },
+  "ushnota/day-4b": {
+    "w": 1280,
+    "h": 720,
+    "sm": true
+  },
+  "ushnota/day-4c": {
+    "w": 1600,
+    "h": 1205,
+    "sm": true
+  },
+  "ushnota/day-5a": {
+    "w": 1600,
+    "h": 900,
+    "sm": true
+  },
+  "ushnota/day-5b": {
+    "w": 1600,
+    "h": 1205,
+    "sm": true
+  },
+  "ushnota/day-5c": {
+    "w": 1600,
+    "h": 1205,
+    "sm": true
+  },
+  "ushnota/day-6": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "ushnota/distribution": {
+    "w": 1280,
+    "h": 963,
+    "sm": true
+  },
+  "ushnota/karail-1": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "ushnota/karail-2": {
+    "w": 1280,
+    "h": 960,
+    "sm": true
+  },
+  "csedweek/announcement": {
+    "w": 1120,
+    "h": 700,
+    "sm": true
+  },
+  "csedweek/rangpur-1": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "csedweek/rangpur-2": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "csedweek/rangpur-3": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "csedweek/rangpur-4": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "csedweek/rangpur-5": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "news/climate-finance-1": {
+    "w": 1600,
+    "h": 1066,
+    "sm": true
+  },
+  "news/climate-finance-2": {
+    "w": 1600,
+    "h": 1066,
+    "sm": true
+  },
+  "news/climate-finance-3": {
+    "w": 1600,
+    "h": 1066,
+    "sm": true
+  },
+  "news/climate-finance-4": {
+    "w": 1170,
+    "h": 770,
+    "sm": true
+  },
+  "news/cica-art-competition": {
+    "w": 1600,
+    "h": 1066,
+    "sm": true
+  },
+  "news/cica-youth-council": {
+    "w": 1120,
+    "h": 480,
+    "sm": true
+  },
+  "news/climate-training": {
+    "w": 1366,
+    "h": 768,
+    "sm": true
+  }
+}
