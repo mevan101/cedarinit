@@ -124,7 +124,7 @@ export default function Header() {
         aria-modal="true"
         aria-label="Site menu"
         hidden={!open}
-        className="fixed inset-0 z-40 overflow-y-auto bg-paper/80 px-[var(--gutter)] pb-10 pt-28 backdrop-blur-2xl lg:hidden"
+        className="fixed inset-0 z-40 overflow-y-auto scroll-pb-10 scroll-pt-28 bg-paper/80 px-[var(--gutter)] pb-10 pt-28 backdrop-blur-2xl lg:hidden"
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">
