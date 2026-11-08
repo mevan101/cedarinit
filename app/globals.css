@@ -366,3 +366,50 @@ html.save-data .decorative-img { display: none !important; }
   .doc-sheet ~ *, main > section:not(:has(.doc-sheet)) { display: none !important; }
   @page { margin: 12mm; }
 }
+
+/* ---------- Home: hero mosaic ---------- */
+.mosaic { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 0.75rem; aspect-ratio: 1 / 1; }
+@media (min-width: 1024px) { .mosaic { aspect-ratio: auto; height: min(74svh, 46rem); min-height: 26rem; } }
+.mosaic-tile { position: relative; overflow: hidden; border-radius: 1.5rem; background: rgb(var(--paper-deep)); }
+.mosaic-1 { grid-column: 1 / 5; grid-row: 1 / 5; }
+.mosaic-2 { grid-column: 5 / 7; grid-row: 1 / 4; }
+.mosaic-3 { grid-column: 5 / 7; grid-row: 4 / 7; }
+.mosaic-4 { grid-column: 1 / 5; grid-row: 5 / 7; }
+.mosaic-tile figcaption { position: absolute; left: 0.6rem; bottom: 0.6rem; border-radius: 999px; background: rgb(var(--ink) / 0.68); color: #fff; padding: 0.2rem 0.65rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em; backdrop-filter: blur(4px); }
+.mosaic-latest { position: absolute; right: -0.5rem; bottom: 34%; display: flex; align-items: center; gap: 0.75rem; border-radius: 1.25rem; background: #fff; padding: 0.75rem 1rem; box-shadow: 0 20px 40px -24px rgb(var(--cedar-950) / 0.5); border: 1px solid rgb(var(--ink) / 0.08); max-width: 16rem; }
+@media (max-width: 639px) { .mosaic-latest { right: 0.5rem; bottom: -1rem; } .mosaic { margin-bottom: 1.5rem; } }
+@media (prefers-reduced-motion: no-preference) {
+  .mosaic-tile { animation: tile-in 1s var(--ease-out) both; animation-delay: calc(var(--i) * 110ms + 150ms); }
+  .kenburns { animation: kenburns 22s ease-in-out infinite alternate; }
+  .mosaic-2 .kenburns { animation-delay: -6s; } .mosaic-3 .kenburns { animation-delay: -11s; } .mosaic-4 .kenburns { animation-delay: -16s; }
+  .mosaic-latest { animation: tile-in 0.9s var(--ease-out) both 0.8s; }
+}
+@keyframes tile-in { from { clip-path: inset(100% 0 0 0 round 1.5rem); transform: translateY(16px); } to { clip-path: inset(0 0 0 0 round 1.5rem); transform: none; } }
+@keyframes kenburns { from { transform: scale(1.02) translate3d(0, 0, 0); } to { transform: scale(1.12) translate3d(-2%, -1.5%, 0); } }
+html.save-data .kenburns { animation: none; }
+
+/* ---------- Home: places fill in as they cross the screen ---------- */
+.place-name { color: transparent; -webkit-text-stroke: 1.5px rgb(var(--cedar-300) / 0.6); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .place-name { animation: place-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
+    .place-row > span:last-child { animation: place-text linear both; animation-timeline: view(); animation-range: entry 50% cover 45%; }
+  }
+}
+@supports not (animation-timeline: view()) { .place-name { color: #fff; -webkit-text-stroke: 0; } }
+@media (prefers-reduced-motion: reduce) { .place-name { color: #fff; -webkit-text-stroke: 0; } }
+@keyframes place-fill { from { color: transparent; transform: translateX(-2%); } to { color: #fff; -webkit-text-stroke-color: transparent; transform: none; } }
+@keyframes place-text { from { opacity: 0.2; } to { opacity: 1; } }
+
+/* ---------- Home: program panels stack on large, tall screens ---------- */
+.stack { display: grid; gap: 1.5rem; }
+@media (min-width: 1024px) and (min-height: 700px) {
+  .stack-card { position: sticky; top: calc(6rem + var(--n) * 1.5rem); }
+  .stack-card article { min-height: min(68svh, 38rem); box-shadow: 0 -20px 60px -40px rgb(var(--cedar-950) / 0.35); }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .stack-card article { animation: stack-shrink linear both; animation-timeline: view(); animation-range: exit-crossing 0% exit-crossing 100%; transform-origin: top center; }
+    }
+  }
+}
+@keyframes stack-shrink { to { transform: scale(0.94); opacity: 0.55; } }

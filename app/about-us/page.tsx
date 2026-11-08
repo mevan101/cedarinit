@@ -4,7 +4,7 @@ import Reveal from '@/components/Reveal';
 import GlassCard from '@/components/GlassCard';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { about, values, wings } from '@/lib/site';
-import { foundingStory, nameStory } from '@/lib/team';
+import { founders, foundingStory, nameStory, portraitOf } from '@/lib/team';
 import Icon from '@/components/Icon';
 
 export const metadata: Metadata = {
@@ -37,15 +37,33 @@ export default function AboutPage() {
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
               <SectionHeading eyebrow="Our story" title="Why Cedar exists" />
+              <p className="mt-5 text-ink-soft">Four co-founders, four reasons. In their own words.</p>
               <Reveal delay={200} className="mt-8 hidden overflow-hidden rounded-4xl lg:block">
                 <Img name="launch/circle-1" alt="Founding members of Cedar Initiative at the launch event" sizes="30vw" className="aspect-[4/5] w-full object-cover" />
               </Reveal>
             </div>
           </div>
           <div className="space-y-6 text-lg leading-[1.8] text-ink-soft lg:col-span-7 lg:col-start-6">
-            {foundingStory.map((p, i) => (
-              <Reveal as="p" key={i} className={i === 0 ? 'text-2xl font-medium leading-snug tracking-[-0.015em] text-ink' : ''}>{p}</Reveal>
-            ))}
+            <Reveal as="p" className="text-2xl font-medium leading-snug tracking-[-0.015em] text-ink">{foundingStory[0]}</Reveal>
+            <ul className="!mt-12 space-y-10">
+              {foundingStory.slice(1).map((para) => {
+                const f = founders.find((x) => x.name.split(' ').some((n) => para.startsWith(`${n} `)));
+                return (
+                  <Reveal as="li" key={para.slice(0, 20)} className="grid gap-5 sm:grid-cols-[9rem_1fr] sm:gap-7">
+                    {f && (
+                      <div>
+                        <div className="overflow-hidden rounded-3xl bg-paper-deep">
+                          <Img name={portraitOf(f)} alt={`Portrait of ${f.name}`} sizes="144px" className="aspect-[4/5] w-full object-cover object-top" />
+                        </div>
+                        <p className="mt-3 text-sm font-semibold leading-tight text-ink">{f.name}</p>
+                        <p className="text-xs leading-snug text-ink-muted">{f.badge} · {f.role.replace(/^Lead of /, '')}</p>
+                      </div>
+                    )}
+                    <p>{para}</p>
+                  </Reveal>
+                );
+              })}
+            </ul>
             <Reveal as="h3" className="t-h3 !mt-14 text-ink">The story behind the name</Reveal>
             {nameStory.map((p, i) => (
               <Reveal as="p" key={`n${i}`}>{p}</Reveal>

@@ -10,12 +10,15 @@ Everything you change there is saved as a file in this GitHub repo, so every edi
 | **Articles** | News, campaign diaries and stories, with cover photo, gallery, category, search description and a rich-text editor (headings, lists, links, quotes, images) | `content/posts/*.md` |
 | **Pages** | New pages built from sections: text, photo, gallery, call-to-action button, form, YouTube video, team list | `content/pages/*.md` |
 | **Forms** | Forms with any questions (short/long text, email, phone, number, date, link, dropdown, tick box). Add one to any page with a *Form* section | `content/forms/*.json` |
+| **Programs** | Each program's page: dates, places, key facts, overview, objectives, who it serves, events, field diary (pick articles), partners with logos, photos, extra sections, linked financial report | `content/programs/*.md` |
+| **Open roles** | Volunteer roles with responsibilities, requirements, benefits and application questions. Applications arrive at `/staff/` | `content/opportunities/*.md` |
+| **Financial reports** | Money in, money out (with bill numbers and receipts), optional budget, outputs. Totals, charts, CSV and PDF are generated | `content/reports/*.json` |
 | **Team** | Teams and members: add, remove, reorder, create new teams (e.g. campus ambassadors, ML Bangladesh) | `content/team.json` |
 | **Settings → Announcement bar** | A site-wide notice with a link, switched on or off | `content/settings/announcement.json` |
 | **Media** | Uploaded photos and files | `public/uploads/` |
 
 Tick **Hide from the site** to keep an article or page as a draft.
-Programs (Ushnota, CSEdWeek, ML Bangladesh) and the homepage are still edited in code for now.
+The homepage and the ML Bangladesh page are still edited in code. Team photos get the Cedar portrait background automatically (`npm run portraits`, also run on every build and by a GitHub Action).
 
 ## Editing on your own computer (works today)
 
