@@ -42,7 +42,7 @@ export default function Footer() {
           </div>
 
           <div className="grid gap-10 xs:grid-cols-2 md:grid-cols-4 lg:col-span-7">
-            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/brand/', label: 'Brand guide' }]} />
+            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/brand/', label: 'Brand guide' }, { href: '/feed.xml', label: 'News feed (RSS)' }]} />
             <FooterCol title="Programs" links={programs} />
             <FooterCol title="Get involved" links={help} />
             <div>

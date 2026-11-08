@@ -31,8 +31,10 @@ export const metadata: Metadata = {
   keywords: ['Cedar Initiative', 'youth-led nonprofit Bangladesh', 'volunteer Dhaka', 'winter clothes donation Bangladesh', 'Ushnota Abhijan', 'CSEdWeek Bangladesh', 'ML Bangladesh', 'AI hackathon Bangladesh'],
   openGraph: { type: 'website', siteName: site.name, locale: 'en_US', images: [{ url: '/images/ushnota/day-4a.webp', alt: 'Students donating winter clothes at a Cedar collection drive in Dhaka' }] },
   twitter: { card: 'summary_large_image', site: '@CedarInitiative' },
-  icons: { icon: '/brand/icon.svg', apple: '/brand/logo.png' },
-  alternates: { canonical: '/' },
+  icons: { icon: [{ url: '/brand/icon.svg', type: 'image/svg+xml' }, { url: '/brand/icon-512.png', sizes: '512x512', type: 'image/png' }], apple: '/brand/icon-512.png' },
+  // Same Search Console verification as the old WordPress site, so ownership carries over.
+  verification: { google: 'qC7-assEJn3xKmrglFDkRaA2Du9folnVe0xXNNnMybE' },
+  alternates: { canonical: '/', types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Cedar Initiative news' }] } },
 };
 
 export const viewport: Viewport = {

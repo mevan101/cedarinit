@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: { absolute: 'Cedar Initiative: youth-led nonprofit in Bangladesh' },
   description:
     'Student volunteers in Bangladesh running winter relief in Dhaka, computer science classes in Rangpur and free AI hackathons on campuses through ML Bangladesh.',
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Cedar Initiative news' }] } },
 };
 
 const work = [
