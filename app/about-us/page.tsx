@@ -37,7 +37,7 @@ export default function AboutPage() {
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
               <SectionHeading eyebrow="Our story" title="Why Cedar exists" />
-              <p className="mt-5 text-ink-soft">Four co-founders, four reasons. In their own words.</p>
+              <p className="mt-5 text-ink-soft">Why each co-founder started Cedar, in their own words.</p>
               <Reveal delay={200} className="mt-8 hidden overflow-hidden rounded-4xl lg:block">
                 <Img name="launch/circle-1" alt="Founding members of Cedar Initiative at the launch event" sizes="30vw" className="aspect-[4/5] w-full object-cover" />
               </Reveal>
