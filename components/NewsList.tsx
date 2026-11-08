@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import PostCard from './PostCard';
-import type { Post } from '@/lib/posts';
+import type { Post } from '@/lib/post-types';
 
 export default function NewsList({ posts, categories }: { posts: Post[]; categories: string[] }) {
   const [cat, setCat] = useState('All');

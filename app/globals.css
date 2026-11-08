@@ -344,3 +344,6 @@ html.save-data .decorative-img { display: none !important; }
   .hero-pad .t-h1 { font-size: clamp(1.6rem, min(8vw, 8.5vh), 2.5rem); }
   .hero-pad .t-eyebrow { display: none; }
 }
+/* Announcement bar on: push hero content below the taller fixed header. */
+.has-notice .hero-pad { padding-top: calc(var(--hero-pt, 7rem) + 2.75rem); }
+.has-notice { scroll-padding-top: calc(var(--header-h) + 3.75rem); }

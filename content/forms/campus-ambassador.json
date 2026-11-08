@@ -1,0 +1,61 @@
+{
+  "id": "campus-ambassador",
+  "title": "Apply to be a campus ambassador",
+  "intro": "Tell us about yourself and your campus. We reply to every application.",
+  "action": "",
+  "method": "POST",
+  "submit_label": "Send application",
+  "success": "Thanks! We'll be in touch within a week.",
+  "fields": [
+    {
+      "label": "Full name",
+      "name": "name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "label": "Email",
+      "name": "email",
+      "type": "email",
+      "required": true
+    },
+    {
+      "label": "Phone or WhatsApp",
+      "name": "phone",
+      "type": "tel",
+      "required": false
+    },
+    {
+      "label": "School or university",
+      "name": "institution",
+      "type": "text",
+      "required": true
+    },
+    {
+      "label": "Year of study",
+      "name": "year",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Class 9–10",
+        "Class 11–12",
+        "University year 1",
+        "University year 2",
+        "University year 3",
+        "University year 4+"
+      ]
+    },
+    {
+      "label": "Why do you want to join?",
+      "name": "why",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "label": "I agree that Cedar may store these details to contact me about this role.",
+      "name": "consent",
+      "type": "checkbox",
+      "required": true
+    }
+  ]
+}

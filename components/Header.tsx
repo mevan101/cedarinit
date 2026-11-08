@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Logo from './Logo';
 import Icon from './Icon';
 import { nav, site } from '@/lib/site';
 
-export default function Header() {
+export default function Header({ notice }: { notice?: ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -67,6 +67,7 @@ export default function Header() {
         style={{ viewTransitionName: 'site-header' }}
         className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ease-out ${hidden && !open ? '-translate-y-full' : ''}`}
       >
+        {notice}
         <div className="shell pt-3 short:pt-2 sm:pt-4">
           <div
             className={`flex h-16 short:h-14 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-all duration-500 ease-out sm:pl-5 ${

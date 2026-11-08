@@ -195,7 +195,7 @@ export default function Home() {
               <ul className="mt-4 flex -space-x-3" aria-label="Founding team">
                 {founders.map((f) => (
                   <li key={f.name} className="overflow-hidden rounded-full border-4 border-white bg-paper-deep">
-                    <Img name={f.image} alt={`${f.name}, ${f.founderRole}`} sizes="64px" className="h-16 w-16 object-cover" />
+                    <Img name={f.photo} alt={`${f.name}, ${f.badge ?? f.role}`} sizes="64px" className="h-16 w-16 object-cover" />
                   </li>
                 ))}
               </ul>

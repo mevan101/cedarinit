@@ -9,29 +9,54 @@ import PostCard from '@/components/PostCard';
 import { CTA } from '@/components/ui';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { formatDate, getPost, posts } from '@/lib/posts';
+import { getPage, pages } from '@/lib/pages';
+import Blocks from '@/components/Blocks';
+import { PageHero } from '@/components/ui';
 import { site } from '@/lib/site';
 
 export const dynamicParams = false;
-export const generateStaticParams = () => posts.map((p) => ({ slug: p.slug }));
+export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug }))];
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const pg = getPage(params.slug);
+  if (pg)
+    return {
+      title: pg.title,
+      description: pg.description,
+      alternates: { canonical: `/${pg.slug}/` },
+      openGraph: { title: pg.title, description: pg.description, images: pg.hero_image ? [pg.hero_image] : undefined },
+    };
   const p = getPost(params.slug);
   if (!p) return {};
   return {
     title: p.title,
     description: p.description,
     alternates: { canonical: `/${p.slug}/` },
-    openGraph: { type: 'article', title: p.title, description: p.description, publishedTime: p.date, images: [`/images/${p.cover}.webp`] },
-    twitter: { card: 'summary_large_image', title: p.title, description: p.description, images: [`/images/${p.cover}.webp`] },
+    openGraph: { type: 'article', title: p.title, description: p.description, publishedTime: p.date, images: [p.cover] },
+    twitter: { card: 'summary_large_image', title: p.title, description: p.description, images: [p.cover] },
   };
 }
 
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const post = getPost(params.slug);
+export default function SlugPage({ params }: { params: { slug: string } }) {
+  const page = getPage(params.slug);
+  if (page)
+    return (
+      <>
+        <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: page.title, path: `/${page.slug}/` }], site.url)} />
+        <PageHero eyebrow={page.eyebrow || site.name} title={page.title} lead={page.lead} image={page.hero_image} imageAlt={page.hero_alt} caption={page.hero_caption} />
+        {page.bodyHtml && <div className="shell pb-16"><div className="prose-cedar" dangerouslySetInnerHTML={{ __html: page.bodyHtml }} /></div>}
+        <Blocks blocks={page.blocks} />
+      </>
+    );
+  return <PostView slug={params.slug} />;
+}
+
+function PostView({ slug }: { slug: string }) {
+  const post = getPost(slug);
   if (!post) notFound();
   const related = posts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3);
   const share = encodeURIComponent(`${site.url}/${post.slug}/`);
-  const gallery = post.gallery.filter((g) => g !== post.cover);
+  const gallery = post.gallery.filter((g) => g.image !== post.cover);
   return (
     <article>
       <JsonLd
@@ -42,7 +67,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             headline: post.title,
             description: post.description,
             datePublished: post.date,
-            image: [`${site.url}/images/${post.cover}.webp`],
+            image: [`${site.url}${post.cover}`],
             mainEntityOfPage: `${site.url}/${post.slug}/`,
             author: { '@type': 'Organization', name: site.name, url: site.url },
             publisher: { '@type': 'NGO', name: site.name, logo: { '@type': 'ImageObject', url: `${site.url}/brand/logo.png` } },
@@ -70,7 +95,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       </header>
       <div className="shell max-w-5xl">
         <Reveal variant="mask" className="overflow-hidden rounded-4xl bg-paper-deep">
-          <Img name={post.cover} alt="" priority sizes="(min-width: 1024px) 64rem, 100vw" className="max-h-[70vh] w-full object-cover short:max-h-[60vh]" />
+          <Img name={post.cover} alt={post.coverAlt} priority sizes="(min-width: 1024px) 64rem, 100vw" className="max-h-[70vh] w-full object-cover short:max-h-[60vh]" />
         </Reveal>
       </div>
       <div className="shell grid max-w-5xl gap-12 py-16 lg:grid-cols-[1fr_12rem]">
@@ -89,7 +114,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <section aria-labelledby="gallery-title" className="pb-16">
           <div className="shell max-w-5xl">
             <h2 id="gallery-title" className="t-h3 mb-6 text-ink">Photos</h2>
-            <Gallery groups={[{ label: 'Photos', items: gallery.map((g, i) => ({ name: g, alt: `${post.title} — photo ${i + 1}` })) }]} />
+            <Gallery groups={[{ label: 'Photos', items: gallery.map((g, i) => ({ name: g.image, alt: g.alt || `${post.title} — photo ${i + 1}` })) }]} />
           </div>
         </section>
       )}

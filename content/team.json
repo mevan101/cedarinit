@@ -1,0 +1,144 @@
+{
+  "teams": [
+    {
+      "name": "Founding team",
+      "slug": "founders",
+      "description": "The four people who started Cedar in 2025. Each leads one area of the work.",
+      "layout": "large",
+      "members": [
+        {
+          "name": "Shahriar Azad Evan",
+          "role": "Lead of Program & Partnership",
+          "badge": "Founder",
+          "photo": "/images/team/shahriar-azad-evan.webp",
+          "facebook": "https://www.facebook.com/shahriarazadevan",
+          "linkedin": "https://www.linkedin.com/in/msaevan101",
+          "bio": ""
+        },
+        {
+          "name": "Sharafat Karim",
+          "role": "Lead of IT & Communication",
+          "badge": "Co-Founder",
+          "photo": "/images/team/sharafat-karim.webp",
+          "facebook": "https://www.facebook.com/sharafatkarim.bd",
+          "linkedin": "https://www.linkedin.com/in/sharafat-karim/",
+          "bio": ""
+        },
+        {
+          "name": "Sabbir Ahmed",
+          "role": "Lead of Innovation & Development",
+          "badge": "Co-Founder",
+          "photo": "/images/team/sabbir-ahmed.webp",
+          "facebook": "https://www.facebook.com/sabbir1192",
+          "linkedin": "https://www.linkedin.com/in/me-sabbir-ahmed",
+          "bio": ""
+        },
+        {
+          "name": "Naimur Rahman Durjoy",
+          "role": "Lead of Policy & Documentation",
+          "badge": "Co-Founder",
+          "photo": "/images/team/naimur-rahman-durjoy.webp",
+          "facebook": "https://www.facebook.com/activistdurjoy",
+          "linkedin": "https://www.linkedin.com/in/nrdurjoy421",
+          "bio": ""
+        }
+      ]
+    },
+    {
+      "name": "Research team",
+      "slug": "research",
+      "description": "",
+      "layout": "grid",
+      "members": [
+        {
+          "name": "Saif Imtiajul",
+          "role": "Data Analyst",
+          "photo": "/images/team/saif-imtiajul.webp",
+          "facebook": "https://www.facebook.com/Saif.imtiajul/",
+          "linkedin": "https://www.linkedin.com/in/saif-imtiajul/",
+          "bio": ""
+        },
+        {
+          "name": "Md Abdulla Redwan",
+          "role": "Member",
+          "photo": "/images/team/md-abdulla-redwan.webp",
+          "facebook": "https://www.facebook.com/abdulla.redwan.2025",
+          "linkedin": "https://www.linkedin.com/in/md-abdulla-r-ab4aa8327",
+          "bio": ""
+        }
+      ]
+    },
+    {
+      "name": "Communication team",
+      "slug": "communication",
+      "description": "",
+      "layout": "grid",
+      "members": [
+        {
+          "name": "Adiba Jaman",
+          "role": "Member",
+          "photo": "/images/team/adiba-jaman.webp",
+          "bio": ""
+        }
+      ]
+    },
+    {
+      "name": "Program & partnership team",
+      "slug": "programs",
+      "description": "",
+      "layout": "grid",
+      "members": [
+        {
+          "name": "Sanzida Ali Tanfi",
+          "role": "Member",
+          "photo": "/images/team/sanzida-ali-tanfi.webp",
+          "facebook": "https://www.facebook.com/sanzidaarmin.tanfi.1",
+          "bio": ""
+        }
+      ]
+    },
+    {
+      "name": "Community mobiliser team",
+      "slug": "community",
+      "description": "",
+      "layout": "grid",
+      "members": [
+        {
+          "name": "Halimaa Khatun",
+          "role": "Member",
+          "photo": "/images/team/halimaa-khatun.webp",
+          "facebook": "https://www.facebook.com/maliha.akter.538634",
+          "bio": ""
+        }
+      ]
+    },
+    {
+      "name": "ML Bangladesh team",
+      "slug": "ml-bangladesh",
+      "description": "The volunteers who run ML Bangladesh, Cedar's STEM program.",
+      "layout": "grid",
+      "members": []
+    },
+    {
+      "name": "Campus ambassadors",
+      "slug": "ambassadors",
+      "description": "Students who represent Cedar at their school or university.",
+      "layout": "grid",
+      "members": []
+    },
+    {
+      "name": "Advisers",
+      "slug": "advisers",
+      "description": "",
+      "layout": "grid",
+      "members": [
+        {
+          "name": "Luke Palandech",
+          "role": "Teacher, Prairie Hill Elementary School, Cedar Rapids, IA, USA",
+          "photo": "/images/team/luke-palandech.webp",
+          "bio": ""
+        }
+      ]
+    }
+  ]
+}

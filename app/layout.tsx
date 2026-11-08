@@ -4,6 +4,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
 import ViewTransitions from '@/components/ViewTransitions';
+import AnnouncementBar from '@/components/AnnouncementBar';
+import announcement from '@/content/settings/announcement.json';
 import { mlbd } from '@/lib/mlbd';
 import { site, socials } from '@/lib/site';
 import './globals.css';
@@ -65,8 +67,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: "var d=document.documentElement;d.classList.remove('no-js');try{if(navigator.connection&&navigator.connection.saveData)d.classList.add('save-data')}catch(e){}" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body>
-        <Header />
+      <body className={announcement.enabled ? 'has-notice' : undefined}>
+        <Header notice={<AnnouncementBar />} />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>

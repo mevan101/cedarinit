@@ -75,7 +75,7 @@ export default function Gallery({ groups, label = 'Photo gallery' }: { groups: G
               <button type="button" onClick={() => open(i)} className="group relative block w-full overflow-hidden rounded-3xl bg-paper-deep">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={im.srcSet ? `/images/${it.name}-sm.webp` : im.src}
+                  src={im.srcSet ? im.src.replace(/\.webp$/, "-sm.webp") : im.src}
                   width={im.width}
                   height={im.height}
                   alt={it.alt}

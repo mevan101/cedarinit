@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Img from './Img';
 import Icon from './Icon';
-import { formatDate, type Post } from '@/lib/posts';
+import { formatDate, type Post } from '@/lib/post-types';
 
 export default function PostCard({ post, featured = false, headingLevel = 'h3' }: { post: Post; featured?: boolean; headingLevel?: 'h2' | 'h3' }) {
   const H = headingLevel;
