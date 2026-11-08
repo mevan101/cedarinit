@@ -26,7 +26,11 @@ export default function ViewTransitions() {
   }, []);
   useEffect(() => {
     if (first.current) first.current = false;
-    else if (!popped.current && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    else if (!popped.current && !location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      // Also scrolls any page that embeds the site in a frame (e.g. a preview viewer).
+      if (window.self !== window.top) document.documentElement.scrollIntoView({ block: 'start', behavior: 'instant' as ScrollBehavior });
+    }
     popped.current = false;
     resolve.current?.();
     resolve.current = null;
