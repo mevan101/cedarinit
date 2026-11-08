@@ -41,7 +41,7 @@ export default function ContactForm() {
 
   const mailto = (fd: FormData) =>
     `mailto:${site.email}?subject=${encodeURIComponent(String(fd.get('your-subject') ?? ''))}&body=${encodeURIComponent(
-      `${fd.get('your-message') ?? ''}\n\n— ${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
+      `${fd.get('your-message') ?? ''}\n\n${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
     )}`;
 
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
@@ -153,7 +153,7 @@ export default function ContactForm() {
         )}
         {status === 'error' && (
           <p className="rounded-2xl border border-amber-500/40 bg-amber-50 p-4 text-amber-950">
-            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a> — it’s pre-filled for you.
+            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a>. It’s pre-filled for you.
           </p>
         )}
       </div>

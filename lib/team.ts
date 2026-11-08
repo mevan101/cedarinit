@@ -13,9 +13,9 @@ export const founders = teams.find((t) => t.slug === 'founders')?.members ?? [];
 export const getTeam = (slug: string) => teams.find((t) => t.slug === slug);
 
 export const foundingStory = [
-  'Cedar Initiative was born from real experiences — from moments when each of us felt something was missing and wanted to make it right.',
+  'Cedar Initiative started with moments when each of us felt something was missing and wanted to put it right.',
   'Evan was a backbencher in class. Opportunities were rarely shared with him, and he often felt left out. That experience stayed with him. It made him believe that chances to grow should not depend on where you sit, who you know, or where you come from. He wants Cedar to be a place where everyone gets access to mentorship, learning, and guidance, even if they can’t afford it. He believes that technology can open doors for people who are usually left behind.',
-  'Sharafat worked in different organizations and saw how easily trust can break when there’s no openness. He felt deeply that transparency and accountability are not optional — they are necessary. That’s why he joined Cedar: to help build an organization that people can believe in, one that is honest in action and purpose.',
+  'Sharafat worked in different organizations and saw how easily trust can break when there’s no openness. He believes transparency and accountability are not optional. That’s why he joined Cedar: to help build an organization that people can believe in, one that is honest in action and purpose.',
   'Durjoy came with experience in climate action and a background in law. He knows that good intentions need strong foundations. He wants to help shape Cedar so it runs fairly, ethically, and sustainably, creating systems that last and truly serve people and the planet.',
   'Sabbir brings light to the team. He believes work should inspire and also bring joy. With his curiosity and focus on the Sustainable Development Goals, he makes sure Cedar keeps learning, stays creative, and always connects its work to real impact.',
 ];

@@ -15,7 +15,19 @@ export default function ViewTransitions() {
   const pathname = usePathname();
   const resolve = useRef<(() => void) | null>(null);
 
+  // Every new page starts at the top (unless the link points at a section), with no smooth-scroll animation.
+  // Back/forward keeps the browser's own scroll restoration.
+  const first = useRef(true);
+  const popped = useRef(false);
   useEffect(() => {
+    const onPop = () => { popped.current = true; };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+  useEffect(() => {
+    if (first.current) first.current = false;
+    else if (!popped.current && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    popped.current = false;
     resolve.current?.();
     resolve.current = null;
   }, [pathname]);

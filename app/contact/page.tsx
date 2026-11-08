@@ -9,7 +9,7 @@ import { site, socials } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with Cedar Initiative — volunteer, donate, partner or just say hello.',
+  description: 'Contact Cedar Initiative in Dhaka about volunteering, giving, partnerships or press. Email, phone, WhatsApp and Messenger. We reply within two working days.',
   alternates: { canonical: '/contact/' },
 };
 
@@ -26,7 +26,7 @@ export default function ContactPage() {
       <Aurora />
       <div className="shell relative grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <SectionHeading as="h1" eyebrow="Contact" title="Let’s build something good" lead="Questions, partnerships, donations or volunteering — we’d love to hear from you. We aim to respond within 1–2 days." />
+          <SectionHeading as="h1" eyebrow="Contact" title="Let’s build something good" lead="Questions about volunteering, giving, partnerships or press? Write to us. We aim to respond within 1–2 days." />
           <ul className="mt-10 grid gap-3 xs:grid-cols-2 lg:grid-cols-1">
             {channels.map((c, i) => (
               <Reveal as="li" key={c.label} delay={i * 80}>
@@ -62,7 +62,7 @@ export default function ContactPage() {
           <div className="mt-5 flex flex-col items-start gap-4 rounded-4xl bg-cedar-800 p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div>
               <p className="text-lg font-semibold">Want to volunteer?</p>
-              <p className="text-white/75">Apply through our volunteer form — it takes about 3 minutes.</p>
+              <p className="text-white/75">Pick a role and apply on this site. It takes about three minutes.</p>
             </div>
             <Link href="/opportunities/" className="btn-light shrink-0">
               Volunteer form <span className="sr-only">(opens Google Form in a new tab)</span>

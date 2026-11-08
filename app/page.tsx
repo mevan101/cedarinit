@@ -48,11 +48,13 @@ const work = [
   },
 ] as const;
 
-const mosaic = [
-  { image: 'ushnota/day-4a', alt: 'Schoolgirls queue to hand over winter clothes to Cedar volunteers', caption: 'Winter drive · Dhaka' },
-  { image: 'mlbd/hacktoberfest-dhaka-group', alt: 'Students and volunteers at Hacktoberfest Hack Day in Dhaka', caption: 'Hack day · Dhaka' },
-  { image: 'csedweek/rangpur-4', alt: 'Students and Cedar volunteers at JAAGO Foundation School, Rangpur', caption: 'CSEdWeek · Rangpur' },
-  { image: 'ushnota/distribution', alt: 'Cedar volunteers record aid for a family in Karail after the fire', caption: 'Fire response · Karail' },
+const tiles = [
+  { image: 'mlbd/hacktoberfest-dhaka', alt: 'Students building projects at Hacktoberfest Hack Day in Dhaka', caption: 'Hack day · Dhaka', pos: '50% 40%' },
+  { image: 'ushnota/day-4a', alt: 'Schoolgirls queue to hand over winter clothes to Cedar volunteers', caption: 'Winter drive · Dhaka', pos: '55% 30%' },
+  { image: 'csedweek/rangpur-1', alt: 'Students and volunteers at JAAGO Foundation School, Rangpur', caption: 'CSEdWeek · Rangpur', pos: '50% 35%' },
+  { image: 'ushnota/distribution', alt: 'Cedar volunteers record aid for a family in Karail after the fire', caption: 'Fire response · Karail', pos: '50% 40%' },
+  { image: 'mlbd/tech-for-her-auw', alt: 'Participants at the Tech For Her hackathon at the Asian University for Women', caption: 'Tech For Her · Chattogram', pos: '50% 45%' },
+  { image: 'mlbd/build-with-gemma-uiu', alt: 'Teams at Build With Gemma at United International University', caption: 'Build With Gemma · Dhaka', pos: '50% 40%' },
 ];
 
 const places = [
@@ -75,39 +77,39 @@ const paths = [
 export default function Home() {
   return (
     <>
-      {/* 1. What Cedar does */}
-      <section className="hero-pad relative pb-14 pt-28 sm:pb-20 sm:pt-36 lg:pt-40">
-        <div className="shell hero-grid fold-split">
-          <div className="hero-copy">
-            <Reveal as="p" className="t-eyebrow hide-tiny mb-5">Be the force for good</Reveal>
-            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="t-display text-ink" />
-            <Reveal as="p" delay={300} className="hero-lead t-lead measure mt-6">
+      {/* 1. What Cedar does. On large screens: field photos float around the headline, then drift away
+             as the launch-day group photo grows to fill the screen (scroll-driven, CSS only). */}
+      <section className="orbit" aria-labelledby="hero-title">
+        <div className="orbit-stage">
+          <div className="orbit-copy">
+            <p className="t-eyebrow hide-tiny justify-center">Be the force for good</p>
+            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="orbit-title t-display mt-5 text-ink" />
+            <Reveal as="p" delay={300} className="hero-lead t-lead mx-auto mt-6 max-w-[40rem]">
               We&rsquo;re student volunteers. Last winter we brought warm clothes to families in Dhaka&rsquo;s Karail slum and ran a computer
               science week in Rangpur. Through ML Bangladesh, we now run free AI hackathons on campuses across the country.
             </Reveal>
-            <Reveal delay={400} className="hero-cta mt-8 flex flex-col gap-3 xs:flex-row">
-              <Link href="#work" className="btn-primary">
-                See our work <Icon name="arrow" className="h-4 w-4" />
-              </Link>
-              <Link href="#help" className="btn-glass">
-                Ways to help
-              </Link>
+            <Reveal delay={400} className="hero-cta mt-8 flex flex-col justify-center gap-3 xs:flex-row">
+              <Link href="#work" className="btn-primary">See our work <Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="#help" className="btn-glass">Ways to help</Link>
             </Reveal>
           </div>
-          <div className="hero-photo-wrap">
-            <div className="mosaic">
-              {mosaic.map((m, i) => (
-                <figure key={m.image} className={`mosaic-tile mosaic-${i + 1}`} style={{ ['--i' as string]: i }}>
-                  <Img name={m.image} alt={m.alt} priority={i === 0} sizes={i === 0 ? '(min-width: 1024px) 32vw, 66vw' : '(min-width: 1024px) 16vw, 33vw'} className="kenburns h-full w-full object-cover" />
-                  <figcaption>{m.caption}</figcaption>
+          <ul className="orbit-tiles" aria-label="Photos from our programs">
+            {tiles.map((t, i) => (
+              <li key={t.image} className={`orbit-tile orbit-t${i + 1}`}>
+                <figure>
+                  <Img name={t.image} alt={t.alt} priority={i < 2} sizes="(min-width: 1024px) 24vw, 50vw" className="h-full w-full object-cover" style={{ objectPosition: t.pos }} />
+                  <figcaption>{t.caption}</figcaption>
                 </figure>
-              ))}
-              <div className="mosaic-latest hide-short">
-                <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cedar-400 opacity-60 motion-reduce:hidden" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-cedar-500" /></span>
-                <span><span className="block text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-cedar-700">Latest</span><span className="block text-sm font-semibold text-ink">Hacktoberfest Hack Day, Dhaka · 18 Oct 2026</span></span>
-              </div>
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
+          <figure className="orbit-group">
+            <Img name="hero/group-banner" alt="Cedar Initiative volunteers with the Cedar banner on launch day" sizes="100vw" className="h-full w-full object-cover" />
+            <figcaption className="orbit-group-caption">
+              <span className="block font-display text-[clamp(1.75rem,3.4vw,3rem)] uppercase leading-none">Every one of us is a volunteer</span>
+              <span className="mt-2 block text-sm text-white/80">Launch day, Dhaka · September 2025</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -140,9 +142,9 @@ export default function Home() {
                 <article className="group relative grid overflow-hidden rounded-5xl border border-ink/10 bg-paper lg:grid-cols-2">
                   <figure className="relative overflow-hidden bg-paper-deep lg:order-2">
                     {'ext' in w ? (
-                      <Img name={w.ext.src} alt={w.ext.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04] lg:aspect-auto" />
+                      <Img name={w.ext.src} alt={w.ext.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04]" />
                     ) : (
-                      <Img name={w.image} alt={w.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04] lg:aspect-auto" />
+                      <Img name={w.image} alt={w.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04]" />
                     )}
                     <figcaption className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-3 py-1 text-xs text-white backdrop-blur-sm">{w.caption}</figcaption>
                   </figure>

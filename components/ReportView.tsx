@@ -171,7 +171,7 @@ export default function ReportView({ report: r }: { report: Report }) {
               <tbody className="divide-y divide-ink/10">
                 {r.expenses.map((e, i) => (
                   <tr key={i}>
-                    <td className="py-3 pr-4 text-ink-muted">{e.bill_no || '—'}</td>
+                    <td className="py-3 pr-4 text-ink-muted">{e.bill_no || '-'}</td>
                     <td className="py-3 pr-4 text-ink-soft">{e.category}{'program' in e && e.program ? <span className="block text-xs text-ink-muted">{String(e.program)}</span> : null}</td>
                     <td className="py-3 pr-4 text-ink">{e.item}{e.receipt && <a href={e.receipt} className="ml-2 text-cedar-700 underline">receipt</a>}</td>
                     <td className="py-3 text-right tabular-nums text-ink">{money(e.amount, r.currency)}</td>

@@ -110,12 +110,21 @@ export default function Page() {
           {m.timeline.map((t) => (
             <li key={t.title} className="flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper">
               {'photo' in t && t.photo ? (
-                <div className="aspect-[16/10] overflow-hidden bg-paper-deep">
-                  <Img name={t.photo.src} alt={t.photo.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full object-cover" />
+                <div className="aspect-[4/3] overflow-hidden bg-paper-deep">
+                  <Img name={t.photo.src} alt={t.photo.alt} sizes="24rem" className="h-full w-full object-cover" />
                 </div>
               ) : (
-                <div className="aspect-[16/10] bg-cedar-900 p-6">
-                  <span className="font-display text-5xl uppercase leading-none text-cedar-300">{t.date}</span>
+                <div className="relative flex aspect-[4/3] flex-col justify-end overflow-hidden bg-cedar-900 p-6 text-white">
+                  <svg aria-hidden="true" viewBox="0 0 200 150" className="absolute -right-6 -top-6 h-40 w-40 text-cedar-700">
+                    <path d="M40 10 C 110 12 160 50 190 110 L 160 140 C 130 85 90 60 30 55 Z" fill="currentColor" />
+                    <path d="M10 70 C 80 55 140 80 175 130 L 165 150 C 120 115 70 105 15 110 Z" fill="currentColor" opacity="0.6" />
+                  </svg>
+                  {'card' in t && t.card && (
+                    <>
+                      <span className="relative font-display text-6xl uppercase leading-none">{t.card.big}</span>
+                      <span className="relative mt-2 text-sm text-cedar-200">{t.card.small}</span>
+                    </>
+                  )}
                 </div>
               )}
               <div className="flex flex-1 flex-col p-6">
@@ -140,7 +149,7 @@ export default function Page() {
               <Reveal as="li" key={g.src}>
                 <figure>
                   <div className="overflow-hidden rounded-3xl bg-paper-deep">
-                    <Img name={g.src} alt={g.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover" />
+                    <Img name={g.src} alt={g.alt} sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw" className="h-auto w-full" />
                   </div>
                   <figcaption className="figcap">{g.caption}</figcaption>
                 </figure>

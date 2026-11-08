@@ -143,7 +143,7 @@ function PostView({ slug }: { slug: string }) {
         <section aria-labelledby="gallery-title" className="pb-16">
           <div className="shell max-w-5xl">
             <h2 id="gallery-title" className="t-h3 mb-6 text-ink">Photos</h2>
-            <Gallery groups={[{ label: 'Photos', items: gallery.map((g, i) => ({ name: g.image, alt: g.alt || `${post.title} — photo ${i + 1}` })) }]} />
+            <Gallery groups={[{ label: 'Photos', items: gallery.map((g, i) => ({ name: g.image, alt: g.alt || `${post.title}, photo ${i + 1}` })) }]} />
           </div>
         </section>
       )}

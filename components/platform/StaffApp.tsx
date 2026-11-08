@@ -64,9 +64,9 @@ export default function StaffApp() {
               <tbody className="divide-y divide-ink/10">
                 {people.map((v) => (
                   <tr key={v.id}>
-                    <td className="py-3 pr-3"><span className="block font-semibold text-ink">{v.full_name || '—'}</span><span className="text-ink-muted">{v.email}</span></td>
-                    <td className="py-3 pr-3 text-ink-soft">{[v.institution, v.city].filter(Boolean).join(' · ') || '—'}</td>
-                    <td className="py-3 pr-3 text-ink-soft">{v.areas.join(', ') || '—'}</td>
+                    <td className="py-3 pr-3"><span className="block font-semibold text-ink">{v.full_name || '-'}</span><span className="text-ink-muted">{v.email}</span></td>
+                    <td className="py-3 pr-3 text-ink-soft">{[v.institution, v.city].filter(Boolean).join(' · ') || '-'}</td>
+                    <td className="py-3 pr-3 text-ink-soft">{v.areas.join(', ') || '-'}</td>
                     <td className="py-3 pr-3 text-right tabular-nums">{hoursOf(v.id)}</td>
                     <td className="py-3 pr-3">
                       {me.role === 'admin' && v.id !== me.id ? (

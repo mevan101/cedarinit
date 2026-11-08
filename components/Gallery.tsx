@@ -67,12 +67,13 @@ export default function Gallery({ groups, label = 'Photo gallery' }: { groups: G
         </div>
       )}
 
-      <ul role="list" aria-label={label} className="columns-1 gap-4 xs:columns-2 lg:columns-3 [&>li]:mb-4">
+      {/* Justified rows: photos keep their own shape (no cropping) and read left to right in order. */}
+      <ul role="list" aria-label={label} className="flex flex-wrap gap-3 after:flex-[10_1_0%] after:content-['']">
         {items.map((it, i) => {
           const im = img(it.name);
           return (
-            <li key={`${tab}-${it.name}`} className="reveal is-visible break-inside-avoid" style={{ ['--delay' as string]: `${(i % 6) * 50}ms` }}>
-              <button type="button" onClick={() => open(i)} className="group relative block w-full overflow-hidden rounded-3xl bg-paper-deep">
+            <li key={`${tab}-${it.name}`} className="reveal is-visible" style={{ ['--delay' as string]: `${(i % 6) * 50}ms`, flex: `${(im.width ?? 4) / (im.height ?? 3)} 1 ${((im.width ?? 4) / (im.height ?? 3)) * 13}rem` }}>
+              <button type="button" onClick={() => open(i)} className="group relative block w-full overflow-hidden rounded-2xl bg-paper-deep" style={{ aspectRatio: `${im.width ?? 4} / ${im.height ?? 3}` }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={im.srcSet ? im.src.replace(/\.webp$/, "-sm.webp") : im.src}
@@ -81,7 +82,7 @@ export default function Gallery({ groups, label = 'Photo gallery' }: { groups: G
                   alt={it.alt}
                   loading="lazy"
                   decoding="async"
-                  className="h-auto w-full transition duration-700 ease-out group-hover:scale-[1.04]"
+                  className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-cedar-950/50 via-transparent opacity-0 transition group-hover:opacity-100" />
                 <span className="glass absolute bottom-3 right-3 inline-flex h-10 w-10 translate-y-2 items-center justify-center rounded-full opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:opacity-100">

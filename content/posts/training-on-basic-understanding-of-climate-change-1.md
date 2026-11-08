@@ -1,47 +1,44 @@
 ---
 slug: training-on-basic-understanding-of-climate-change-1
 title: 'Online training: the basics of climate change'
-description: >-
-  On 5 November 2025 we ran a free online session on the basics of climate
-  change for young people in Bangladesh. What we covered and who took part.
+description: On 5 November 2025 we ran a free online session on the basics of climate change for young people in
+  Bangladesh. What we covered and who took part.
 date: '2025-11-05'
 category: News
 cover: /images/news/climate-training.webp
 cover_alt: ''
-excerpt: >-
-  Overview Cedar Initiative successfully organized an online training session
-  titled “Basic Understanding of Climate Change” on 5 November 2025 via Google
-  Meet. The session aimed to enhance participants’ foundational…
+excerpt: Cedar Initiative ran an online training session titled “Basic Understanding of Climate Change” on 5 November
+  2025 via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science,…
 gallery: []
 original_title: Training on Basic Understanding of Climate Change
 draft: false
 ---
 #### **Overview**
 
-Cedar Initiative successfully organized an online training session titled **“Basic Understanding of Climate Change”** on **5 November 2025** via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science, global and local climate change impacts, and possible adaptation and mitigation strategies.
+Cedar Initiative ran an online training session titled **“Basic Understanding of Climate Change”** on **5 November 2025** via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science, global and local climate change impacts, and possible adaptation and mitigation strategies.
 
 The training brought together youth volunteers and environmental enthusiasts eager to build knowledge and take action toward sustainable development.
 
 #### **Session Flow**
 
--   **Host:***Naimur Rahman Durjoy*, Co-founder – Cedar Initiative  
+-   **Host:** *Naimur Rahman Durjoy*, Co-founder, Cedar Initiative  
     Durjoy opened the session by welcoming all participants and briefly introducing the objectives of the training.  
       
     
 -   **Facilitators:**
-    -   *Fariha S Aumi*, Chair – Brighters  
+    -   *Fariha S Aumi*, Chair, Brighters  
           
-        -   **Topics Covered:***Weather, Greenhouse Gases (GHG), Climate, Climate Change*
+        -   **Topics Covered:** *Weather, Greenhouse Gases (GHG), Climate, Climate Change*
         -   Aumi discussed the fundamental differences between weather and climate, explained the role of greenhouse gases, and illustrated how human activities contribute to global climate change.  
               
             
-    -   *Jimran*, Chief Executive Officer – MAGIC Initiative  
+    -   *Jimran*, Chief Executive Officer, MAGIC Initiative  
           
-        -   **Topics Covered:***Climate Change Impact (Local and Global), Adaptation, Mitigation*
+        -   **Topics Covered:** *Climate Change Impact (Local and Global), Adaptation, Mitigation*
         -   Jimran focused on the global and national impacts of climate change, highlighting real-world examples from Bangladesh. He also explained practical adaptation and mitigation measures to reduce vulnerabilities and enhance community resilience.  
               
             
--   **Vote of Thanks:***Md. Shahriar Azad Evan*, Founder – Cedar Initiative  
+-   **Vote of Thanks:** *Md. Shahriar Azad Evan*, Co-founder, Cedar Initiative  
     Evan concluded the session by expressing gratitude to the facilitators and participants for their active engagement and valuable contributions.  
       
     

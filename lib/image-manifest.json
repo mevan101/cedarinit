@@ -360,5 +360,10 @@
     "w": 1600,
     "h": 1333,
     "sm": true
+  },
+  "mlbd/mini-ml-fest-uiu": {
+    "w": 1600,
+    "h": 1500,
+    "sm": true
   }
 }

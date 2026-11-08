@@ -74,7 +74,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
               scrolled || open ? 'chrome' : 'border border-transparent'
             }`}
           >
-            <Link href="/" className="rounded-full" aria-label={`${site.name} — home`}>
+            <Link href="/" className="rounded-full" aria-label={`${site.name} home page`}>
               <Logo />
             </Link>
 
