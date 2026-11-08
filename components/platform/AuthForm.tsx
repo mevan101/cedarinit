@@ -7,10 +7,10 @@ import { DemoBanner, Field, Notice, input } from './ui';
 
 /** Firebase error codes in plain words. */
 function friendly(msg: string) {
-  if (/email-already-in-use/.test(msg)) return 'An account with this email already exists. Sign in instead.';
-  if (/invalid-credential|wrong-password|user-not-found/.test(msg)) return 'That email and password don’t match. Try again, or reset your password.';
-  if (/weak-password/.test(msg)) return 'Choose a longer password (at least 8 characters).';
-  if (/too-many-requests/.test(msg)) return 'Too many attempts. Wait a few minutes and try again.';
+  if (/email-already-in-use|already registered/i.test(msg)) return 'An account with this email already exists. Sign in instead.';
+  if (/invalid-credential|wrong-password|user-not-found|Invalid login credentials/i.test(msg)) return 'That email and password don’t match. Try again, or reset your password.';
+  if (/weak-password|Password should be/i.test(msg)) return 'Choose a longer password (at least 8 characters).';
+  if (/too-many-requests|rate limit/i.test(msg)) return 'Too many attempts. Wait a few minutes and try again.';
   if (/network/.test(msg)) return 'We couldn’t reach the server. Check your connection and try again.';
   return msg.replace(/^Firebase: /, '');
 }

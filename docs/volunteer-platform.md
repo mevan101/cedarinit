@@ -12,7 +12,7 @@ Accounts, in-site applications, hours, certificates and letters, verification an
 | Issuer | `/staff/` | Everything a manager can do, plus issue and revoke certificates, appointment, offer, recommendation, experience and removal letters |
 | Admin | `/staff/` | Everything, plus change people's roles |
 
-Accounts use Firebase Authentication (email and password, sign-in links, password reset, email verification).
+Accounts use Supabase Auth (email and password, sign-in links, password reset).
 Every document gets an unguessable ID (e.g. `CI-2026-7F3K9QXM`), a QR code, a printable branded layout ("Save as PDF"),
 and a LinkedIn "Add to profile" link that fills in the name, issuer, date, credential ID and verify URL.
 Removal letters are never publicly verifiable.
@@ -22,39 +22,60 @@ Removal letters are never publicly verifiable.
 Until the backend is connected, the platform runs entirely in the visitor's browser with sample data and a yellow
 "Demo mode" banner. Use it to try every screen; nothing is sent anywhere.
 
-## Going live on Firebase (free Spark plan is enough)
+## Going live: Supabase + Cloudflare
 
-Do these once in the [Firebase console](https://console.firebase.google.com/). Leave the ML Bangladesh and AI hackathon projects alone.
+The Supabase project **Cedar** (`jczodfunfnbixlmdhgqr`, Tokyo) already exists and is empty. From a terminal on your computer, in this repo:
 
-1. **Project.** Use an empty project (or *Add project*) and rename it: Project settings → General → *Project name* → `Cedar Initiative`.
-   Note the *Project ID* (e.g. `cedar-initiative`) and put it in `.firebaserc`.
-2. **Web app.** Project settings → General → *Your apps* → *Add app* → Web. Copy `apiKey`, `authDomain`, `projectId` and `appId`
-   into the host's environment as `NEXT_PUBLIC_FIREBASE_API_KEY`, `..._AUTH_DOMAIN`, `..._PROJECT_ID`, `..._APP_ID`, then rebuild.
-   These values are public by design; the security rules protect the data. The demo banner disappears.
-3. **Sign-in.** Build → Authentication → *Get started* → Sign-in method → enable **Email/Password** and **Email link (passwordless sign-in)**.
-   Settings → *Authorised domains* → add `cedar-initiative.org`. Templates → set the sender name to *Cedar Initiative*
-   (this is the email for verification, sign-in links and password resets).
-4. **Database.** Build → Firestore Database → *Create database* (region `asia-south1`, Mumbai, is closest), *production mode*.
-   Rules tab → paste the contents of `firestore.rules` → *Publish*. (Or `npx firebase-tools deploy --only firestore:rules`.)
-5. **First admin.** Sign up on the site. In Firestore → `users` → your document, change `role` from `volunteer` to `admin`.
-   From then on, admins change other people's roles in `/staff/` → Volunteers.
-6. **Emails from the staff area (optional).** Messages are always saved to the volunteer's account. To also email them, upgrade to the
-   pay-as-you-go plan and install the *Trigger Email from Firestore* extension with collection `mail` (it reads what the staff area queues).
+```bash
+npx supabase@latest login
+```
+
+```bash
+npx supabase@latest link --project-ref jczodfunfnbixlmdhgqr
+```
+
+```bash
+npx supabase@latest db push
+```
+
+That applies `supabase/migrations/0001_volunteer_platform.sql` (tables, row-level security, the verify function).
+Then in the Supabase dashboard:
+
+1. **Authentication → URL configuration:** Site URL `https://cedar-initiative.org`; add redirect URLs `https://cedar-initiative.org/account/` and your `*.workers.dev` address.
+2. **Authentication → Emails → SMTP:** Supabase's built-in email only reaches your own team. For sign-up confirmations and password-reset emails to reach volunteers, add an SMTP sender (Resend's free tier works: verify `cedar-initiative.org`, then paste its SMTP details).
+3. **First admin:** sign up on the site, then in SQL editor run `update profiles set role = 'admin' where email = 'you@…';`.
+
+Deploy the site to Cloudflare (Workers static assets, settings in `wrangler.jsonc`):
+
+```bash
+npx wrangler@4.152.0 login
+```
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://jczodfunfnbixlmdhgqr.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key from Supabase > Project settings > API> npm run build
+```
+
+```bash
+npx wrangler@4.152.0 deploy
+```
+
+The site is then live at `cedar-initiative.<your-subdomain>.workers.dev`. Point `cedar-initiative.org` at it under Workers → cedar-initiative → Settings → Domains.
+The anon key is public by design; never put the `service_role` or `secret` key in the site.
+
+Optional email from the staff area: `npx supabase@latest functions deploy send-email`, then
+`npx supabase@latest secrets set RESEND_API_KEY=… MAIL_FROM="Cedar Initiative <team@cedar-initiative.org>"`.
+Without it, staff messages are still saved to the volunteer's account.
 
 ## Security
 
-All access rules are enforced by Firestore security rules, not by the website. `firebase/tests/rules.test.mjs` checks 41 cases
-on the Firestore emulator: volunteers can't change their role, apply as someone else, approve their own hours, issue documents
-or fake their public hours; the public can verify a document only by its exact ID and can never list them; removal letters are
-never publicly verifiable.
+All access rules are enforced by Postgres row-level security, not by the website. `supabase/tests/` runs them on plain
+Postgres: volunteers can't change their role, apply as someone else, approve their own hours or issue documents; the
+public can only verify, and only through `verify_document()`.
 
 ```bash
-npm i --no-save @firebase/rules-unit-testing@5 firebase-tools@15.34.1
-npx firebase emulators:exec --only firestore --project cedar-test "node firebase/tests/rules.test.mjs"
+createdb cedar_test
+psql -d cedar_test -f supabase/tests/00_supabase_stub.sql -f supabase/migrations/0001_volunteer_platform.sql -f supabase/tests/01_rls_test.sql
 ```
-
-To try the whole site against local Firebase: run `npx firebase emulators:start --only auth,firestore --project cedar-test`,
-build with `NEXT_PUBLIC_FIREBASE_EMULATOR=1` plus any placeholder config values, and serve `out/`.
 
 ## Before relying on letters legally
 

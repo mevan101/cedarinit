@@ -19,6 +19,12 @@ export default function AccountApp() {
   const [docs, setDocs] = useState<Doc[]>([]);
   const [msgs, setMsgs] = useState<Message[]>([]);
   const [tab, setTab] = useState<'overview' | 'profile' | 'hours' | 'documents' | 'messages'>('overview');
+  // Arriving from a password-reset email: ask for the new password first.
+  const [recovering, setRecovering] = useState(false);
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('reset') === '1') setRecovering(true);
+    return p.onRecovery?.(() => setRecovering(true));
+  }, [p]);
 
   useEffect(() => {
     if (!me) return;
@@ -36,6 +42,8 @@ export default function AccountApp() {
         </Card>
       </div>
     );
+
+  if (recovering && p.updatePassword) return <NewPassword onDone={() => { setRecovering(false); history.replaceState(null, '', '/account/'); }} />;
 
   const approved = hours.filter((h) => h.status === 'approved').reduce((a, h) => a + Number(h.hours), 0);
   const pending = hours.filter((h) => h.status === 'pending').reduce((a, h) => a + Number(h.hours), 0);
@@ -100,6 +108,32 @@ export default function AccountApp() {
         </Card>
       )}
     </div>
+  );
+}
+
+function NewPassword({ onDone }: { onDone: () => void }) {
+  const { p } = usePlatform();
+  const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
+  async function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const a = String(f.get('pw')), b = String(f.get('pw2'));
+    if (a !== b) return setMsg({ error: 'The two passwords don’t match.' });
+    try { await p.updatePassword!(a); setMsg({ ok: 'Password changed. You’re signed in.' }); setTimeout(onDone, 1200); }
+    catch (x) { setMsg({ error: (x as Error).message }); }
+  }
+  return (
+    <form onSubmit={submit} className="max-w-lg">
+      <Card title="Choose a new password">
+        <div className="space-y-4">
+          <Field id="pw" text="New password" hint="At least 8 characters."><input id="pw" name="pw" type="password" required minLength={8} autoComplete="new-password" className={input} /></Field>
+          <Field id="pw2" text="Type it again"><input id="pw2" name="pw2" type="password" required minLength={8} autoComplete="new-password" className={input} /></Field>
+          {msg.error && <Notice kind="error">{msg.error}</Notice>}
+          {msg.ok && <Notice kind="ok">{msg.ok}</Notice>}
+          <button type="submit" className="btn-primary">Save new password</button>
+        </div>
+      </Card>
+    </form>
   );
 }
 
