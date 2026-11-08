@@ -14,7 +14,10 @@ const programs = [
 
 const help = [
   { href: '/give/', label: 'Give' },
-  { href: '/volunteer/', label: 'Volunteer' },
+  { href: '/opportunities/', label: 'Open roles' },
+  { href: '/volunteer/', label: 'How volunteering works' },
+  { href: '/verify/', label: 'Verify a certificate' },
+  { href: '/account/', label: 'My account' },
   { href: '/partner/', label: 'Partner' },
   { href: '/fiscal-sponsors/', label: 'Fiscal sponsor proposal' },
 ];

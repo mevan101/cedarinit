@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import ContactForm from '@/components/ContactForm';
 import GlassCard from '@/components/GlassCard';
@@ -63,9 +64,9 @@ export default function ContactPage() {
               <p className="text-lg font-semibold">Want to volunteer?</p>
               <p className="text-white/75">Apply through our volunteer form — it takes about 3 minutes.</p>
             </div>
-            <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-light shrink-0">
-              Volunteer form <Icon name="external" className="h-4 w-4" /><span className="sr-only">(opens Google Form in a new tab)</span>
-            </a>
+            <Link href="/opportunities/" className="btn-light shrink-0">
+              Volunteer form <span className="sr-only">(opens Google Form in a new tab)</span>
+            </Link>
           </div>
         </Reveal>
       </div>

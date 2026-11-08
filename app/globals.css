@@ -361,3 +361,8 @@ html.save-data .decorative-img { display: none !important; }
   .report table { font-size: 10pt; }
   .report .hero-pad { padding-top: 0 !important; }
 }
+@media print {
+  .doc-sheet { box-shadow: none !important; max-width: none !important; margin: 0 !important; }
+  .doc-sheet ~ *, main > section:not(:has(.doc-sheet)) { display: none !important; }
+  @page { margin: 12mm; }
+}

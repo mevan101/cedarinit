@@ -104,7 +104,7 @@ export default function GivePage() {
                 ))}
               </ul>
               <p className="mt-6 border-t border-ink/10 pt-5 text-sm text-ink-soft">
-                Can&rsquo;t give money? <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="link-underline font-medium text-cedar-700">Volunteer with us</a>{' '}
+                Can&rsquo;t give money? <Link href="/opportunities/" className="link-underline font-medium text-cedar-700">Volunteer with us</Link>{' '}
                 or <Link href="/fiscal-sponsors/" className="link-underline font-medium text-cedar-700">become our fiscal sponsor</Link>.
               </p>
             </Reveal>

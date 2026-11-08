@@ -97,7 +97,10 @@ export default function Header({ notice }: { notice?: ReactNode }) {
             </nav>
 
             <div className="flex items-center gap-2">
-              <Link href="/volunteer/" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
+              <Link href="/account/" className="hidden h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-white/70 sm:inline-flex" aria-label="My volunteer account">
+                <Icon name="people" className="h-5 w-5" />
+              </Link>
+              <Link href="/opportunities/" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
                 Volunteer
               </Link>
               <Link href="/give/" className="btn-primary hidden !min-h-[44px] !px-5 text-sm xs:inline-flex">
@@ -130,7 +133,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">
-            {[{ href: '/', label: 'Home' }, ...nav, { href: '/give/', label: 'Give' }].map((item, i) => (
+            {[{ href: '/', label: 'Home' }, ...nav, { href: '/opportunities/', label: 'Open roles' }, { href: '/account/', label: 'My account' }, { href: '/give/', label: 'Give' }].map((item, i) => (
               <li key={item.href} className="reveal is-visible" style={{ ['--delay' as string]: `${i * 40}ms` }}>
                 <Link
                   href={item.href}
@@ -145,7 +148,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
           </ul>
         </nav>
         <div className="mt-8 grid gap-3 xs:grid-cols-2">
-          <Link href="/volunteer/" className="btn-glass">Volunteer</Link>
+          <Link href="/opportunities/" className="btn-glass">Volunteer</Link>
           <Link href="/give/" className="btn-primary">Give</Link>
         </div>
         <p className="mt-10 text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Follow us</p>

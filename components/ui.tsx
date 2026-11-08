@@ -111,7 +111,7 @@ export function CTA({
             <ul className="grid gap-3 sm:grid-cols-3 lg:col-span-6">
               {[
                 { href: '/give/', label: 'Give', note: 'Fund a campaign' },
-                { href: '/volunteer/', label: 'Volunteer', note: 'Give your time' },
+                { href: '/opportunities/', label: 'Volunteer', note: 'See open roles' },
                 { href: '/partner/', label: 'Partner', note: 'Schools, NGOs, companies' },
               ].map((p) => (
                 <li key={p.href}>

@@ -372,6 +372,54 @@ collections:
           - { name: options, label: Dropdown choices, widget: list, required: false, hint: 'Only for Dropdown' }
           - { name: help, label: Help text, widget: string, required: false }
 
+  - name: opportunities
+    label: Open roles
+    label_singular: Role
+    description: Volunteer roles people can apply for on the site. Applications arrive in the staff area at /staff/.
+    folder: content/opportunities
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}} · {{status}}'
+    fields:
+      - { name: title, label: Role title, widget: string }
+      - { name: slug, label: Web address, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only'] }
+      - { name: status, label: Status, widget: select, options: [open, closed], default: open }
+      - { name: program, label: Program, widget: string }
+      - { name: location, label: Where, widget: string }
+      - { name: commitment, label: Time needed, widget: string, hint: 'e.g. One day per event' }
+      - { name: deadline, label: Apply by (optional), widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: summary, label: Summary, widget: text }
+      - { name: responsibilities, label: What you'll do, widget: list }
+      - { name: requirements, label: Who we're looking for, widget: list, required: false }
+      - { name: benefits, label: What you get, widget: list, required: false }
+      - { name: areas, label: Areas (used on certificates), widget: list, required: false }
+      - name: questions
+        label: Application questions
+        label_singular: question
+        widget: list
+        summary: '{{fields.label}} ({{fields.type}})'
+        fields:
+          - { name: label, label: Question, widget: string }
+          - { name: name, label: Field key, widget: string, pattern: ['^[a-z0-9_]+$', 'Lowercase, numbers, underscores'], hint: 'Short and unique within the form, e.g. full_name' }
+          - name: type
+            label: Answer type
+            widget: select
+            options:
+              - { label: Short text, value: text }
+              - { label: Long text, value: textarea }
+              - { label: Email, value: email }
+              - { label: Phone, value: tel }
+              - { label: Number, value: number }
+              - { label: Date, value: date }
+              - { label: Link, value: url }
+              - { label: Dropdown, value: select }
+              - { label: Tick box, value: checkbox }
+            default: text
+          - { name: required, label: Required, widget: boolean, default: false }
+          - { name: options, label: Dropdown choices, widget: list, required: false, hint: 'Only for Dropdown' }
+          - { name: help, label: Help text, widget: string, required: false }
+
+
   - name: reports
     label: Financial reports
     label_singular: Report

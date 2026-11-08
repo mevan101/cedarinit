@@ -50,7 +50,7 @@ const work = [
 
 const paths = [
   { href: '/give/', title: 'Give', body: 'Pay for warm clothes, transport and teaching materials. Every campaign gets a public financial report.', cta: 'How giving works' },
-  { href: '/volunteer/', title: 'Volunteer', body: 'Help at a collection drive, teach a session, or run a hackathon. Pick one event or stay on for a season.', cta: 'See volunteer roles' },
+  { href: '/opportunities/', title: 'Volunteer', body: 'Help at a collection drive, teach a session, or run a hackathon. Apply here, log your hours, get a verifiable certificate.', cta: 'See open roles' },
   { href: '/partner/', title: 'Partner', body: 'Schools, universities, NGOs and companies: host a program, co-run a campaign, or sponsor one.', cta: 'How partnerships work' },
 ];
 

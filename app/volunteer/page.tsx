@@ -25,7 +25,7 @@ const roles = [
 ];
 
 const steps = [
-  { t: 'Apply', b: 'Fill in the short form. Tell us what you can do and when you’re free.' },
+  { t: 'Apply', b: 'Create a free account, pick a role and answer a few questions. You can follow your application in your account.' },
   { t: 'Talk to us', b: 'Someone from the team gets in touch to match you to a role that fits.' },
   { t: 'Show up', b: 'At your first event you work alongside volunteers who have done it before.' },
 ];
@@ -40,9 +40,9 @@ export default function VolunteerPage() {
         lead="Most of Cedar is run by students. Pick one event, stay for a campaign, or take on an ongoing role."
       >
         <div className="flex flex-col gap-3 xs:flex-row">
-          <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-primary">
-            Apply to volunteer <Icon name="external" className="h-4 w-4" /><span className="sr-only">(opens Google Form in a new tab)</span>
-          </a>
+          <Link href="/opportunities/" className="btn-primary">
+            See open roles and apply <Icon name="arrow" className="h-4 w-4" />
+          </Link>
           <Link href="/contact/?subject=Volunteering" className="btn-glass">Ask a question first</Link>
         </div>
       </PageHero>
@@ -85,7 +85,7 @@ export default function VolunteerPage() {
             <div className="mt-10 rounded-3xl border border-ink/10 bg-paper p-6">
               <h3 className="font-semibold text-ink">Certificates</h3>
               <p className="mt-2 text-ink-soft">
-                Ask us about a certificate when you finish a program. We are building a public verify page so employers and universities can check Cedar certificates online.
+                When you finish a program you get a certificate with your verified hours and the areas you worked in. Each one has a QR code and an ID that employers and universities can check on our <Link href="/verify/" className="link-underline font-medium text-cedar-700">verify page</Link>, and you can add it to LinkedIn in one click.
               </p>
             </div>
           </div>
