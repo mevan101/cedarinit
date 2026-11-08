@@ -26,7 +26,7 @@ export default function TeamPage() {
       {shown.map((t, ti) => (
         <section key={t.slug} id={t.slug} className={`section ${ti === 0 ? 'pt-0' : ''} ${ti % 2 ? 'bg-white' : ''}`}>
           <div className="shell">
-            <SectionHeading eyebrow={`${t.members.length} ${t.members.length === 1 ? 'person' : 'people'}`} title={t.name} lead={t.description || undefined} />
+            <SectionHeading title={t.name} lead={t.description || undefined} />
             <ul className={`mt-10 grid gap-5 ${t.layout === 'large' ? 'sm:grid-cols-2 lg:grid-cols-4' : 'xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'}`}>
               {t.members.map((p, i) => (
                 <Reveal as="li" key={p.name} delay={(i % 5) * 70}>
