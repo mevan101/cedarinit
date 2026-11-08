@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Logo from './Logo';
 import Icon from './Icon';
-import { nav, site } from '@/lib/site';
+import { nav, site, socials } from '@/lib/site';
 
 export default function Header({ notice }: { notice?: ReactNode }) {
   const pathname = usePathname();
@@ -148,8 +148,18 @@ export default function Header({ notice }: { notice?: ReactNode }) {
           <Link href="/volunteer/" className="btn-glass">Volunteer</Link>
           <Link href="/give/" className="btn-primary">Give</Link>
         </div>
-        <p className="mt-8 text-sm text-ink-muted">
-          <a href={`mailto:${site.email}`} className="link-underline">{site.email}</a>
+        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Follow us</p>
+        <ul className="mt-3 flex flex-wrap gap-2" aria-label="Social media">
+          {socials.map((s) => (
+            <li key={s.label}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 bg-white text-ink">
+                <Icon name={s.icon} className="h-5 w-5" /><span className="sr-only">{s.label} (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-sm text-ink-muted">
+          <a href={`mailto:${site.email}`} className="link-underline">{site.email}</a> · <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="link-underline">WhatsApp</a>
         </p>
       </div>
     </>

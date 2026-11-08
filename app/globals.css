@@ -347,3 +347,17 @@ html.save-data .decorative-img { display: none !important; }
 /* Announcement bar on: push hero content below the taller fixed header. */
 .has-notice .hero-pad { padding-top: calc(var(--hero-pt, 7rem) + 2.75rem); }
 .has-notice { scroll-padding-top: calc(var(--header-h) + 3.75rem); }
+
+/* Report bars grow in when scrolled into view. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bar-fill { animation: bar-grow linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; transform-origin: left; }
+  }
+}
+@keyframes bar-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media print {
+  .no-print, .chrome { display: none !important; }
+  .report .section { padding-block: 1.5rem !important; background: #fff !important; }
+  .report table { font-size: 10pt; }
+  .report .hero-pad { padding-top: 0 !important; }
+}

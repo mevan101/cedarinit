@@ -6,7 +6,6 @@ import Reveal from '@/components/Reveal';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { site } from '@/lib/site';
-import { csedweek } from '@/lib/programs';
 import { mlbd } from '@/lib/mlbd';
 
 export const metadata: Metadata = {
@@ -32,8 +31,8 @@ const steps = [
 
 const track = [
   'JAAGO Foundation School, Rangpur (CSEdWeek host)',
-  `${csedweek.sponsor.name} (CSEdWeek sponsor)`,
-  `${csedweek.partner.name} (CSEdWeek partner)`,
+  'Enhanfy Global Ltd. (CSEdWeek sponsor)',
+  'Youth for NextGen (CSEdWeek partner)',
   'Tejgaon Government High School, Dhaka',
   'Tejgaon Government Girls High School, Dhaka',
   'Government Science High School, Dhaka',

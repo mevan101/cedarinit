@@ -310,5 +310,55 @@
     "w": 1366,
     "h": 768,
     "sm": true
+  },
+  "mlbd/hacktoberfest-dhaka-group": {
+    "w": 1600,
+    "h": 900,
+    "sm": true
+  },
+  "mlbd/tech-for-her-auw": {
+    "w": 1600,
+    "h": 900,
+    "sm": true
+  },
+  "mlbd/hacktoberfest-dinajpur": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "mlbd/hacktoberfest-dhaka": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "mlbd/bwai-emk": {
+    "w": 1600,
+    "h": 1200,
+    "sm": true
+  },
+  "mlbd/bwai-diu": {
+    "w": 1600,
+    "h": 1334,
+    "sm": true
+  },
+  "mlbd/build-with-gemma-uiu": {
+    "w": 1600,
+    "h": 1500,
+    "sm": true
+  },
+  "mlbd/bwai-seu": {
+    "w": 1600,
+    "h": 1500,
+    "sm": true
+  },
+  "mlbd/bwai-ruet": {
+    "w": 1600,
+    "h": 1500,
+    "sm": true
+  },
+  "mlbd/bwai-bau": {
+    "w": 1600,
+    "h": 1333,
+    "sm": true
   }
 }

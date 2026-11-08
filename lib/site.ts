@@ -9,6 +9,7 @@ export const site = {
   description:
     'Cedar Initiative is a youth-led volunteer group in Bangladesh. We run winter relief in Dhaka, computer science classes in Rangpur and, through ML Bangladesh, free AI hackathons on campuses.',
   founded: '2025',
+  /** @deprecated Credit the whole founding team (content/team.json) rather than one person. */
   founder: 'Shahriar Azad Evan',
   email: 'info@cedar-initiative.org',
   phone: '+880 1540-405257',
@@ -102,9 +103,4 @@ export const press = [
   { outlet: 'Peokoton', title: 'Cedar Initiative launched in Dhaka to empower communities through technology and social good.', href: 'https://www.facebook.com/share/p/19z9ZVXJQP/', image: 'launch/09', lang: 'en' },
   { outlet: 'Jagoron News', title: 'সিডার ইনিশিয়েটিভের যাত্রা শুরু ঢাকায়, প্রযুক্তি ও সমাজসেবার মিলনে টেকসই ভবিষ্যতের অঙ্গীকার', href: 'https://jagoronnews.com/news/detail/3523/', image: 'launch/03', lang: 'bn' },
   { outlet: 'The Business Standard', title: 'Bangladeshi youth win top spot in CICA Artificial Intelligence Art Competition', href: 'https://www.tbsnews.net/bangladesh/bangladeshi-youth-wins-top-spot-cica-artificial-intelligence-art-competition-1284891', image: 'news/cica-art-competition', lang: 'en' },
-] as const;
-
-export const reports = [
-  { slug: 'financial-report-cedar-initiative-2025', title: 'Financial Report 2025', subtitle: 'Cedar Initiative — annual statement', file: '/reports/Financial-Report-Cedar-Initiative-2025.pdf', year: '2025' },
-  { slug: 'financial-report-ushnota-abhijan-2025', title: 'Ushnota Abhijan 2025', subtitle: 'Campaign financial report', file: '/reports/Financial-Report-Ushnota-Abhijan-2025.pdf', year: '2025' },
 ] as const;

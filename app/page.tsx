@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Img from '@/components/Img';
-import ExtImg from '@/components/ExtImg';
 import Icon from '@/components/Icon';
 import Reveal, { RiseText } from '@/components/Reveal';
 import Stat from '@/components/Stat';
 import PostCard from '@/components/PostCard';
 import { ArrowLink, SectionHeading } from '@/components/ui';
-import { impact, press, reports, site } from '@/lib/site';
-import { founders } from '@/lib/team';
+import { impact, press, site } from '@/lib/site';
+import { reports, money } from '@/lib/finance';
+import { founders, portraitOf } from '@/lib/team';
 import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
 
@@ -105,7 +105,7 @@ export default function Home() {
                   <figure>
                     <div className="overflow-hidden rounded-3xl bg-paper-deep">
                       {'ext' in w ? (
-                        <ExtImg src={w.ext.src} alt={w.ext.alt} className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                        <Img name={w.ext.src} alt={w.ext.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
                       ) : (
                         <Img name={w.image} alt={w.alt} sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
                       )}
@@ -182,7 +182,7 @@ export default function Home() {
                     <Link href={`/${r.slug}/`} className="group flex min-h-[56px] items-center justify-between gap-4 py-3">
                       <span>
                         <span className="block font-semibold text-ink group-hover:text-cedar-700">{r.title}</span>
-                        <span className="text-sm text-ink-muted">{r.subtitle}</span>
+                        <span className="text-sm text-ink-muted">{r.kind === 'annual' ? 'Annual statement' : 'Program report'} · {money(r.spent, r.currency)} spent</span>
                       </span>
                       <Icon name="file" className="h-5 w-5 shrink-0 text-cedar-700" />
                     </Link>
@@ -192,16 +192,20 @@ export default function Home() {
             </Reveal>
             <Reveal delay={180}>
               <h3 className="t-h3 text-ink">The people responsible</h3>
-              <ul className="mt-4 flex -space-x-3" aria-label="Founding team">
+              <p className="mt-3 text-ink-soft">Cedar was started in {site.founded} by four co-founders, each leading one part of the work.</p>
+              <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5" aria-label="Co-founders">
                 {founders.map((f) => (
-                  <li key={f.name} className="overflow-hidden rounded-full border-4 border-white bg-paper-deep">
-                    <Img name={f.photo} alt={`${f.name}, ${f.badge ?? f.role}`} sizes="64px" className="h-16 w-16 object-cover" />
+                  <li key={f.name} className="flex items-center gap-3">
+                    <span className="shrink-0 overflow-hidden rounded-full bg-paper-deep ring-1 ring-ink/10">
+                      <Img name={portraitOf(f)} alt="" sizes="56px" className="h-14 w-14 object-cover object-top" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold leading-tight text-ink">{f.name}</span>
+                      <span className="block text-xs leading-snug text-ink-muted">{f.role.replace(/^Lead of /, '')}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-ink-soft">
-                Founded by {site.founder} with three co-founders, each leading one area: programs, IT and communication, innovation, and policy.
-              </p>
               <ArrowLink href="/our-team/" className="mt-4">Meet the team</ArrowLink>
             </Reveal>
           </div>

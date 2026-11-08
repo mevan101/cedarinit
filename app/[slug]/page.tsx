@@ -10,14 +10,33 @@ import { CTA } from '@/components/ui';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { formatDate, getPost, posts } from '@/lib/posts';
 import { getPage, pages } from '@/lib/pages';
+import { getReport, reports } from '@/lib/finance';
+import ReportView from '@/components/ReportView';
+import ProgramView from '@/components/ProgramView';
+import { getProgram, programs } from '@/lib/programs';
 import Blocks from '@/components/Blocks';
 import { PageHero } from '@/components/ui';
 import { site } from '@/lib/site';
 
 export const dynamicParams = false;
-export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug }))];
+export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug })), ...reports.map((r) => ({ slug: r.slug })), ...programs.map((p) => ({ slug: p.slug }))];
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const prog = getProgram(params.slug);
+  if (prog)
+    return {
+      title: { absolute: `${prog.seo_title || prog.title} · Cedar Initiative` },
+      description: prog.description || prog.lead,
+      alternates: { canonical: `/${prog.slug}/` },
+      openGraph: { title: prog.seo_title || prog.title, description: prog.description, images: [prog.cover] },
+    };
+  const rep = getReport(params.slug);
+  if (rep)
+    return {
+      title: `${rep.title}: financial report`,
+      description: `${rep.summary}`.slice(0, 158),
+      alternates: { canonical: `/${rep.slug}/` },
+    };
   const pg = getPage(params.slug);
   if (pg)
     return {
@@ -38,6 +57,16 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 }
 
 export default function SlugPage({ params }: { params: { slug: string } }) {
+  const program = getProgram(params.slug);
+  if (program) return <ProgramView program={program} />;
+  const report = getReport(params.slug);
+  if (report)
+    return (
+      <>
+        <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: 'Transparency', path: '/transparency/' }, { name: report.title, path: `/${report.slug}/` }], site.url)} />
+        <ReportView report={report} />
+      </>
+    );
   const page = getPage(params.slug);
   if (page)
     return (

@@ -1,6 +1,10 @@
 import data from '@/content/team.json';
+import portraits from '@/content/team-portraits.json';
 
-export type Person = { name: string; role: string; badge?: string; photo: string; facebook?: string; linkedin?: string; email?: string; bio?: string };
+export type Person = { name: string; role: string; badge?: string; photo: string; keep_original_background?: boolean; facebook?: string; linkedin?: string; email?: string; bio?: string };
+
+/** The branded portrait made by scripts/team-portraits.mjs, or the original photo if none exists yet. */
+export const portraitOf = (p: Person) => (p.keep_original_background ? p.photo : (portraits as Record<string, string>)[p.photo] ?? p.photo);
 export type Team = { name: string; slug: string; description?: string; layout?: 'large' | 'grid'; members: Person[] };
 
 /** Teams and members are edited in the CMS (Team collection, content/team.json). */

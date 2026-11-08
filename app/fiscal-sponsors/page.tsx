@@ -3,7 +3,7 @@ import Reveal from '@/components/Reveal';
 import Icon from '@/components/Icon';
 import GlassCard from '@/components/GlassCard';
 import { PageHero } from '@/components/ui';
-import { fiscal } from '@/lib/programs';
+import { fiscal } from '@/lib/fiscal';
 
 export const metadata: Metadata = {
   title: 'Open call for fiscal sponsors',

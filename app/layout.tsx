@@ -7,6 +7,7 @@ import ViewTransitions from '@/components/ViewTransitions';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import announcement from '@/content/settings/announcement.json';
 import { mlbd } from '@/lib/mlbd';
+import { founders } from '@/lib/team';
 import { site, socials } from '@/lib/site';
 import './globals.css';
 
@@ -51,7 +52,7 @@ const jsonLd = {
   logo: `${site.url}/brand/logo.png`,
   email: site.email,
   telephone: '+8801540405257',
-  founder: { '@type': 'Person', name: site.founder },
+  founder: founders.map((f) => ({ '@type': 'Person', name: f.name, jobTitle: f.role, sameAs: [f.linkedin, f.facebook].filter(Boolean) })),
   areaServed: 'Bangladesh',
   address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
   foundingDate: site.founded,

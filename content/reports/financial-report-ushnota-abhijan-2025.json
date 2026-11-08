@@ -1,0 +1,85 @@
+{
+  "title": "Ushnota Abhijan 2025",
+  "kind": "program",
+  "program": "ushnota-abhijan-2025",
+  "year": "2025",
+  "period_start": "2025-11-01",
+  "period_end": "2025-12-31",
+  "currency": "BDT",
+  "status": "final",
+  "summary": "Every taka raised for the 2025 winter clothes drive went on collecting, storing and handing out clothes. The campaign closed with a zero balance.",
+  "prepared_by": "Cedar Initiative finance team",
+  "approved_by": "",
+  "published": "2026-01-25",
+  "budget": [],
+  "income": [
+    {
+      "source": "Shahriar Azad Evan (co-founder)",
+      "type": "donation",
+      "amount": 1000
+    },
+    {
+      "source": "Sharafat Karim (co-founder)",
+      "type": "donation",
+      "amount": 1000
+    },
+    {
+      "source": "Sabbir Ahmed (co-founder)",
+      "type": "donation",
+      "amount": 500
+    },
+    {
+      "source": "Naimur Rahman Durjoy (co-founder)",
+      "type": "donation",
+      "amount": 500
+    },
+    {
+      "source": "Shopnojoy Foundation",
+      "type": "donation",
+      "amount": 1030
+    }
+  ],
+  "expenses": [
+    {
+      "bill_no": "Bill-251201",
+      "category": "Transport",
+      "item": "Collection booths to the storehouse",
+      "amount": 1470
+    },
+    {
+      "bill_no": "Bill-251202",
+      "category": "Logistics & branding",
+      "item": "Banners, stands and bags",
+      "amount": 1640
+    },
+    {
+      "bill_no": "Bill-251203",
+      "category": "Refreshments",
+      "item": "Snacks for volunteers",
+      "amount": 460
+    },
+    {
+      "bill_no": "Bill-251204",
+      "category": "Stationery & printing",
+      "item": "Pens, markers, paper and printing",
+      "amount": 460
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Winter clothes collected and handed out",
+      "value": "1,000+"
+    },
+    {
+      "label": "Schools that ran a collection",
+      "value": "4"
+    }
+  ],
+  "internal_notes": "TODO(finance): the 2025 annual statement attributes this campaign's donations differently (Sharafat 2,000; Evan 1,000; Shopnojoy 1,030). Confirm which is correct.",
+  "attachments": [
+    {
+      "label": "Original report (PDF)",
+      "file": "/reports/Financial-Report-Ushnota-Abhijan-2025.pdf"
+    }
+  ]
+}

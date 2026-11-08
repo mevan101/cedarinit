@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import Img from '@/components/Img';
 import Icon from '@/components/Icon';
 import Reveal, { RiseText } from '@/components/Reveal';
-import ExtImg from '@/components/ExtImg';
 import Stat from '@/components/Stat';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { CTA, SectionHeading } from '@/components/ui';
@@ -55,7 +55,7 @@ export default function Page() {
           </div>
           <figure className="hero-photo-wrap">
             <div className="overflow-hidden rounded-4xl bg-paper-deep">
-              <ExtImg src={m.hero.src} alt={m.hero.alt} priority className="hero-photo focus-in aspect-[4/3] w-full object-cover" />
+              <Img name={m.hero.src} alt={m.hero.alt} priority sizes="(min-width: 1024px) 50vw, 100vw" className="hero-photo focus-in aspect-[4/3] w-full object-cover" />
             </div>
             <figcaption className="figcap">{m.hero.caption}</figcaption>
           </figure>
@@ -111,7 +111,7 @@ export default function Page() {
             <li key={t.title} className="flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper">
               {'photo' in t && t.photo ? (
                 <div className="aspect-[16/10] overflow-hidden bg-paper-deep">
-                  <ExtImg src={t.photo.src} alt={t.photo.alt} className="h-full w-full object-cover" />
+                  <Img name={t.photo.src} alt={t.photo.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full object-cover" />
                 </div>
               ) : (
                 <div className="aspect-[16/10] bg-cedar-900 p-6">
@@ -140,7 +140,7 @@ export default function Page() {
               <Reveal as="li" key={g.src}>
                 <figure>
                   <div className="overflow-hidden rounded-3xl bg-paper-deep">
-                    <ExtImg src={g.src} alt={g.alt} className="aspect-[4/3] w-full object-cover" />
+                    <Img name={g.src} alt={g.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover" />
                   </div>
                   <figcaption className="figcap">{g.caption}</figcaption>
                 </figure>

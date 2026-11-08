@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import Logo from './Logo';
 import Icon from './Icon';
-import { site, socials, reports } from '@/lib/site';
+import SocialLinks from './SocialLinks';
+import { site, socials} from '@/lib/site';
+import { reports } from '@/lib/finance';
 
 const programs = [
   { href: '/ushnota-abhijan-2025/', label: 'Ushnota Abhijan' },
@@ -20,26 +22,20 @@ const help = [
 export default function Footer() {
   return (
     <footer className="on-dark relative overflow-hidden bg-cedar-950 text-white/80">
-      <div className="shell relative pb-10 pt-20 sm:pt-24">
+      <div className="border-b border-white/10">
+        <div className="shell flex flex-col gap-6 py-10 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="font-display text-3xl uppercase text-white">Follow the work as it happens</p>
+            <p className="mt-1 text-white/65">Field updates, calls for volunteers and event photos, usually the same day.</p>
+          </div>
+          <SocialLinks tone="dark" withChat />
+        </div>
+      </div>
+      <div className="shell relative pb-10 pt-16 sm:pt-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Logo tone="white" />
             <p className="mt-6 max-w-sm text-[0.98rem] leading-relaxed text-white/70">{site.description}</p>
-            <ul className="mt-8 flex flex-wrap gap-2" aria-label="Social media">
-              {socials.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white/10"
-                  >
-                    <Icon name={s.icon} className="h-[18px] w-[18px]" />
-                    <span className="sr-only">{s.label} (opens in a new tab)</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="grid gap-10 xs:grid-cols-2 md:grid-cols-4 lg:col-span-7">
@@ -57,6 +53,7 @@ export default function Footer() {
               </ul>
               <h2 className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">Transparency</h2>
               <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
+                <li><Link className="link-underline font-semibold text-white" href="/transparency/">All reports</Link></li>
                 {reports.map((r) => (
                   <li key={r.slug}><Link className="link-underline text-white" href={`/${r.slug}/`}>{r.title}</Link></li>
                 ))}

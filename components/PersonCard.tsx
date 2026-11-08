@@ -1,12 +1,12 @@
 import Img from './Img';
 import Icon from './Icon';
-import type { Person } from '@/lib/team';
+import { portraitOf, type Person } from '@/lib/team';
 
 export default function PersonCard({ person, large = false }: { person: Person; large?: boolean }) {
   return (
     <article className="group relative h-full overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[0_20px_40px_-28px_rgb(var(--cedar-950)/0.35)]">
       <div className={`relative overflow-hidden bg-cedar-50 ${large ? 'aspect-[4/5]' : 'aspect-square'}`}>
-        <Img name={person.photo} alt={`Portrait of ${person.name}`} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="h-full w-full object-cover object-top transition duration-700 ease-out group-hover:scale-[1.04]" />
+        <Img name={portraitOf(person)} alt={`Portrait of ${person.name}`} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="h-full w-full object-cover object-top transition duration-700 ease-out group-hover:scale-[1.04]" />
         {person.badge && (
           <span className="chip glass absolute left-4 top-4 !border-white/60 !bg-white/75">{person.badge}</span>
         )}

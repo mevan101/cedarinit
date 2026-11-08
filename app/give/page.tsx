@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import Icon from '@/components/Icon';
 import { PageHero } from '@/components/ui';
-import { giving, reports, site } from '@/lib/site';
+import { giving, site } from '@/lib/site';
+import { reports, money } from '@/lib/finance';
 
 export const metadata: Metadata = {
   title: 'Give',
@@ -95,7 +96,7 @@ export default function GivePage() {
                     <Link href={`/${r.slug}/`} className="group flex items-start justify-between gap-4">
                       <span>
                         <span className="block font-semibold text-ink group-hover:text-cedar-700">{r.title}</span>
-                        <span className="text-sm text-ink-soft">{r.subtitle}</span>
+                        <span className="text-sm text-ink-soft">{r.kind === 'annual' ? 'Annual statement' : 'Program report'} · {money(r.spent, r.currency)} spent</span>
                       </span>
                       <Icon name="arrow" className="mt-1 h-4 w-4 shrink-0 text-cedar-600" />
                     </Link>

@@ -14,7 +14,7 @@ colours, radii or easing in components — use the tokens.**
 
 - **Name:** Cedar Initiative — *Community Empowerment for Development & Advocacy Resilience*
 - **What:** a youth-led, volunteer-based nonprofit working in Bangladesh (currently unregistered; path to 501(c)(3) via fiscal sponsorship).
-- **Founder:** Shahriar Azad Evan
+- **Co-founders:** Shahriar Azad Evan, Sharafat Karim, Sabbir Ahmed, Naimur Rahman Durjoy (credit the team, not one person)
 - **Tagline:** Be the Force for Good · *Built by U. Powered by purpose.*
 - **Mission:** Empowering communities through climate action, education, wellness, and innovation to drive sustainable progress globally.
 - **Vision:** A world where empowered youth and communities lead sustainable progress, fostering resilience, equity, and well-being for all.

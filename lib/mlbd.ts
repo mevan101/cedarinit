@@ -2,9 +2,7 @@
 // Facts below are taken from mlbangladesh.org (About and Programs pages, read 8 Nov 2026).
 // MLBD keeps its own site, events system and Facebook group; this page introduces it to Cedar's audience.
 
-const media = (id: string, w: 640 | 1024 | 1600 = 1024) => `https://mlbangladesh.org/media/${id}.w${w}.webp`;
-const sb = (path: string, w = 880, h = 660) =>
-  `https://zhqzscggtcjmtjvmmktp.supabase.co/storage/v1/render/image/public/event-media/65c9249e-0bae-4254-bc53-e82098c13948/${path}.webp?width=${w}&height=${h}&resize=cover&quality=80`;
+// Photos were copied into public/images/mlbd from mlbangladesh.org (8 Nov 2026).
 
 export type ExtPhoto = { src: string; alt: string; caption: string };
 
@@ -26,7 +24,7 @@ export const mlbd = {
   merger:
     'ML Bangladesh joined Cedar Initiative in September 2026 and is now Cedar’s STEM program. It keeps its name, its volunteers and its own website. Cedar adds governance, financial reporting and a wider volunteer base.',
   hero: {
-    src: 'https://mlbangladesh.org/about/hacktoberfest-dhaka-emk-2026.webp',
+    src: '/images/mlbd/hacktoberfest-dhaka-group.webp',
     alt: 'Group photo of participants and volunteers at Hacktoberfest Hack Day Dhaka at the EMK Center',
     caption: 'Hacktoberfest Hack Day Dhaka, EMK Center · 18 October 2026',
   } satisfies ExtPhoto,
@@ -49,11 +47,11 @@ export const mlbd = {
     { date: 'Feb–May 2024', title: 'ML Olympiad 2024', body: 'The CO2 Emissions Prediction Challenge runs on Kaggle with GDG Dhaka. 353 entrants and a finale at UIU on 24–25 May. Featured on the Google Developers Blog.', href: 'https://developers.googleblog.com/en/ml-olympiad-2024-globally-distributed-ml-competitions-by-google-ml-community/' },
     { date: '12 Jul 2024', title: 'Renamed ML Bangladesh', body: 'The community has outgrown one region. Still a member of the Google AI Community Network.' },
     { date: '11 Oct 2025', title: 'Mini ML Fest', body: 'A mini conference at United International University.' },
-    { date: 'May 2026', title: 'First in-person hackathons', body: 'Build With AI Hack Days start at UITS on 12 May, then DIU a week later.', photo: { src: sb('7cb1a0e9-b0c8-4bb5-a055-2acb32b48189'), alt: 'Students building at Build With AI Hack Days at Daffodil International University' } },
-    { date: '26 Jul 2026', title: 'Build With Gemma @Bangladesh', body: 'A hybrid hackathon at UIU, part of Google DeepMind’s global series. Planned in about a week, judged on Kaggle: 82 teams from 42 universities.', photo: { src: sb('f4ac7ea3-04a1-4817-9a67-c2b3039abf6f'), alt: 'Participants at Build With Gemma at United International University' } },
-    { date: 'Aug 2026', title: 'Hack Days tour', body: 'South East University, RUET, the EMK Center and Bangladesh Agricultural University in one month.', photo: { src: sb('430f5f04-5f32-4045-b707-2d492a141885'), alt: 'Students at Build With AI Hack Days at South East University' } },
-    { date: 'Sep 2026', title: 'Joins Cedar Initiative', body: 'ML Bangladesh becomes Cedar’s STEM program. Tech For Her runs at the Asian University for Women on 25 September.', photo: { src: media('f6d05ba2-76b6-4bf6-98d2-52a37a856d6c'), alt: 'Participants at the Tech For Her hackathon at the Asian University for Women' } },
-    { date: 'Oct 2026', title: 'Hacktoberfest and Kaggle', body: 'Hack days in Dinajpur (HSTU, 3 Oct) and Dhaka (18 Oct), plus the Kaggle Community Olympiad on PM2.5 forecasting for Dhaka.', photo: { src: media('eaa2f935-4d04-4699-b51b-189c4aaf6dad'), alt: 'Hacktoberfest Hack Days at Hajee Mohammad Danesh Science and Technology University, Dinajpur' } },
+    { date: 'May 2026', title: 'First in-person hackathons', body: 'Build With AI Hack Days start at UITS on 12 May, then DIU a week later.', photo: { src: '/images/mlbd/bwai-diu.webp', alt: 'Students building at Build With AI Hack Days at Daffodil International University' } },
+    { date: '26 Jul 2026', title: 'Build With Gemma @Bangladesh', body: 'A hybrid hackathon at UIU, part of Google DeepMind’s global series. Planned in about a week, judged on Kaggle: 82 teams from 42 universities.', photo: { src: '/images/mlbd/build-with-gemma-uiu.webp', alt: 'Participants at Build With Gemma at United International University' } },
+    { date: 'Aug 2026', title: 'Hack Days tour', body: 'South East University, RUET, the EMK Center and Bangladesh Agricultural University in one month.', photo: { src: '/images/mlbd/bwai-seu.webp', alt: 'Students at Build With AI Hack Days at South East University' } },
+    { date: 'Sep 2026', title: 'Joins Cedar Initiative', body: 'ML Bangladesh becomes Cedar’s STEM program. Tech For Her runs at the Asian University for Women on 25 September.', photo: { src: '/images/mlbd/tech-for-her-auw.webp', alt: 'Participants at the Tech For Her hackathon at the Asian University for Women' } },
+    { date: 'Oct 2026', title: 'Hacktoberfest and Kaggle', body: 'Hack days in Dinajpur (HSTU, 3 Oct) and Dhaka (18 Oct), plus the Kaggle Community Olympiad on PM2.5 forecasting for Dhaka.', photo: { src: '/images/mlbd/hacktoberfest-dinajpur.webp', alt: 'Hacktoberfest Hack Days at Hajee Mohammad Danesh Science and Technology University, Dinajpur' } },
     { date: 'Next', title: '20+ campuses planned', body: 'More hackathons, more of them outside Dhaka. Build Club keeps going and ML Club comes back.' },
   ],
   principles: [
@@ -72,9 +70,9 @@ export const mlbd = {
   ],
   places: ['Dhaka', 'Rajshahi', 'Mymensingh', 'Chattogram', 'Dinajpur', 'Online'],
   gallery: [
-    { src: media('4c6636e5-394c-466f-bfb6-21c751e31e4d'), alt: 'Participants at Hacktoberfest Hack Day Dhaka', caption: 'Hacktoberfest Hack Day, Dhaka · Oct 2026' },
-    { src: media('eed460aa-b8a6-4e1e-9598-1a3ad6a73f8f'), alt: 'Build With AI Hack Days at the EMK Center in Dhaka', caption: 'Build With AI Hack Days, EMK Center · Aug 2026' },
-    { src: sb('fab50c78-732a-4c87-be9c-020ba3a3eab4'), alt: 'Students at Build With AI Hack Days at RUET', caption: 'Build With AI Hack Days, RUET Rajshahi · Aug 2026' },
-    { src: sb('f5f8ec0f-d91e-450c-a301-2adbd1802cbf'), alt: 'Students at Build With AI Hack Days at Bangladesh Agricultural University', caption: 'Build With AI Hack Days, BAU Mymensingh · Aug 2026' },
+    { src: '/images/mlbd/hacktoberfest-dhaka.webp', alt: 'Participants at Hacktoberfest Hack Day Dhaka', caption: 'Hacktoberfest Hack Day, Dhaka · Oct 2026' },
+    { src: '/images/mlbd/bwai-emk.webp', alt: 'Build With AI Hack Days at the EMK Center in Dhaka', caption: 'Build With AI Hack Days, EMK Center · Aug 2026' },
+    { src: '/images/mlbd/bwai-ruet.webp', alt: 'Students at Build With AI Hack Days at RUET', caption: 'Build With AI Hack Days, RUET Rajshahi · Aug 2026' },
+    { src: '/images/mlbd/bwai-bau.webp', alt: 'Students at Build With AI Hack Days at Bangladesh Agricultural University', caption: 'Build With AI Hack Days, BAU Mymensingh · Aug 2026' },
   ] satisfies ExtPhoto[],
 };
