@@ -98,8 +98,8 @@ export default function Header() {
               <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
                 Volunteer
               </a>
-              <Link href="/contact/?subject=Donation" className="btn-primary hidden !min-h-[44px] !px-5 text-sm xs:inline-flex">
-                Support us
+              <Link href="/give/" className="btn-primary hidden !min-h-[44px] !px-5 text-sm xs:inline-flex">
+                Give
               </Link>
               <button
                 ref={toggleRef}
@@ -144,7 +144,7 @@ export default function Header() {
         </nav>
         <div className="mt-8 grid gap-3 xs:grid-cols-2">
           <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass">Volunteer</a>
-          <Link href="/contact/?subject=Donation" className="btn-primary">Support us</Link>
+          <Link href="/give/" className="btn-primary">Give</Link>
         </div>
         <p className="mt-8 text-sm text-ink-muted">
           <a href={`mailto:${site.email}`} className="link-underline">{site.email}</a>

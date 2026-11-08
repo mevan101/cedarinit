@@ -6,7 +6,7 @@ import Counter from '@/components/Counter';
 import GlassCard from '@/components/GlassCard';
 import PostCard from '@/components/PostCard';
 import { Aurora, ArrowLink, CTA, SectionHeading } from '@/components/ui';
-import { about, impact, joinOptions, press, site, wings } from '@/lib/site';
+import { about, impact, impactNote, joinOptions, press, site, wings } from '@/lib/site';
 import { programs } from '@/lib/programs';
 import { posts } from '@/lib/posts';
 
@@ -20,12 +20,12 @@ export default function Home() {
           <div className="lg:col-span-6 xl:col-span-6">
             <Reveal as="p" className="chip mb-6">
               <span className="h-2 w-2 rounded-full bg-cedar-500 shadow-[0_0_0_4px_rgb(var(--cedar-500)/0.2)]" aria-hidden="true" />
-              Youth-led · Volunteer-powered · Bangladesh
+              Be the force for good
             </Reveal>
-            <RiseText as="h1" text="Be the force for good" className="t-display text-ink" />
+            <RiseText as="h1" text="Youth-led relief and education across Bangladesh" className="t-display text-ink" />
             <Reveal as="p" delay={350} className="t-lead mt-7 max-w-xl">
-              {site.promise} We are a youth-led movement turning climate action, education, wellness and innovation into
-              real change for communities across Bangladesh. <span className="font-semibold text-ink">{site.subTagline}</span>
+              We&rsquo;re student volunteers in Bangladesh. Last winter we brought warm clothes to families in Dhaka&rsquo;s Karail
+              slum, and we ran a computer science week for students in Rangpur.
             </Reveal>
             <Reveal delay={450} className="mt-9 flex flex-col gap-3 xs:flex-row">
               <Link href="/our-work/" className="btn-primary">
@@ -48,13 +48,7 @@ export default function Home() {
               <GlassCard className="p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Impact so far</p>
                 <p className="mt-1 font-display text-5xl text-ink"><Counter value={4250} suffix="+" /></p>
-                <p className="text-sm text-ink-soft">people reached through our programs</p>
-              </GlassCard>
-            </Reveal>
-            <Reveal delay={750} className="absolute -top-5 right-4 hidden sm:block lg:-right-4">
-              <GlassCard className="flex items-center gap-3 p-3 pr-5">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-cedar-700 text-white"><Icon name="leaf" /></span>
-                <span className="text-sm"><span className="block font-semibold text-ink">Ushnota Abhijan</span><span className="text-ink-muted">Winter campaign · live</span></span>
+                <p className="text-sm text-ink-soft">people reached through our programs in {impactNote.period}</p>
               </GlassCard>
             </Reveal>
           </div>
@@ -76,9 +70,9 @@ export default function Home() {
       <section aria-labelledby="impact-title" className="pb-[var(--section-y)]">
         <div className="shell">
           <h2 id="impact-title" className="sr-only">Our impact in numbers</h2>
-          <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {impact.map((m, i) => (
-              <Reveal as="li" key={m.label} delay={i * 80} className={i === 0 ? 'col-span-2 md:col-span-1' : ''}>
+          <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {impact.filter((m) => m.label !== 'Trees planted').map((m, i) => (
+              <Reveal as="li" key={m.label} delay={i * 80} >
                 <GlassCard className="flex h-full flex-col justify-between gap-6 p-6 sm:p-7">
                   <span className="font-display text-[clamp(2.75rem,5vw,4rem)] leading-none text-cedar-700">
                     <Counter value={m.value} suffix={'suffix' in m ? m.suffix : ''} />
@@ -88,6 +82,10 @@ export default function Home() {
               </Reveal>
             ))}
           </ul>
+          <p className="mt-5 text-sm text-ink-muted">
+            Figures for {impactNote.period}, counted from our program records.{' '}
+            <Link href={impactNote.source} className="link-underline font-medium text-cedar-700">See the financial report</Link>
+          </p>
         </div>
       </section>
 

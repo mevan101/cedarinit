@@ -75,10 +75,25 @@ export const impact = [
   { value: 7, label: 'Trees planted' },
 ] as const;
 
+// Period and source shown next to the headline numbers. TODO(Evan): confirm the period is right.
+export const impactNote = { period: '2025', source: '/financial-report-cedar-initiative-2025/' } as const;
+
+// Giving runs through a registered fiscal sponsor while Cedar is unregistered.
+// TODO(Evan): fill in once the sponsor agreement is confirmed. While `sponsor` is null,
+// /give/ explains the status and asks donors to get in touch instead of showing payment details.
+export const giving = {
+  sponsor: null as null | {
+    name: string; // e.g. the registered youth organisation's legal name
+    registration: string; // e.g. 'Registered with the Department of Youth Development, reg. no. …'
+    url?: string;
+  },
+  methods: [] as { label: string; detail: string; note?: string }[], // e.g. { label: 'bKash (merchant)', detail: '01XXXXXXXXX', note: 'Reference: CEDAR' }
+};
+
 export const joinOptions = [
   { title: 'Volunteer', body: 'Give your time and skills to campaigns, events and research.', image: 'join/volunteer', href: site.volunteerForm, cta: 'Apply to volunteer', external: true },
-  { title: 'Regular Donor', body: 'Fuel programs every month with a recurring contribution.', image: 'join/regular-donor', href: '/contact/?subject=Regular%20Donor', cta: 'Become a donor' },
-  { title: 'Lifetime & Donor Member', body: 'Stand with Cedar for the long run as a founding supporter.', image: 'join/lifetime-member', href: '/contact/?subject=Lifetime%20%26%20Donor%20Membership', cta: 'Enquire' },
+  { title: 'Regular Donor', body: 'Fuel programs every month with a recurring contribution.', image: 'join/regular-donor', href: '/give/', cta: 'How to give' },
+  { title: 'Lifetime & Donor Member', body: 'Stand with Cedar for the long run as a founding supporter.', image: 'join/lifetime-member', href: '/give/', cta: 'How to give' },
   { title: 'Career', body: 'Grow with a youth-led team building the future of impact.', image: 'join/career', href: '/contact/?subject=Career', cta: 'Get in touch' },
 ] as const;
 
