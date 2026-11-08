@@ -81,5 +81,5 @@ export const fiscal = {
   ],
   conclusion:
     'The Cedar Initiative presents a unique opportunity for your organization to partner with a high-potential, compliant, and rapidly growing youth movement. We are prepared to submit a detailed programmatic plan and budget for your immediate review and welcome the opportunity to discuss this proposal further.',
-  contact: { name: 'Md Shahriar Azad Evan', role: 'Lead of Program & Partnership', email: 'shahriar@cedar-initiative.org', phone: '+8801540405257' },
+  contact: { name: 'Md Shahriar Azad Evan', role: 'Lead of Program & Partnership', email: 'shahriar@cedar-initiative.org', phone: '+8801612383345' },
 };

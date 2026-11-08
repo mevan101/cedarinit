@@ -12,8 +12,8 @@ export const site = {
   /** @deprecated Credit the whole founding team (content/team.json) rather than one person. */
   founder: 'Shahriar Azad Evan',
   email: 'info@cedar-initiative.org',
-  phone: '+880 1540-405257',
-  phoneHref: 'tel:+8801540405257',
+  phone: '+880 1612-383345',
+  phoneHref: 'tel:+8801612383345',
   whatsapp: 'https://wa.me/8801612383345',
   messenger: 'https://m.me/cedar.initiative',
   volunteerForm: 'https://forms.gle/yA6EmMmDS4Yy1Pyh6',

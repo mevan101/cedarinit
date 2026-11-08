@@ -51,7 +51,7 @@ const jsonLd = {
   url: site.url,
   logo: `${site.url}/brand/logo.png`,
   email: site.email,
-  telephone: '+8801540405257',
+  telephone: '+8801612383345',
   founder: founders.map((f) => ({ '@type': 'Person', name: f.name, jobTitle: f.role, sameAs: [f.linkedin, f.facebook].filter(Boolean) })),
   areaServed: 'Bangladesh',
   address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
