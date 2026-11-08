@@ -82,8 +82,7 @@ export default function Home() {
       <section className="orbit" aria-labelledby="hero-title">
         <div className="orbit-stage">
           <div className="orbit-copy">
-            <p className="t-eyebrow hide-tiny justify-center">Be the force for good</p>
-            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="orbit-title t-display mt-5 text-ink" />
+            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="orbit-title t-display text-ink" />
             <Reveal as="p" delay={300} className="hero-lead t-lead mx-auto mt-6 max-w-[40rem]">
               We&rsquo;re student volunteers. Last winter we brought warm clothes to families in Dhaka&rsquo;s Karail slum and ran a computer
               science week in Rangpur. Through ML Bangladesh, we now run free AI hackathons on campuses across the country.

@@ -82,7 +82,6 @@
   .t-h3 { @apply font-sans font-semibold leading-tight tracking-[-0.015em]; font-size: clamp(1.25rem, 2vw, 1.5rem); }
   .t-lead { @apply leading-relaxed text-ink-soft; font-size: clamp(1.0625rem, 1.5vw, 1.3125rem); }
   .t-eyebrow { @apply inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-cedar-700; }
-  .t-eyebrow::before { content: ''; @apply inline-block h-px w-6 bg-current; }
 
   /* Surfaces. Content sits on solid, flat cards: cheap to paint on low-end Android
      and easy to read. `.glass`/`.glass-dark` are kept as class names for existing
@@ -215,7 +214,6 @@
 
   /* Photo with a documentary caption (place · date). */
   .figcap { @apply mt-3 flex items-start gap-2 text-sm leading-snug text-ink-muted; }
-  .figcap::before { content: ''; @apply mt-[0.55em] inline-block h-px w-4 shrink-0 bg-current; }
 
   /* Evidence number: value, label, then period + source on its own line. */
   .stat-source { @apply mt-3 border-t border-ink/10 pt-3 text-xs leading-relaxed text-ink-muted; }
@@ -420,7 +418,6 @@ html.save-data .kenburns { animation: none; }
    ========================================================================== */
 .orbit-stage { display: flex; flex-direction: column; gap: 2rem; padding: 7rem var(--gutter) 3rem; }
 .orbit-copy { text-align: center; }
-.orbit-copy .t-eyebrow::after { content: ''; display: inline-block; height: 1px; width: 1.5rem; background: currentColor; }
 .orbit-title { font-size: clamp(2.1rem, min(9vw, 7.2vh), 6.25rem); max-width: 15ch; margin-inline: auto; }
 .orbit-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
 .orbit-tile figure { position: relative; height: 100%; overflow: hidden; border-radius: 1.25rem; background: rgb(var(--paper-deep)); aspect-ratio: 4 / 3; }

@@ -13,8 +13,7 @@ export default function Page() {
     <>
       <section className="hero-pad pb-[var(--section-y)] pt-32 sm:pt-40">
         <div className="shell max-w-6xl">
-          <p className="t-eyebrow">Your account</p>
-          <h1 className="t-h1 mt-5 text-ink">My Cedar</h1>
+          <h1 className="t-h1 text-ink">My Cedar</h1>
           <div className="mt-10">
             <AccountApp />
           </div>

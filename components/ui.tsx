@@ -63,7 +63,7 @@ export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, child
     <section className="hero-pad relative pb-14 pt-32 sm:pb-20 sm:pt-40">
       <div className="shell relative">
         <div className="hero-copy">
-          <SectionHeading as="h1" eyebrow={eyebrow} title={title} className="!max-w-4xl" />
+          <SectionHeading as="h1" title={title} className="!max-w-4xl" />
           {lead && (
             <Reveal delay={150} className="hero-lead t-lead mt-5 max-w-3xl">
               {lead}

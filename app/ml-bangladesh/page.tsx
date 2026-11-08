@@ -40,7 +40,6 @@ export default function Page() {
       <section className="hero-pad pb-12 pt-28 sm:pb-16 sm:pt-36">
         <div className="shell hero-grid fold-split">
           <div className="hero-copy">
-            <p className="t-eyebrow hide-tiny mb-5">{m.kicker} · joined Cedar {m.joined}</p>
             <RiseText as="h1" text="ML Bangladesh" className="t-display text-ink" />
             <Reveal as="p" delay={250} className="hero-lead t-lead measure mt-6">{m.lead}</Reveal>
             <Reveal delay={350} className="hero-cta mt-8 flex flex-col gap-3 xs:flex-row">

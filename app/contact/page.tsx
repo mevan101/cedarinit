@@ -26,7 +26,7 @@ export default function ContactPage() {
       <Aurora />
       <div className="shell relative grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <SectionHeading as="h1" eyebrow="Contact" title="Let’s build something good" lead="Questions about volunteering, giving, partnerships or press? Write to us. We aim to respond within 1–2 days." />
+          <SectionHeading as="h1" title="Let’s build something good" lead="Questions about volunteering, giving, partnerships or press? Write to us. We aim to respond within 1–2 days." />
           <ul className="mt-10 grid gap-3 xs:grid-cols-2 lg:grid-cols-1">
             {channels.map((c, i) => (
               <Reveal as="li" key={c.label} delay={i * 80}>

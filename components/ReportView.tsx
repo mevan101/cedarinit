@@ -45,8 +45,7 @@ export default function ReportView({ report: r }: { report: Report }) {
           <nav aria-label="Breadcrumb" className="no-print mb-6 text-sm text-ink-muted">
             <Link href="/transparency/" className="link-underline">Transparency</Link> <span aria-hidden="true">/</span> {r.year}
           </nav>
-          <p className="t-eyebrow">{r.kind === 'annual' ? 'Annual statement' : 'Program financial report'} · {r.status === 'final' ? 'Final' : 'Draft'}</p>
-          <h1 className="t-h1 mt-5 text-ink">{r.title}</h1>
+          <h1 className="t-h1 text-ink">{r.title}</h1>
           <p className="t-lead measure mt-5">{r.summary}</p>
           <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-ink-muted">
             <div><dt className="inline">Period: </dt><dd className="inline font-medium text-ink">{period(r)}</dd></div>
