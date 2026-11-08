@@ -18,7 +18,7 @@ export default function OutreachPage() {
     <>
       <PageHero eyebrow="Outreach" title="Stories from the field" lead="Campaign diaries, milestones and press coverage, written by the volunteers who were there." />
       <section className="pb-[var(--section-y)]">
-        <div className="shell"><NewsList posts={posts} categories={categories} /></div>
+        <div className="shell"><NewsList posts={posts.map((p) => ({ ...p, html: "", sourceTitle: "" }))} categories={categories} /></div>
       </section>
       <section className="section bg-white">
         <div className="shell">

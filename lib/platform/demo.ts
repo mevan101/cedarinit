@@ -2,7 +2,7 @@ import type { Application, Doc, HourEntry, Message, Platform, Profile, Role } fr
 
 /**
  * Demo backend: same behaviour as the live one, but everything is stored in this browser (localStorage).
- * Used for previews and while Supabase isn't connected. Nothing leaves the device.
+ * Used for previews and while Firebase isn't connected. Nothing leaves the device.
  */
 const KEY = 'cedar-demo-v1';
 type DB = { me: string | null; profiles: Profile[]; applications: Application[]; hours: HourEntry[]; documents: Doc[]; messages: Message[] };
