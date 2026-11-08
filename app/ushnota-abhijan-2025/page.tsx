@@ -8,21 +8,43 @@ import GlassCard from '@/components/GlassCard';
 import PostCard from '@/components/PostCard';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { ushnota as u, ushnotaGallery } from '@/lib/programs';
-import { posts } from '@/lib/posts';
+import { formatDate, posts } from '@/lib/posts';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
+import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'Ushnota Abhijan 2025 — Warmth Campaign',
-  description: u.short,
+  title: 'Ushnota Abhijan 2025: winter clothes drive in Dhaka',
+  description: 'Our 2025 winter clothes drive: collections in Dhaka schools from 4 November, then aid for families made homeless by the Karail slum fire. Diary and report.',
   alternates: { canonical: '/ushnota-abhijan-2025/' },
 };
 
 export default function Page() {
   const updates = posts.filter((p) => p.slug.startsWith('ushnota'));
+  const dayOf = (slug: string) => Number(slug.match(/day-0?(\d+)/)?.[1] ?? 99);
+  const diary = updates.slice().sort((a, b) => dayOf(a.slug) - dayOf(b.slug));
   return (
     <>
-      <PageHero eyebrow={`${u.kicker} · ${u.status}`} title="Ushnota Abhijan 2025" lead={u.summary[0]} image={u.cover} imageAlt="Volunteers with collected winter clothes for Ushnota Abhijan 2025">
+      <JsonLd
+        data={[
+          breadcrumb([{ name: 'Home', path: '/' }, { name: 'Our work', path: '/our-work/' }, { name: u.title, path: `/${u.slug}/` }], site.url),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Event',
+            name: 'Ushnota Abhijan 2025 winter clothes drive',
+            startDate: '2025-11-04',
+            endDate: '2026-01-31',
+            eventStatus: 'https://schema.org/EventScheduled',
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            location: { '@type': 'Place', name: 'Dhaka', address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' } },
+            organizer: { '@type': 'NGO', name: site.name, url: site.url },
+            image: [`${site.url}/images/${u.cover}.webp`],
+            description: u.short,
+          },
+        ]}
+      />
+      <PageHero eyebrow={`${u.kicker} · ${u.status}`} title="Ushnota Abhijan 2025" lead={u.short} image={u.cover} imageAlt="Volunteers with collected winter clothes for Ushnota Abhijan 2025" caption="Volunteers with donated clothes, Dhaka · November 2025">
         <div className="flex flex-col gap-3 xs:flex-row">
-          <Link href="/contact/?subject=Ushnota%20Abhijan%20donation" className="btn-primary">Donate clothes or funds <Icon name="arrow" className="h-4 w-4" /></Link>
+          <Link href="/give/" className="btn-primary">Fund the next drive <Icon name="arrow" className="h-4 w-4" /></Link>
           <Link href={u.report} className="btn-glass"><Icon name="file" className="h-4 w-4" /> Financial report</Link>
         </div>
       </PageHero>
@@ -108,16 +130,35 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="section">
+      {/* Scene 4: field diary, day by day */}
+      <section aria-labelledby="diary-title" className="section">
         <div className="shell">
-          <SectionHeading eyebrow="News & updates" title="Campaign diary" />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {updates.map((p, i) => <Reveal key={p.slug} delay={(i % 3) * 90} className="h-full"><PostCard post={p} /></Reveal>)}
-          </div>
+          <p className="t-eyebrow">Field diary</p>
+          <h2 id="diary-title" className="t-h2 mt-5 text-ink">Day by day, then the fire</h2>
+          <p className="t-lead measure mt-5">Scroll sideways through each collection day and the emergency response in Karail.</p>
+          <div className="draw-line mt-8 h-0.5 w-full bg-cedar-700" aria-hidden="true" />
         </div>
+        <ol className="track shell-wide mt-8" aria-label="Campaign diary, scroll sideways for more">
+          {diary.map((p) => (
+            <li key={p.slug} className="group relative flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white">
+              <div className="aspect-[4/3] overflow-hidden bg-paper-deep">
+                <Img name={p.cover} alt="" sizes="24rem" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="text-sm font-semibold text-cedar-700">
+                  {dayOf(p.slug) === 99 ? 'Emergency response' : `Day ${dayOf(p.slug)}`} · <time dateTime={p.date}>{formatDate(p.date)}</time>
+                </p>
+                <h3 className="mt-2 text-lg font-semibold leading-snug text-ink">
+                  <Link href={`/${p.slug}/`} className="after:absolute after:inset-0">{p.title.replace(/^Winter clothes drive, day \d+: /, '')}</Link>
+                </h3>
+                <p className="mt-2 line-clamp-3 text-[0.95rem] text-ink-soft">{p.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
-      <CTA title="Spread warmth this winter." lead={`${u.conclusion} ${u.signoff}`} />
+      <CTA title="Help the next winter drive" lead="Fund transport and clothes, run a collection at your school, or bring your organisation in as a partner." />
     </>
   );
 }

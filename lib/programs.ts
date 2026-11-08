@@ -3,14 +3,14 @@ import type { GalleryGroup } from '@/components/Gallery';
 export const ushnota = {
   slug: 'ushnota-abhijan-2025',
   title: 'Ushnota Abhijan 2025',
-  kicker: 'Warmth Campaign',
-  status: 'Ongoing',
+  kicker: 'Winter relief',
+  status: 'Completed · 2025 edition',
   cover: 'ushnota/cover',
   short:
-    'Collecting new and gently used winter clothes and distributing them among underprivileged families, street children and the homeless — spreading warmth, compassion and humanity through the cold season.',
+    'We collected new and gently used winter clothes in Dhaka schools in November 2025, then handed them to families in Karail slum after the fire, and to street children and homeless people.',
   summary: [
     '“Ushnota Abhijan 2025” is a humanitarian initiative by Cedar Initiative aimed at providing warm clothing to underprivileged and vulnerable communities during winter. Every year, thousands of people across Bangladesh — especially in urban slums and northern districts — suffer from severe cold-related hardships. This campaign seeks to reduce their suffering by mobilizing communities, engaging youth volunteers, collecting winter clothing, and distributing them systematically to those most in need.',
-    'The project will be implemented between December 2025 and January 2026 and aims to support 2,000+ beneficiaries across Dhaka, Rangpur, Dinajpur, Kurigram, Panchagarh, and Bhola. Cedar Initiative is seeking financial and in-kind support as well as partners to ensure the effective implementation of this campaign.',
+    'The 2025 plan set a target of 2,000+ people across Dhaka, Rangpur, Dinajpur, Kurigram, Panchagarh and Bhola between December 2025 and January 2026. Collection started early, on 4 November 2025, and the Karail slum fire on 25 November, which left nearly 1,500 families homeless, turned the first distribution into an emergency response. What was spent is in the campaign financial report.',
   ],
   facts: [
     { label: 'Beneficiaries targeted', value: '2,000+' },
@@ -25,7 +25,7 @@ export const ushnota = {
   ],
   longTerm: [
     'Establish a consistent annual winter relief program across multiple districts.',
-    'Strengthen social responsibility and foster a culture of empathy and humanitarian values.',
+    'Make giving to neighbours in need a normal part of school life.',
     'Engage and train youth volunteers to participate in regular community service initiatives.',
   ],
   vision:
@@ -33,7 +33,7 @@ export const ushnota = {
   mission: [
     'Establish an organized system for collecting, managing, and distributing winter clothing.',
     'Build strategic partnerships with schools, communities, youth groups, and institutions.',
-    'Empower volunteers with the skills and motivation to lead community service activities.',
+    'Train volunteers so they can lead community service activities themselves.',
   ],
   beneficiaries: [
     'Street children',
@@ -62,11 +62,11 @@ export const ushnotaGallery: GalleryGroup[] = [
 export const csedweek = {
   slug: 'csedweek2025',
   title: 'CSEdWeek 2025',
-  kicker: 'Computer Science Education Week',
+  kicker: 'CS education',
   status: 'Completed',
   cover: 'csedweek/rangpur-1',
   short:
-    'A structured, accessible introduction to coding and AI for high-school students who rarely get exposure to digital skills — delivered at JAAGO Foundation School, Rangpur.',
+    'A one-hour introduction to coding and AI for high-school students at JAAGO Foundation School, Rangpur, during Computer Science Education Week 2025.',
   purpose:
     'The purpose of this program is to deliver a structured, accessible computer science learning experience to high school students who do not typically receive exposure to digital skills. This initiative focuses on foundational coding and introductory AI concepts, delivered through guided instructional activities during CSEdWeek.',
   objectives: [

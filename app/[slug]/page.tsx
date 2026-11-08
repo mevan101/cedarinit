@@ -6,7 +6,8 @@ import Icon from '@/components/Icon';
 import Reveal from '@/components/Reveal';
 import Gallery from '@/components/Gallery';
 import PostCard from '@/components/PostCard';
-import { Aurora, CTA } from '@/components/ui';
+import { CTA } from '@/components/ui';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { formatDate, getPost, posts } from '@/lib/posts';
 import { site } from '@/lib/site';
 
@@ -18,9 +19,10 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!p) return {};
   return {
     title: p.title,
-    description: p.excerpt,
+    description: p.description,
     alternates: { canonical: `/${p.slug}/` },
-    openGraph: { type: 'article', title: p.title, description: p.excerpt, publishedTime: p.date, images: [`/images/${p.cover}.webp`] },
+    openGraph: { type: 'article', title: p.title, description: p.description, publishedTime: p.date, images: [`/images/${p.cover}.webp`] },
+    twitter: { card: 'summary_large_image', title: p.title, description: p.description, images: [`/images/${p.cover}.webp`] },
   };
 }
 
@@ -32,14 +34,29 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const gallery = post.gallery.filter((g) => g !== post.cover);
   return (
     <article>
-      <header className="relative overflow-hidden pb-12 pt-36 sm:pt-44">
-        <Aurora />
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: post.title,
+            description: post.description,
+            datePublished: post.date,
+            image: [`${site.url}/images/${post.cover}.webp`],
+            mainEntityOfPage: `${site.url}/${post.slug}/`,
+            author: { '@type': 'Organization', name: site.name, url: site.url },
+            publisher: { '@type': 'NGO', name: site.name, logo: { '@type': 'ImageObject', url: `${site.url}/brand/logo.png` } },
+          },
+          breadcrumb([{ name: 'Home', path: '/' }, { name: 'News', path: '/outreach/' }, { name: post.title, path: `/${post.slug}/` }], site.url),
+        ]}
+      />
+      <header className="hero-pad relative pb-12 pt-32 sm:pt-40">
         <div className="shell relative max-w-4xl">
           <Reveal as="nav" aria-label="Breadcrumb" className="mb-8 text-sm text-ink-muted">
             <ol className="flex flex-wrap items-center gap-2">
               <li><Link href="/" className="link-underline">Home</Link></li>
               <li aria-hidden="true">/</li>
-              <li><Link href="/outreach/" className="link-underline">Outreach</Link></li>
+              <li><Link href="/outreach/" className="link-underline">News</Link></li>
               <li aria-hidden="true">/</li>
               <li aria-current="page" className="text-ink">{post.category}</li>
             </ol>
@@ -53,7 +70,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       </header>
       <div className="shell max-w-5xl">
         <Reveal variant="mask" className="overflow-hidden rounded-4xl bg-paper-deep">
-          <Img name={post.cover} alt="" priority sizes="(min-width: 1024px) 64rem, 100vw" className="max-h-[70vh] w-full object-cover" />
+          <Img name={post.cover} alt="" priority sizes="(min-width: 1024px) 64rem, 100vw" className="max-h-[70vh] w-full object-cover short:max-h-[60vh]" />
         </Reveal>
       </div>
       <div className="shell grid max-w-5xl gap-12 py-16 lg:grid-cols-[1fr_12rem]">

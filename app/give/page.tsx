@@ -22,7 +22,14 @@ export default function GivePage() {
         eyebrow="Give"
         title="Fund the next winter drive and classroom"
         lead="Your gift pays for warm clothes, transport and teaching materials. We publish a financial report for every campaign."
-      />
+      >
+        <div className="flex flex-col gap-3 xs:flex-row">
+          <Link href={ready ? '#how-title' : '/contact/?subject=Donation'} className="btn-primary">
+            {ready ? 'See how to give' : 'Contact us to give'} <Icon name="arrow" className="h-4 w-4" />
+          </Link>
+          <Link href="#status-title" className="btn-glass">Read our legal status</Link>
+        </div>
+      </PageHero>
 
       <section className="section bg-white">
         <div className="shell grid gap-12 lg:grid-cols-12">

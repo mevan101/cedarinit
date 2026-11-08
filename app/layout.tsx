@@ -3,6 +3,8 @@ import localFont from 'next/font/local';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
+import ViewTransitions from '@/components/ViewTransitions';
+import { mlbd } from '@/lib/mlbd';
 import { site, socials } from '@/lib/site';
 import './globals.css';
 
@@ -20,11 +22,11 @@ const bengali = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} — ${site.tagline}`, template: `%s · ${site.name}` },
+  title: { default: `${site.name}: youth-led nonprofit in Bangladesh`, template: `%s · ${site.name}` },
   description: site.description,
   applicationName: site.name,
-  keywords: ['Cedar Initiative', 'youth-led nonprofit', 'Bangladesh', 'climate action', 'volunteer', 'Ushnota Abhijan', 'CSEdWeek'],
-  openGraph: { type: 'website', siteName: site.name, locale: 'en_US', images: [{ url: '/images/hero/group-banner.webp', width: 1600, height: 900 }] },
+  keywords: ['Cedar Initiative', 'youth-led nonprofit Bangladesh', 'volunteer Dhaka', 'winter clothes donation Bangladesh', 'Ushnota Abhijan', 'CSEdWeek Bangladesh', 'ML Bangladesh', 'AI hackathon Bangladesh'],
+  openGraph: { type: 'website', siteName: site.name, locale: 'en_US', images: [{ url: '/images/ushnota/day-4a.webp', alt: 'Students donating winter clothes at a Cedar collection drive in Dhaka' }] },
   twitter: { card: 'summary_large_image', site: '@CedarInitiative' },
   icons: { icon: '/brand/icon.svg', apple: '/brand/logo.png' },
   alternates: { canonical: '/' },
@@ -35,6 +37,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [{ color: '#F8F7F2' }],
+  colorScheme: 'light',
 };
 
 const jsonLd = {
@@ -49,14 +52,17 @@ const jsonLd = {
   founder: { '@type': 'Person', name: site.founder },
   areaServed: 'Bangladesh',
   address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
+  foundingDate: site.founded,
+  description: site.description,
   sameAs: socials.map((s) => s.href),
+  subOrganization: { '@type': 'Organization', name: mlbd.name, alternateName: 'MLBD', url: mlbd.url, foundingDate: '2023-09', sameAs: [mlbd.group] },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${bengali.variable} no-js`} id="top" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.remove('no-js')" }} />
+        <script dangerouslySetInnerHTML={{ __html: "var d=document.documentElement;d.classList.remove('no-js');try{if(navigator.connection&&navigator.connection.saveData)d.classList.add('save-data')}catch(e){}" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
@@ -66,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <ChatWidget />
+        <ViewTransitions />
       </body>
     </html>
   );

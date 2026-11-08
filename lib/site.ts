@@ -5,9 +5,9 @@ export const site = {
   url: 'https://cedar-initiative.org',
   tagline: 'Be the Force for Good',
   subTagline: 'Built by U. Powered by purpose.',
-  promise: 'Empowering Communities for a Sustainable Future.',
+  promise: 'Youth-led relief and STEM education across Bangladesh.',
   description:
-    'Cedar Initiative is a youth-led, volunteer-based nonprofit in Bangladesh empowering communities through climate action, education, wellness and innovation.',
+    'Cedar Initiative is a youth-led volunteer group in Bangladesh. We run winter relief in Dhaka, computer science classes in Rangpur and, through ML Bangladesh, free AI hackathons on campuses.',
   founded: '2025',
   founder: 'Shahriar Azad Evan',
   email: 'info@cedar-initiative.org',
@@ -26,9 +26,9 @@ export const site = {
 
 export const nav = [
   { href: '/about-us/', label: 'About' },
-  { href: '/our-work/', label: 'Our Work' },
-  { href: '/our-team/', label: 'Team' },
-  { href: '/outreach/', label: 'Outreach' },
+  { href: '/our-work/', label: 'Our work' },
+  { href: '/ml-bangladesh/', label: 'ML Bangladesh' },
+  { href: '/outreach/', label: 'News' },
   { href: '/contact/', label: 'Contact' },
 ] as const;
 
@@ -42,20 +42,20 @@ export const socials = [
 
 export const about = {
   whoWeAre:
-    'Cedar Initiative (Community Empowerment for Development & Advocacy Resilience) is a newly established, unregistered, youth-led nonprofit committed to empowering communities through a multi-sectoral approach. Our mission is to foster sustainable progress, cultivate youth leadership and promote overall well-being, with a particular emphasis on impactful initiatives in Bangladesh and beyond.',
+    'Cedar Initiative (Community Empowerment for Development & Advocacy Resilience) is a youth-led volunteer group founded in Dhaka in 2025. We are not yet a registered organisation. Students and young professionals plan and run every program, and we publish a financial report for each one.',
   whoWeAre2:
-    'We address some of the most pressing challenges of our time — sustainability, climate innovation, mental health, education, clean water, food security and civic engagement. With a vision rooted in innovation, collaboration and compassion, we strive to create meaningful change and build resilient communities for a better, more sustainable future.',
+    'We work where we can show results: warm clothes for families in Dhaka’s slums, computer science classes in schools that have no CS teacher, and, since ML Bangladesh joined us in September 2026, free AI and machine learning hackathons on university campuses across the country.',
   vision:
-    'A world where empowered youth and communities lead sustainable progress, fostering resilience, equity, and well-being for all.',
+    'A Bangladesh where young people can help their own communities, and where getting into science and technology doesn’t depend on where you went to school.',
   mission:
-    'Empowering communities through climate action, education, wellness, and innovation to drive sustainable progress globally.',
+    'We organise young volunteers to deliver relief, teach computer science and AI, and take on climate work, and we report openly on what each program did.',
 };
 
 export const wings = [
-  { title: 'Climate Change', body: 'Fighting climate change and promoting sustainability through innovative, actionable initiatives.', icon: 'leaf' },
-  { title: 'Community & Youth Empowerment', body: 'Nurturing the next generation of leaders and ensuring equitable access to quality education.', icon: 'sprout' },
-  { title: 'Research & Innovation', body: 'Driving progress through groundbreaking research and innovation for a sustainable future.', icon: 'spark' },
-  { title: 'Civic Engagement', body: 'Encouraging active community participation and informed decision-making.', icon: 'people' },
+  { title: 'Climate Change', body: 'Climate training for young people and small, local projects that cut waste and plant trees.', icon: 'leaf' },
+  { title: 'Community & Youth', body: 'Winter relief, emergency response and volunteering that gives students real responsibility.', icon: 'sprout' },
+  { title: 'STEM & Innovation', body: 'Computer science weeks in schools and, through ML Bangladesh, AI hackathons and study clubs on campus.', icon: 'spark' },
+  { title: 'Civic Engagement', body: 'Helping young people take part in public debate, youth councils and local decisions.', icon: 'people' },
 ] as const;
 
 export const values = [
@@ -67,15 +67,16 @@ export const values = [
   { title: 'Transparency', body: 'Operating with openness, clarity, and full disclosure to build trust with all stakeholders.' },
 ] as const;
 
-export const impact = [
-  { value: 4250, suffix: '+', label: 'People impacted' },
-  { value: 1000, suffix: '+', label: 'Clothes donated' },
-  { value: 2, label: 'Programs completed' },
-  { value: 2, label: 'Ongoing programs' },
-  { value: 7, label: 'Trees planted' },
-] as const;
+/** Headline numbers. Every one carries its period and a source link (strategy §5). */
+export type Stat = { value: number; suffix?: string; label: string; period: string; source: { label: string; href: string; external?: boolean } };
+export const impact: Stat[] = [
+  { value: 4250, suffix: '+', label: 'People reached by Cedar programs', period: '2025', source: { label: 'Cedar financial report 2025', href: '/financial-report-cedar-initiative-2025/' } },
+  { value: 1000, suffix: '+', label: 'Winter clothes collected and handed out', period: 'Nov 2025 – Jan 2026', source: { label: 'Ushnota Abhijan report', href: '/financial-report-ushnota-abhijan-2025/' } },
+  { value: 7000, suffix: '+', label: 'Members of the ML Bangladesh community', period: 'Facebook group, Nov 2026', source: { label: 'mlbangladesh.org', href: 'https://mlbangladesh.org/about', external: true } },
+  { value: 82, label: 'Teams from 42 universities at Build With Gemma', period: 'July 2026, UIU Dhaka', source: { label: 'ML Bangladesh programs', href: 'https://mlbangladesh.org/programs', external: true } },
+];
 
-// Period and source shown next to the headline numbers. TODO(Evan): confirm the period is right.
+// Kept for older imports. TODO(Evan): confirm the 2025 figures against program records.
 export const impactNote = { period: '2025', source: '/financial-report-cedar-initiative-2025/' } as const;
 
 // Giving runs through a registered fiscal sponsor while Cedar is unregistered.
@@ -91,7 +92,7 @@ export const giving = {
 };
 
 export const joinOptions = [
-  { title: 'Volunteer', body: 'Give your time and skills to campaigns, events and research.', image: 'join/volunteer', href: site.volunteerForm, cta: 'Apply to volunteer', external: true },
+  { title: 'Volunteer', body: 'Give your time and skills to campaigns, events and research.', image: 'join/volunteer', href: '/volunteer/', cta: 'See volunteer roles' },
   { title: 'Regular Donor', body: 'Fuel programs every month with a recurring contribution.', image: 'join/regular-donor', href: '/give/', cta: 'How to give' },
   { title: 'Lifetime & Donor Member', body: 'Stand with Cedar for the long run as a founding supporter.', image: 'join/lifetime-member', href: '/give/', cta: 'How to give' },
   { title: 'Career', body: 'Grow with a youth-led team building the future of impact.', image: 'join/career', href: '/contact/?subject=Career', cta: 'Get in touch' },

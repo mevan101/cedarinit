@@ -64,12 +64,13 @@ export default function Header() {
       </a>
       <div className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-cedar-500 via-cedar-400 to-ember" aria-hidden="true" />
       <header
+        style={{ viewTransitionName: 'site-header' }}
         className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ease-out ${hidden && !open ? '-translate-y-full' : ''}`}
       >
-        <div className="shell pt-3 sm:pt-4">
+        <div className="shell pt-3 short:pt-2 sm:pt-4">
           <div
-            className={`flex h-16 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-all duration-500 ease-out sm:pl-5 ${
-              scrolled || open ? 'glass' : 'border border-transparent'
+            className={`flex h-16 short:h-14 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-all duration-500 ease-out sm:pl-5 ${
+              scrolled || open ? 'chrome' : 'border border-transparent'
             }`}
           >
             <Link href="/" className="rounded-full" aria-label={`${site.name} — home`}>
@@ -95,9 +96,9 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
+              <Link href="/volunteer/" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
                 Volunteer
-              </a>
+              </Link>
               <Link href="/give/" className="btn-primary hidden !min-h-[44px] !px-5 text-sm xs:inline-flex">
                 Give
               </Link>
@@ -124,16 +125,16 @@ export default function Header() {
         aria-modal="true"
         aria-label="Site menu"
         hidden={!open}
-        className="fixed inset-0 z-40 overflow-y-auto scroll-pb-10 scroll-pt-28 bg-paper/80 px-[var(--gutter)] pb-10 pt-28 backdrop-blur-2xl lg:hidden"
+        className="fixed inset-0 z-40 overflow-y-auto scroll-pb-10 scroll-pt-28 bg-paper px-[var(--gutter)] pb-10 pt-28 short:pt-20 lg:hidden"
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">
-            {[{ href: '/', label: 'Home' }, ...nav, { href: '/fiscal-sponsors/', label: 'Fiscal Sponsors' }].map((item, i) => (
+            {[{ href: '/', label: 'Home' }, ...nav, { href: '/give/', label: 'Give' }].map((item, i) => (
               <li key={item.href} className="reveal is-visible" style={{ ['--delay' as string]: `${i * 40}ms` }}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) && item.href !== '/' ? 'page' : pathname === '/' && item.href === '/' ? 'page' : undefined}
-                  className="flex items-center justify-between border-b border-ink/10 py-4 font-display text-4xl uppercase text-ink aria-[current=page]:text-cedar-700"
+                  className="flex items-center justify-between border-b border-ink/10 py-4 short:py-2 font-display text-[clamp(1.75rem,min(9vw,7vh),2.25rem)] uppercase text-ink aria-[current=page]:text-cedar-700"
                 >
                   {item.label}
                   <Icon name="arrow" className="h-6 w-6 text-cedar-600" />
@@ -143,7 +144,7 @@ export default function Header() {
           </ul>
         </nav>
         <div className="mt-8 grid gap-3 xs:grid-cols-2">
-          <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass">Volunteer</a>
+          <Link href="/volunteer/" className="btn-glass">Volunteer</Link>
           <Link href="/give/" className="btn-primary">Give</Link>
         </div>
         <p className="mt-8 text-sm text-ink-muted">

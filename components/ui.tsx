@@ -58,54 +58,72 @@ export function ArrowLink({ href, children, external, className = '' }: { href: 
 }
 
 /** Interior page hero: big type over a soft cedar aurora, optional image. */
-export function PageHero({ eyebrow, title, lead, image, imageAlt, children }: { eyebrow: string; title: string; lead?: ReactNode; image?: string; imageAlt?: string; children?: ReactNode }) {
+export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, children }: { eyebrow: string; title: string; lead?: ReactNode; image?: string; imageAlt?: string; caption?: string; children?: ReactNode }) {
   return (
-    <section className="relative overflow-hidden pb-16 pt-36 sm:pb-24 sm:pt-44">
-      <Aurora />
+    <section className="hero-pad relative pb-14 pt-32 sm:pb-20 sm:pt-40">
       <div className="shell relative">
-        <SectionHeading as="h1" eyebrow={eyebrow} title={title} lead={lead} className="!max-w-4xl" />
-        {children && <Reveal delay={250} className="mt-10">{children}</Reveal>}
+        <div className="hero-copy">
+          <SectionHeading as="h1" eyebrow={eyebrow} title={title} className="!max-w-4xl" />
+          {lead && (
+            <Reveal delay={150} className="hero-lead t-lead mt-5 max-w-3xl">
+              {lead}
+            </Reveal>
+          )}
+          {children && <Reveal delay={250} className="hero-cta mt-10">{children}</Reveal>}
+        </div>
         {image && (
-          <Reveal variant="mask" delay={200} className="mt-14 overflow-hidden rounded-4xl shadow-[0_40px_80px_-40px_rgb(var(--cedar-950)/0.5)] sm:mt-20">
-            <div className="aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
-              <Img name={image} alt={imageAlt ?? ''} priority sizes="100vw" className="parallax h-full w-full object-cover" />
+          <figure className="mt-12 sm:mt-16">
+            <div className="overflow-hidden rounded-4xl bg-paper-deep">
+              <div className="aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
+                <Img name={image} alt={imageAlt ?? ''} priority sizes="100vw" className="focus-in h-full w-full object-cover" />
+              </div>
             </div>
-          </Reveal>
+            {caption && <figcaption className="figcap">{caption}</figcaption>}
+          </figure>
         )}
       </div>
     </section>
   );
 }
 
-export function Aurora({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
-  const a = tone === 'light' ? 'bg-cedar-200/70' : 'bg-cedar-500/30';
-  const b = tone === 'light' ? 'bg-ember-soft/80' : 'bg-cedar-300/10';
-  const c = tone === 'light' ? 'bg-cedar-100' : 'bg-cedar-700/40';
-  return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className={`float-slow absolute -left-[10%] -top-[20%] h-[38rem] w-[38rem] rounded-full ${a} blur-[110px]`} />
-      <div className={`float-slow absolute right-[-15%] top-[5%] h-[30rem] w-[30rem] rounded-full ${b} blur-[120px] [animation-delay:-5s]`} />
-      <div className={`float-slow absolute bottom-[-30%] left-[30%] h-[28rem] w-[28rem] rounded-full ${c} blur-[100px] [animation-delay:-9s]`} />
-    </div>
-  );
+/** Retired: the drifting aurora backgrounds. Kept as a no-op so older markup still compiles. */
+export function Aurora(_: { tone?: 'light' | 'dark' }) {
+  return null;
 }
 
-export function CTA({ title = 'Be the force for good.', lead = 'Volunteer, donate or partner with a youth-led movement building resilient communities across Bangladesh.' }: { title?: string; lead?: string }) {
+export function CTA({
+  title = 'Three ways to help',
+  lead = 'Give, volunteer or partner with us. Each path is a separate page, so you only see what you need.',
+}: {
+  title?: string;
+  lead?: string;
+}) {
   return (
     <section className="section pt-0">
       <div className="shell">
-        <Reveal variant="zoom" className="on-dark grain relative overflow-hidden rounded-5xl bg-cedar-800 px-6 py-16 text-center sm:px-12 sm:py-24">
-          <Aurora tone="dark" />
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6">
-            <p className="t-eyebrow !text-cedar-300">Get involved</p>
-            <h2 className="t-h2 text-white">{title}</h2>
-            <p className="t-lead !text-white/75">{lead}</p>
-            <div className="mt-2 flex w-full flex-col justify-center gap-3 xs:w-auto xs:flex-row">
-              <a href="https://forms.gle/yA6EmMmDS4Yy1Pyh6" target="_blank" rel="noopener noreferrer" className="btn-light">
-                Become a volunteer <Icon name="external" className="h-4 w-4" />
-              </a>
-              <Link href="/contact/?subject=Partnership" className="btn-ghost-dark">Partner with us</Link>
+        <Reveal className="on-dark relative overflow-hidden rounded-5xl bg-cedar-900 px-6 py-14 sm:px-12 sm:py-20">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-6">
+              <p className="t-eyebrow !text-cedar-300">Get involved</p>
+              <h2 className="t-h2 mt-4 text-white">{title}</h2>
+              <p className="t-lead mt-4 !text-white/75">{lead}</p>
             </div>
+            <ul className="grid gap-3 sm:grid-cols-3 lg:col-span-6">
+              {[
+                { href: '/give/', label: 'Give', note: 'Fund a campaign' },
+                { href: '/volunteer/', label: 'Volunteer', note: 'Give your time' },
+                { href: '/partner/', label: 'Partner', note: 'Schools, NGOs, companies' },
+              ].map((p) => (
+                <li key={p.href}>
+                  <Link href={p.href} className="group flex h-full min-h-[6.5rem] flex-col justify-between rounded-3xl border border-white/15 p-5 text-white transition hover:border-white/40 hover:bg-white/5">
+                    <span className="flex items-center justify-between font-display text-2xl uppercase">
+                      {p.label} <Icon name="arrow" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <span className="text-sm text-white/70">{p.note}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </Reveal>
       </div>
