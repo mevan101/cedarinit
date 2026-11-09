@@ -6,6 +6,7 @@ import Stat from '@/components/Stat';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { CTA, SectionHeading } from '@/components/ui';
 import { mlbd as m } from '@/lib/mlbd';
+import { LogoGrid } from '@/components/LogoWall';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -173,11 +174,7 @@ export default function Page() {
           </div>
           <div>
             <SectionHeading eyebrow="Supporters" title="Who has backed it" />
-            <Reveal as="ul" className="mt-10 flex flex-wrap gap-2" aria-label="ML Bangladesh supporters">
-              {m.supporters.map((s) => (
-                <li key={s} className="rounded-full border border-ink/10 px-4 py-2 text-sm font-medium text-ink-soft">{s}</li>
-              ))}
-            </Reveal>
+            <LogoGrid only="ML Bangladesh" className="mt-10 !grid-cols-2 sm:!grid-cols-3" />
             <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">In the press</p>
             <ul className="mt-3 space-y-2">
               {m.press.map((p) => (

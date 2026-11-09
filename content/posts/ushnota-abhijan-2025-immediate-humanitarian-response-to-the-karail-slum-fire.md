@@ -7,8 +7,8 @@ date: '2025-11-29'
 category: Project
 cover: /images/ushnota/distribution-cover.webp
 cover_alt: ''
-excerpt: Ushnota Abhijan 2025, our winter clothes drive, began in early November with collections at schools in
-  Tejgaon, Dhaka. The plan was to sort, clean and pack everything before handing it out later in the winter.
+excerpt: The Ushnota Abhijan 2025 (Warmth Campaign) began with school-based activism, public awareness activities,
+  and active volunteer participation. Students and teachers from different institutions came forward with heartfelt…
 gallery:
 - image: /images/ushnota/karail-1.webp
   alt: ''
@@ -17,16 +17,14 @@ gallery:
 original_title: Ushnota Abhijan 2025 — Immediate Humanitarian Response to the Karail Slum Fire
 draft: false
 ---
-Ushnota Abhijan 2025, our winter clothes drive, began in early November with collections at schools in Tejgaon, Dhaka. The plan was to sort, clean and pack everything before handing it out later in the winter.
+The **Ushnota Abhijan 2025 (Warmth Campaign)** began with school-based activism, public awareness activities, and active volunteer participation. Students and teachers from different institutions came forward with heartfelt contributions, donating warm clothing to support underprivileged communities in Dhaka.
 
-#### The fire
+As part of the campaign protocol, all collected winter clothes were to be sorted, cleaned, and packaged before distribution to the city’s needy population. However, an unexpected tragedy reshaped the campaign’s immediate priorities.
 
-On the afternoon of **25 November 2025**, a fire swept through Dhaka's **Karail slum**. Nearly **1,500 families** lost their homes, and with them their food, clothing and shelter.
+On the afternoon of **November 25**, a devastating fire swept through Dhaka’s **Karail slum**, leaving nearly **1,500 families** homeless within minutes. Many lost their food, clothing, and shelter, pushing them into an urgent humanitarian crisis.
 
-#### What we did
+In response to this emergency, **Cedar Initiative** held an emergency board meeting and made a swift and compassionate decision. According to this decision, **all winter clothes collected during the campaign until November 27 were immediately allocated and delivered** to the families affected by the Karail fire.
 
-Cedar's board held an emergency meeting and changed the plan. **All the winter clothes collected up to 27 November went straight to families affected by the fire**, instead of waiting for the scheduled distribution.
-
-Volunteers delivered the clothes in Karail. The photos below are from the distribution.
+Through this prompt action, we were able to stand beside the affected families, offering essential support and a message of solidarity in their moment of need. The Cedar Initiative remains committed to serving vulnerable communities with empathy, responsibility, and humanity.
 
 The full cost of the campaign is in the [Ushnota Abhijan 2025 financial report](/financial-report-ushnota-abhijan-2025/).

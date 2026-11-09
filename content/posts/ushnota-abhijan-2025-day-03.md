@@ -7,13 +7,16 @@ date: '2025-11-06'
 category: Project
 cover: /images/ushnota/day-3b.webp
 cover_alt: ''
-excerpt: Day three of the drive was at Government Science High School in Tejgaon.
+excerpt: On the third day of “Ushnota Abhijan 2025”, the campaign continued its heartfelt mission at Government
+  Science High School, where winter clothes were collected to support underprivileged communities.
 gallery: []
 original_title: 'Ushnota Abhijan 2025 – Day 03: Spreading Warmth Through Generosity'
 draft: false
 ---
-Day three of the drive was at **Government Science High School** in Tejgaon.
+On the third day of *“Ushnota Abhijan 2025”*, the campaign continued its heartfelt mission at **Government Science High School**, where winter clothes were collected to support underprivileged communities.
 
-**12 students and 4 guardians** donated winter clothes, and students and teachers at the school helped with the collection.
+A total of **12 students and 4 guardians** actively participated in the collection drive, donating warm clothes with immense generosity and compassion. The students and teachers of the institution came forward wholeheartedly, reflecting the true spirit of empathy and community service.
 
-**Organised by:** Sopnojoy Foundation and Cedar Initiative
+Each donated item represents a step toward spreading warmth and smiles among those in need, strengthening the campaign’s vision of collective kindness and social responsibility.
+
+**Organized by:** Sopnojoy Foundation and Cedar Initiative

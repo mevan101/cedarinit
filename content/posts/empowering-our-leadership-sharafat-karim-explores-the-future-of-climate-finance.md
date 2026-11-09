@@ -7,8 +7,8 @@ date: '2026-02-03'
 category: News
 cover: /images/news/climate-finance-1.webp
 cover_alt: ''
-excerpt: 'Sharafat Karim, co-founder of Cedar Initiative, completed the “Climate Finance Fundamentals for Youth:
-  Bangladesh Context” training held at the Bangladesh Public Administration Training Centre (BPATC).'
+excerpt: 'We are proud to announce that Sharafat Karim, Co-founder of Cedar Initiative, successfully participated
+  in the “Climate Finance Fundamentals for Youth: Bangladesh Context” training held at the Bangladesh Public…'
 gallery:
 - image: /images/news/climate-finance-2.webp
   alt: ''
@@ -19,10 +19,10 @@ gallery:
 original_title: 'Empowering Our Leadership: Sharafat Karim Explores the Future of Climate Finance'
 draft: false
 ---
-Sharafat Karim, co-founder of Cedar Initiative, completed the “**Climate Finance Fundamentals for Youth: Bangladesh Context**” training held at the Bangladesh Public Administration Training Centre (BPATC).
+We are proud to announce that Sharafat Karim, Co-founder of Cedar Initiative, successfully participated in the “**Climate Finance Fundamentals for Youth: Bangladesh Context**” training held at the Bangladesh Public Administration Training Centre (BPATC).
 
-The intensive four-day program, organized by the Economic Relations Division (ERD) and Practical Action, brought together a select cohort of youth leaders and government officials. The training bridged the gap between global climate policy (such as the UNFCCC and the Paris Agreement) and local implementation through Bangladesh’s National Adaptation Plan (NAP) 2023–2050.
+The intensive four-day program, organized by the Economic Relations Division (ERD) and Practical Action, brought together a select cohort of youth leaders and government officials. The training bridged the gap between global climate policy, such as the UNFCCC and Paris Agreement, and local implementation through Bangladesh’s National Adaptation Plan (NAP) 2023–2050.
 
 “*Climate finance is the engine that will drive Bangladesh’s resilient future,*” said Sharafat Karim. “Understanding the mechanisms behind the Green Climate Fund (GCF) and the Loss and Damage Fund allows Cedar Initiative to better align our grassroots efforts with national and global priorities.”
 
-What Sharafat learned will shape how we plan and fund Cedar’s climate work.
+Through this engagement, Cedar Initiative reaffirms its commitment to being at the forefront of climate advocacy and youth-led solutions in Bangladesh.

@@ -554,3 +554,9 @@ html.intro-on .intro {
 @keyframes photo-pop { from { scale: 0.3; opacity: 0; } }
 @keyframes counter-spin { 0% { transform: rotate(140deg); } 68% { transform: rotate(-30deg); } 100% { transform: rotate(-120deg); } }
 @media (prefers-reduced-motion: reduce) { html.intro-on .intro { display: none; } html.intro-on body { overflow: auto; } }
+
+/* Sponsor logos: calm greyscale that comes to colour on hover; always in colour on touch screens. */
+@media (hover: hover) and (pointer: fine) {
+  .logo-mute img { filter: grayscale(1); opacity: 0.7; transition: filter 0.4s var(--ease-out), opacity 0.4s var(--ease-out); }
+  .logo-mute:hover img, a.logo-mute:focus-visible img { filter: none; opacity: 1; }
+}

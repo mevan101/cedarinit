@@ -7,14 +7,16 @@ date: '2025-11-05'
 category: Project
 cover: /images/ushnota/day-2.webp
 cover_alt: ''
-excerpt: 'On day two we collected winter clothes at two schools: Government Science High School, Tejgaon, and Tejgaon
-  Government High School.'
+excerpt: On the second day of “Ushnota Abhijan 2025”, the campaign continued its warm mission by collecting winter
+  clothes from Government Science High School, Tejgaon, and Tejgaon Government High School.
 gallery: []
 original_title: 'Ushnota Abhijan 2025 – Day 02: Continuing the Warmth Through Community Action'
 draft: false
 ---
-On day two we collected winter clothes at two schools: **Government Science High School, Tejgaon**, and **Tejgaon Government High School**.
+On the second day of *“Ushnota Abhijan 2025”*, the campaign continued its warm mission by collecting winter clothes from **Government Science High School, Tejgaon**, and **Tejgaon Government High School**.
 
-**25 students and 7 guardians** donated, with students and teachers from both schools taking part.
+A total of **25** **students and 7 guardians** actively participated in the collection drive, donating winter clothing to support underprivileged communities. Students and teachers from both institutions joined hands with enthusiasm and compassion, showcasing their commitment to spreading warmth and kindness during the upcoming winter season.
 
-**Organised by:** Sopnojoy Foundation and Cedar Initiative
+This ongoing initiative aims to encourage youth and families to stand beside those in need, ensuring that the spirit of empathy and community service reaches every corner of society.
+
+**Organized by:** Sopnojoy Foundation and Cedar Initiative

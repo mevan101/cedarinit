@@ -7,6 +7,7 @@ import JsonLd, { breadcrumb } from '@/components/JsonLd';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { site } from '@/lib/site';
 import { mlbd } from '@/lib/mlbd';
+import { LogoGrid } from '@/components/LogoWall';
 
 export const metadata: Metadata = {
   title: 'Partner with us',
@@ -88,11 +89,14 @@ export default function PartnerPage() {
               ML Bangladesh adds university hosts across the country and supporters including {mlbd.supporters.slice(0, 4).join(', ')} and the {mlbd.supporters[10]}.{' '}
               <Link href="/ml-bangladesh/" className="link-underline font-medium text-cedar-700">See ML Bangladesh</Link>
             </p>
-            <div className="mt-10 flex items-center gap-4">
-              <Img name="partners/enhanfy-global" alt="Enhanfy Global Ltd. logo" sizes="120px" className="h-12 w-auto" />
-              <Img name="partners/youth-for-nextgen" alt="Youth for NextGen logo" sizes="120px" className="h-12 w-auto" />
-            </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section pb-0">
+        <div className="shell">
+          <SectionHeading title="Sponsors and supporters" lead="Organisations that have funded or backed Cedar and ML Bangladesh events." />
+          <LogoGrid className="mt-10" />
         </div>
       </section>
 

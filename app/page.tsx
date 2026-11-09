@@ -12,6 +12,7 @@ import { founders, portraitOf } from '@/lib/team';
 import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
 import Intro from '@/components/Intro';
+import { LogoMarquee } from '@/components/LogoWall';
 
 export const metadata: Metadata = {
   title: { absolute: 'Cedar Initiative: youth-led nonprofit in Bangladesh' },
@@ -67,7 +68,6 @@ const places = [
   { name: 'Dinajpur', when: 'October 2026', what: 'Hacktoberfest Hack Days at HSTU.' },
 ];
 
-const backers = ['JAAGO Foundation', 'Enhanfy Global', 'Youth for NextGen', 'Shopnojoy Foundation', 'Google for Developers', 'Major League Hacking', 'EMK Center', 'HerWILL', 'DataCamp Donates', 'DigitalOcean', 'Kaggle community', 'GDG Dhaka'];
 
 const paths = [
   { href: '/give/', title: 'Give', body: 'Pay for warm clothes, transport and teaching materials. Every campaign gets a public financial report.', cta: 'How giving works' },
@@ -184,13 +184,9 @@ export default function Home() {
       </section>
 
       {/* Partners and supporters */}
-      <section aria-label="Partners and supporters" className="border-b border-ink/10 bg-paper py-10">
-        <p className="shell text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Worked with and backed by</p>
-        <div className="mask-fade-x mt-5 overflow-hidden">
-          <ul className="marquee flex w-max gap-10 whitespace-nowrap pr-10 font-display text-3xl uppercase text-ink/70 motion-reduce:flex-wrap motion-reduce:whitespace-normal" style={{ ['--marquee-duration' as string]: '60s' }}>
-            {[...backers, ...backers].map((n, k) => <li key={k} aria-hidden={k >= backers.length ? true : undefined}>{n}<span className="ml-10 text-cedar-500" aria-hidden="true">/</span></li>)}
-          </ul>
-        </div>
+      <section aria-label="Sponsors and supporters" className="border-b border-ink/10 bg-white py-12">
+        <p className="shell text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Sponsored and supported by</p>
+        <div className="mt-7"><LogoMarquee /></div>
       </section>
 
       {/* 4. How to help: three separate paths */}

@@ -7,15 +7,16 @@ date: '2025-11-05'
 category: News
 cover: /images/news/climate-training.webp
 cover_alt: ''
-excerpt: Cedar Initiative ran an online training session titled “Basic Understanding of Climate Change” on 5 November
-  2025 via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science,…
+excerpt: Cedar Initiative successfully organized an online training session titled “Basic Understanding of Climate
+  Change” on 5 November 2025 via Google Meet. The session aimed to enhance participants’ foundational understanding
+  of…
 gallery: []
 original_title: Training on Basic Understanding of Climate Change
 draft: false
 ---
 #### **Overview**
 
-Cedar Initiative ran an online training session titled **“Basic Understanding of Climate Change”** on **5 November 2025** via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science, global and local climate change impacts, and possible adaptation and mitigation strategies.
+Cedar Initiative successfully organized an online training session titled **“Basic Understanding of Climate Change”** on **5 November 2025** via Google Meet. The session aimed to enhance participants’ foundational understanding of climate science, global and local climate change impacts, and possible adaptation and mitigation strategies.
 
 The training brought together youth volunteers and environmental enthusiasts eager to build knowledge and take action toward sustainable development.
 
@@ -38,7 +39,7 @@ The training brought together youth volunteers and environmental enthusiasts eag
         -   Jimran focused on the global and national impacts of climate change, highlighting real-world examples from Bangladesh. He also explained practical adaptation and mitigation measures to reduce vulnerabilities and enhance community resilience.  
               
             
--   **Vote of Thanks:** *Md. Shahriar Azad Evan*, Co-founder, Cedar Initiative  
+-   **Vote of Thanks:** *Md. Shahriar Azad Evan*, Founder, Cedar Initiative  
     Evan concluded the session by expressing gratitude to the facilitators and participants for their active engagement and valuable contributions.  
       
     
