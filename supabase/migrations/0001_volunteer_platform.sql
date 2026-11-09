@@ -3,7 +3,7 @@
 -- Security model: every table has row-level security. Volunteers see only their own rows.
 -- Staff rights come from profiles.role; only admins can change roles.
 
-create extension if not exists pgcrypto;
+create extension if not exists pgcrypto with schema extensions;
 
 create type public.app_role as enum ('volunteer', 'manager', 'issuer', 'admin');
 
@@ -111,7 +111,7 @@ create policy "delete own pending" on public.hours for delete using (user_id = a
 -- Short, unguessable IDs like CI-2026-7F3K9QXM, printed on the document and used by /verify/.
 create or replace function public.new_document_id()
 returns text language plpgsql as $$
-declare alphabet text := '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'; out text := ''; b bytea := gen_random_bytes(8);
+declare alphabet text := '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'; out text := ''; b bytea := extensions.gen_random_bytes(8);
 begin
   for i in 0..7 loop out := out || substr(alphabet, (get_byte(b, i) % 32) + 1, 1); end loop;
   return 'CI-' || to_char(now(), 'YYYY') || '-' || out;

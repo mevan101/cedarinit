@@ -1,7 +1,9 @@
 // Sponsors and supporters, past and present. Logos in public/images/sponsors (ML Bangladesh's from mlbangladesh.org/partners).
 export type Sponsor = { name: string; logo: string; url?: string; with: 'Cedar' | 'ML Bangladesh'; tall?: boolean; xl?: boolean };
 
-export const sponsors: Sponsor[] = [
+import liveSponsors from '@/content/live/sponsors.json';
+
+const fileSponsors: Sponsor[] = [
   // Enhanfy is listed once (Cedar's CSEdWeek sponsor); ML Bangladesh's copy of its logo is used because it is tightly cropped.
   { name: 'Enhanfy Global Ltd.', logo: '/images/sponsors/enhanfy.png', with: 'Cedar' },
   { name: 'Youth for NextGen', logo: '/images/sponsors/youth-for-nextgen.png', with: 'Cedar', tall: true },
@@ -24,3 +26,9 @@ export const sponsors: Sponsor[] = [
   { name: 'DEV Community', logo: '/images/sponsors/dev.png', url: 'https://dev.to/', with: 'ML Bangladesh', tall: true },
   { name: 'Genspark', logo: '/images/sponsors/genspark.png', url: 'https://www.genspark.ai/', with: 'ML Bangladesh' },
 ];
+
+type LiveSponsor = { name: string; logo_url: string; url?: string | null; program: string; size: string };
+/** Edited in the staff dashboard (Website → Sponsors). The list above is the fallback. */
+export const sponsors: Sponsor[] = (liveSponsors as LiveSponsor[]).length
+  ? (liveSponsors as LiveSponsor[]).map((s) => ({ name: s.name, logo: s.logo_url, url: s.url || undefined, with: s.program === 'ML Bangladesh' ? 'ML Bangladesh' : 'Cedar', tall: s.size === 'tall', xl: s.size === 'xl' }))
+  : fileSponsors;

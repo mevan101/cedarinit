@@ -1,4 +1,4 @@
-export type Role = 'volunteer' | 'manager' | 'issuer' | 'admin';
+export type Role = 'volunteer' | 'editor' | 'manager' | 'issuer' | 'admin';
 export type Profile = {
   id: string; email: string; full_name: string; handle?: string | null; photo_url?: string | null; phone?: string | null;
   institution?: string | null; city?: string | null; bio?: string | null; linkedin?: string | null; areas: string[];
@@ -62,4 +62,8 @@ export interface Platform {
 }
 
 export const isStaff = (p: Profile | null) => !!p && p.role !== 'volunteer';
+/** Can see volunteers' applications, hours and messages. */
+export const canManage = (p: Profile | null) => !!p && ['manager', 'issuer', 'admin'].includes(p.role);
+/** Can edit the public website. */
+export const canEdit = (p: Profile | null) => !!p && (p.role === 'editor' || p.role === 'admin');
 export const canIssue = (p: Profile | null) => !!p && (p.role === 'issuer' || p.role === 'admin');

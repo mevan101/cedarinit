@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Logo from './Logo';
 import Icon from './Icon';
 import SocialLinks from './SocialLinks';
-import { site, socials} from '@/lib/site';
+import { footerLinks, site } from '@/lib/site';
 import { reports } from '@/lib/finance';
 
 const programs = [
@@ -20,6 +20,8 @@ const help = [
   { href: '/account/', label: 'My account' },
   { href: '/partner/', label: 'Partner' },
   { href: '/fiscal-sponsors/', label: 'Fiscal sponsor proposal' },
+  // Extra links added in the staff dashboard (Website → Settings → Footer links)
+  ...footerLinks.map((l) => ({ href: l.href, label: l.label })),
 ];
 
 export default function Footer() {
@@ -87,7 +89,11 @@ function FooterCol({ title, links }: { title: string; links: readonly { href: st
       <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
         {links.map((l) => (
           <li key={l.href}>
-            <Link href={l.href} className="link-underline text-white">{l.label}</Link>
+            {/^https?:/.test(l.href) ? (
+              <a href={l.href} target="_blank" rel="noopener noreferrer" className="link-underline text-white">{l.label}<span className="sr-only"> (opens in a new tab)</span></a>
+            ) : (
+              <Link href={l.href} className="link-underline text-white">{l.label}</Link>
+            )}
           </li>
         ))}
       </ul>

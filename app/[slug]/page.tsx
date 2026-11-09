@@ -8,7 +8,7 @@ import Gallery from '@/components/Gallery';
 import PostCard from '@/components/PostCard';
 import { CTA } from '@/components/ui';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
-import { formatDate, getPost, posts } from '@/lib/posts';
+import { formatDate, getPost, livePages, posts } from '@/lib/posts';
 import { getPage, pages } from '@/lib/pages';
 import { getReport, reports } from '@/lib/finance';
 import ReportView from '@/components/ReportView';
@@ -19,7 +19,7 @@ import { PageHero } from '@/components/ui';
 import { site } from '@/lib/site';
 
 export const dynamicParams = false;
-export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug })), ...reports.map((r) => ({ slug: r.slug })), ...programs.map((p) => ({ slug: p.slug }))];
+export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug })), ...reports.map((r) => ({ slug: r.slug })), ...programs.map((p) => ({ slug: p.slug })), ...livePages.filter((lp) => !pages.some((p) => p.slug === lp.slug)).map((p) => ({ slug: p.slug }))];
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const prog = getProgram(params.slug);
@@ -45,6 +45,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       alternates: { canonical: `/${pg.slug}/` },
       openGraph: { title: pg.title, description: pg.description, images: pg.hero_image ? [pg.hero_image] : undefined },
     };
+  const lp = livePages.find((x) => x.slug === params.slug);
+  if (lp) return { title: lp.title, description: lp.description, alternates: { canonical: `/${lp.slug}/` } };
   const p = getPost(params.slug);
   if (!p) return {};
   return {
@@ -77,6 +79,15 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
         <Blocks blocks={page.blocks} />
       </>
     );
+  const lp = livePages.find((x) => x.slug === params.slug);
+  if (lp)
+    return (
+      <>
+        <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: lp.title, path: `/${lp.slug}/` }], site.url)} />
+        <PageHero title={lp.title} lead={lp.excerpt} image={lp.cover !== '/images/hero/group-banner.webp' ? lp.cover : undefined} imageAlt={lp.coverAlt} />
+        <div className="shell max-w-3xl pb-[var(--section-y)]"><div className="prose-cedar" dangerouslySetInnerHTML={{ __html: lp.html }} /></div>
+      </>
+    );
   return <PostView slug={params.slug} />;
 }
 
@@ -96,7 +107,7 @@ function PostView({ slug }: { slug: string }) {
             headline: post.title,
             description: post.description,
             datePublished: post.date,
-            image: [`${site.url}${post.cover}`],
+            image: [/^https?:/.test(post.cover) ? post.cover : `${site.url}${post.cover}`],
             mainEntityOfPage: `${site.url}/${post.slug}/`,
             author: { '@type': 'Organization', name: site.name, url: site.url },
             publisher: { '@type': 'NGO', name: site.name, logo: { '@type': 'ImageObject', url: `${site.url}/brand/logo.png` } },

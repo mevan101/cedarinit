@@ -1,9 +1,10 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from '../supabase-client';
 import type { Application, Doc, HourEntry, Message, Platform, Profile, PublicProfile, VerifiedDoc } from './types';
 
 /** Live backend: Supabase Auth + Postgres (row-level security in supabase/migrations) + Storage + the send-email function. */
-export function supabasePlatform(url: string, anonKey: string): Platform & { resetPassword(email: string): Promise<void>; updatePassword(password: string): Promise<void>; onRecovery(cb: () => void): () => void } {
-  const sb: SupabaseClient = createClient(url, anonKey, { auth: { persistSession: true, detectSessionInUrl: true } });
+export function supabasePlatform(): Platform & { resetPassword(email: string): Promise<void>; updatePassword(password: string): Promise<void>; onRecovery(cb: () => void): () => void } {
+  const sb = supabase() as SupabaseClient;
   const uid = async () => (await sb.auth.getUser()).data.user?.id ?? null;
   const ok = <T>({ data, error }: { data: T; error: unknown }) => {
     if (error) throw new Error((error as { message?: string }).message ?? 'Request failed');
@@ -82,7 +83,7 @@ export function supabasePlatform(url: string, anonKey: string): Platform & { res
     async sendMessage(user_id, subject, body, application_id) {
       // The send-email function emails and logs the message. If it isn't deployed yet, still save the message to the account.
       const { data, error } = await sb.functions.invoke('send-email', { body: { user_id, subject, body, application_id } });
-      if (!error && data?.ok) return { delivered: true };
+      if (!error && data?.ok) return { delivered: !!data.delivered };
       if (error) ok(await sb.from('messages').insert({ user_id, subject, body, application_id: application_id ?? null }));
       return { delivered: false };
     },

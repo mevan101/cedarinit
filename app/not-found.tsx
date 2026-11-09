@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import { Aurora } from '@/components/ui';
+import StoryRedirect from '@/components/StoryRedirect';
 
 export default function NotFound() {
   return (
     <section className="relative flex min-h-[80svh] items-center overflow-hidden pt-32">
       <Aurora />
+      <StoryRedirect />
       <div className="shell relative text-center">
         
         <h1 className="t-display mt-4 text-ink">Lost in the forest</h1>

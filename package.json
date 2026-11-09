@@ -9,10 +9,11 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "predev": "node scripts/copy-cms.mjs",
-    "prebuild": "node scripts/copy-cms.mjs && node scripts/team-portraits.mjs --tolerant",
+    "predev": "node scripts/copy-cms.mjs && node scripts/pull-site-data.mjs",
+    "prebuild": "node scripts/copy-cms.mjs && node scripts/pull-site-data.mjs && node scripts/team-portraits.mjs --tolerant",
     "cms": "decap-server",
-    "portraits": "node scripts/team-portraits.mjs"
+    "portraits": "node scripts/team-portraits.mjs",
+    "pull": "node scripts/pull-site-data.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

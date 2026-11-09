@@ -1,5 +1,7 @@
 import data from '@/content/team.json';
 import portraits from '@/content/team-portraits.json';
+import liveTeam from '@/content/live/team.json';
+import { liveSettings } from './live';
 
 export type Person = { name: string; role: string; badge?: string; photo: string; keep_original_background?: boolean; facebook?: string; linkedin?: string; email?: string; bio?: string };
 
@@ -7,8 +9,27 @@ export type Person = { name: string; role: string; badge?: string; photo: string
 export const portraitOf = (p: Person) => (p.keep_original_background ? p.photo : (portraits as Record<string, string>)[p.photo] ?? p.photo);
 export type Team = { name: string; slug: string; description?: string; layout?: 'large' | 'grid'; members: Person[] };
 
-/** Teams and members are edited in the CMS (Team collection, content/team.json). */
-export const teams = (data as { teams: Team[] }).teams;
+type LiveMember = { name: string; title: string; team: string; badge?: string | null; bio?: string | null; photo_url?: string | null; linkedin?: string | null; facebook?: string | null; email?: string | null; keep_background?: boolean };
+const fileTeams = (data as { teams: Team[] }).teams;
+const live = liveTeam as LiveMember[];
+
+/** Teams and members are edited in the staff dashboard (Website → Team). content/team.json is the fallback. */
+export const teams: Team[] = live.length
+  ? (() => {
+      const groups = liveSettings.teams?.length ? liveSettings.teams : fileTeams.map(({ name, slug, description, layout }) => ({ name, slug, description, layout }));
+      const known = new Set(groups.map((g) => g.slug));
+      const extra = Array.from(new Set(live.map((m) => m.team).filter((t) => !known.has(t)))).map((slug) => ({ name: slug, slug, description: '', layout: 'grid' as const }));
+      return [...groups, ...extra].map((g) => ({
+        ...g,
+        description: g.description || undefined,
+        members: live.filter((m) => m.team === g.slug).map((m) => ({
+          name: m.name, role: m.title, badge: m.badge || undefined, photo: m.photo_url || '/images/brand/icon-512.png',
+          keep_original_background: m.keep_background, facebook: m.facebook || undefined, linkedin: m.linkedin || undefined,
+          email: m.email || undefined, bio: m.bio || undefined,
+        })),
+      }));
+    })()
+  : fileTeams;
 export const founders = teams.find((t) => t.slug === 'founders')?.members ?? [];
 export const getTeam = (slug: string) => teams.find((t) => t.slug === slug);
 

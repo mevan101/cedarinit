@@ -58,7 +58,7 @@ export function ArrowLink({ href, children, external, className = '' }: { href: 
 }
 
 /** Interior page hero: big type over a soft cedar aurora, optional image. */
-export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, children }: { eyebrow: string; title: string; lead?: ReactNode; image?: string; imageAlt?: string; caption?: string; children?: ReactNode }) {
+export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, children }: { eyebrow?: string; title: string; lead?: ReactNode; image?: string; imageAlt?: string; caption?: string; children?: ReactNode }) {
   return (
     <section className="hero-pad relative pb-14 pt-32 sm:pb-20 sm:pt-40">
       <div className="shell relative">

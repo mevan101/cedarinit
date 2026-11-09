@@ -11,6 +11,8 @@ export type Post = {
   gallery: { image: string; alt: string }[];
   html: string;
   sourceTitle: string;
+  /** Set for stories not yet built into their own page. */
+  href?: string;
 };
 
 export function formatDate(iso: string) {

@@ -1,3 +1,8 @@
+import { liveSettings } from './live';
+
+const c = liveSettings.contact ?? {};
+const phone = c.phone || '+880 1612-383345';
+
 export const site = {
   name: 'Cedar Initiative',
   legalName: 'The Cedar Initiative',
@@ -11,19 +16,19 @@ export const site = {
   founded: '2025',
   /** @deprecated Credit the whole founding team (content/team.json) rather than one person. */
   founder: 'Shahriar Azad Evan',
-  email: 'info@cedar-initiative.org',
-  phone: '+880 1612-383345',
-  phoneHref: 'tel:+8801612383345',
-  whatsapp: 'https://wa.me/8801612383345',
-  messenger: 'https://m.me/cedar.initiative',
-  volunteerForm: 'https://forms.gle/yA6EmMmDS4Yy1Pyh6',
+  email: c.email || 'info@cedar-initiative.org',
+  phone,
+  phoneHref: `tel:${phone.replace(/[^\d+]/g, '')}`,
+  whatsapp: c.whatsapp || 'https://wa.me/8801612383345',
+  messenger: c.messenger || 'https://m.me/cedar.initiative',
+  volunteerForm: c.volunteer_form || 'https://forms.gle/yA6EmMmDS4Yy1Pyh6',
   contactEndpoint:
     process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ??
     'https://cedar-initiative.org/wp-json/contact-form-7/v1/contact-forms/2674/feedback',
   contactFormId: '2674',
   contactUnitTag: 'wpcf7-f2674-p1287-o1',
-  location: 'Dhaka, Bangladesh',
-} as const;
+  location: c.location || 'Dhaka, Bangladesh',
+};
 
 export const nav = [
   { href: '/about-us/', label: 'About' },
@@ -33,13 +38,18 @@ export const nav = [
   { href: '/contact/', label: 'Contact' },
 ] as const;
 
-export const socials = [
+const defaultSocials: { label: string; href: string; icon: string }[] = [
   { label: 'Facebook', href: 'https://www.facebook.com/cedar.initiative', icon: 'facebook' },
   { label: 'Instagram', href: 'https://www.instagram.com/cedar.initiative/', icon: 'instagram' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/cedar-initiative', icon: 'linkedin' },
   { label: 'X (Twitter)', href: 'https://x.com/CedarInitiative', icon: 'x' },
   { label: 'YouTube', href: 'https://www.youtube.com/@CEDARInitiative', icon: 'youtube' },
-] as const;
+];
+
+/** Social links, edited in the staff dashboard (Website → Settings). */
+export const socials = liveSettings.socials?.length ? liveSettings.socials.map((l) => ({ label: l.label, href: l.href, icon: l.icon || 'external' })) : defaultSocials;
+/** Extra links for the footer, edited in the staff dashboard. */
+export const footerLinks = liveSettings.footer_links ?? [];
 
 export const about = {
   whoWeAre:

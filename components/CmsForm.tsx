@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { formToObject, sendForm } from '@/lib/send-form';
 import Icon from './Icon';
 import type { FormDef } from '@/lib/forms';
 
@@ -14,6 +15,14 @@ export default function CmsForm({ form, fallbackEmail }: { form: FormDef; fallba
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    if (data.get('website')) return; // honeypot
+    try {
+      setState('sending');
+      if (await sendForm(form.id || form.title, formToObject(data))) return setState('done');
+    } catch {
+      return setState('error');
+    }
+    setState('idle');
     if (!form.action) {
       const lines = Array.from(data.entries()).map(([k, v]) => `${form.fields.find((f) => f.name === k)?.label ?? k}: ${v}`);
       location.href = `mailto:${fallbackEmail}?subject=${encodeURIComponent(form.title)}&body=${encodeURIComponent(lines.join('\n'))}`;
@@ -37,7 +46,8 @@ export default function CmsForm({ form, fallbackEmail }: { form: FormDef; fallba
 
   const input = 'mt-2 block w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-ink focus:border-cedar-600 focus:outline-none focus:ring-2 focus:ring-cedar-500/30';
   return (
-    <form onSubmit={onSubmit} className="rounded-[var(--radius-card)] border border-ink/10 bg-white p-6 sm:p-8" noValidate={false}>
+    <form onSubmit={onSubmit} className="relative rounded-[var(--radius-card)] border border-ink/10 bg-white p-6 sm:p-8" noValidate={false}>
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label>Leave this empty <input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <h2 className="t-h3 text-ink">{form.title}</h2>
       {form.intro && <p className="mt-2 text-ink-soft">{form.intro}</p>}
       <div className="mt-6 grid gap-5 sm:grid-cols-2">

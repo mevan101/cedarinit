@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import Icon from '../Icon';
 import type { AppStatus, Application, Doc, DocKind, HourEntry, Profile, Role } from '@/lib/platform';
-import { canIssue, isStaff } from '@/lib/platform';
+import { canEdit, canIssue, canManage, isStaff } from '@/lib/platform';
+import Website from './cms/Website';
+import { Activity, Inbox, Internal } from './cms/TeamTools';
 import { kindLabel, template } from '@/lib/platform/templates';
 import { usePlatform } from './usePlatform';
 import { Badge, Card, DemoBanner, Field, Notice, fmtDate, input } from './ui';
@@ -21,7 +23,8 @@ function csvDownload(name: string, rows: (string | number | null | undefined)[][
 
 export default function StaffApp() {
   const { p, me, tick, refresh } = usePlatform();
-  const [tab, setTab] = useState<'applications' | 'volunteers' | 'hours' | 'documents'>('applications');
+  type Tab = 'applications' | 'volunteers' | 'hours' | 'documents' | 'website' | 'inbox' | 'internal' | 'activity';
+  const [tab, setTab] = useState<Tab | null>(null);
   const [apps, setApps] = useState<Application[]>([]);
   const [people, setPeople] = useState<Profile[]>([]);
   const [hours, setHours] = useState<HourEntry[]>([]);
@@ -30,7 +33,7 @@ export default function StaffApp() {
   const [messageTo, setMessageTo] = useState<{ person: Profile; app?: Application } | null>(null);
 
   useEffect(() => {
-    if (!isStaff(me ?? null)) return;
+    if (!canManage(me ?? null)) return;
     Promise.all([p.applications(), p.volunteers(), p.allHours(), p.documents()]).then(([a, v, h, d]) => { setApps(a); setPeople(v); setHours(h); setDocs(d); });
   }, [me, p, tick]);
 
@@ -45,18 +48,27 @@ export default function StaffApp() {
 
   const hoursOf = (id: string) => hours.filter((h) => h.user_id === id && h.status === 'approved').reduce((a, h) => a + Number(h.hours), 0);
   const pendingHours = hours.filter((h) => h.status === 'pending');
-  const tabs = [['applications', `Applications (${apps.filter((a) => a.status === 'new').length} new)`], ['volunteers', `Volunteers (${people.length})`], ['hours', `Hours (${pendingHours.length} to approve)`], ['documents', `Certificates & letters (${docs.length})`]] as const;
+  // Each role sees only what it needs: editors the website, managers the volunteers, issuers also documents, admins everything.
+  const tabs = ([
+    ...(canManage(me) ? [['applications', `Applications (${apps.filter((a) => a.status === 'new').length} new)`], ['volunteers', `Volunteers (${people.length})`], ['hours', `Hours (${pendingHours.length} to approve)`]] : []),
+    ...(canIssue(me) ? [['documents', `Certificates & letters (${docs.length})`]] : []),
+    ...(canEdit(me) ? [['website', 'Website']] : []),
+    ...(canManage(me) ? [['inbox', 'Inbox']] : []),
+    ['internal', 'Team notes'],
+    ...(me.role === 'admin' ? [['activity', 'Activity']] : []),
+  ] as [Tab, string][]);
+  const current: Tab = tab && tabs.some(([k]) => k === tab) ? tab : tabs[0][0];
 
   return (
     <div className="space-y-6">
       <DemoBanner />
       <nav aria-label="Staff sections" className="flex gap-1 overflow-x-auto rounded-full border border-ink/10 bg-white p-1">
-        {tabs.map(([k, t]) => <button key={k} type="button" aria-current={tab === k ? 'page' : undefined} onClick={() => setTab(k)} className={`min-h-[44px] shrink-0 rounded-full px-4 text-sm font-semibold ${tab === k ? 'bg-cedar-700 text-white' : 'text-ink-soft hover:text-ink'}`}>{t}</button>)}
+        {tabs.map(([k, t]) => <button key={k} type="button" aria-current={current === k ? 'page' : undefined} onClick={() => setTab(k)} className={`min-h-[44px] shrink-0 rounded-full px-4 text-sm font-semibold ${current === k ? 'bg-cedar-700 text-white' : 'text-ink-soft hover:text-ink'}`}>{t}</button>)}
       </nav>
 
-      {tab === 'applications' && <Applications apps={apps} people={people} onChange={refresh} onMessage={(person, app) => setMessageTo({ person, app })} />}
+      {current === 'applications' && <Applications apps={apps} people={people} onChange={refresh} onMessage={(person, app) => setMessageTo({ person, app })} />}
 
-      {tab === 'volunteers' && (
+      {current === 'volunteers' && (
         <Card title="Volunteers" action={<button type="button" className="btn-glass !min-h-[44px]" onClick={() => csvDownload('cedar-volunteers.csv', [['Name', 'Email', 'Phone', 'Institution', 'City', 'Areas', 'Verified hours', 'Role', 'Joined'], ...people.map((v) => [v.full_name, v.email, v.phone, v.institution, v.city, v.areas.join('; '), hoursOf(v.id), v.role, v.created_at.slice(0, 10)])])}>Export to spreadsheet</button>}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[46rem] text-left text-sm">
@@ -71,7 +83,7 @@ export default function StaffApp() {
                     <td className="py-3 pr-3">
                       {me.role === 'admin' && v.id !== me.id ? (
                         <select aria-label={`Role for ${v.full_name}`} value={v.role} onChange={(e) => p.setRole(v.id, e.target.value as Role).then(refresh)} className="rounded-xl border border-ink/15 bg-white px-2 py-1.5">
-                          {(['volunteer', 'manager', 'issuer', 'admin'] as Role[]).map((r) => <option key={r}>{r}</option>)}
+                          {(['volunteer', 'editor', 'manager', 'issuer', 'admin'] as Role[]).map((r) => <option key={r}>{r}</option>)}
                         </select>
                       ) : <span className="capitalize">{v.role}</span>}
                     </td>
@@ -89,9 +101,9 @@ export default function StaffApp() {
         </Card>
       )}
 
-      {tab === 'hours' && <Hours hours={hours} people={people} onChange={refresh} />}
+      {current === 'hours' && <Hours hours={hours} people={people} onChange={refresh} />}
 
-      {tab === 'documents' && (
+      {current === 'documents' && (
         <div className="space-y-6">
           {canIssue(me) ? <IssueForm people={people} hoursOf={hoursOf} hours={hours} initial={issueFor} me={me} onIssued={() => { setIssueFor(null); refresh(); }} /> : <Notice>Only credential issuers and admins can issue documents.</Notice>}
           <Card title="Issued documents">
@@ -112,6 +124,11 @@ export default function StaffApp() {
           </Card>
         </div>
       )}
+
+      {current === 'website' && <Website isAdmin={me.role === 'admin'} />}
+      {current === 'inbox' && <Inbox />}
+      {current === 'internal' && <Internal canWrite={canManage(me)} />}
+      {current === 'activity' && <Activity />}
 
       {messageTo && <MessageDialog to={messageTo.person} app={messageTo.app} onClose={() => setMessageTo(null)} />}
     </div>

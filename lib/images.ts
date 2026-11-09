@@ -14,7 +14,9 @@ export function img(nameOrPath: string) {
   const e = images[key];
   if (!e) {
     if (nameOrPath.startsWith('/') || /^https?:\/\//.test(nameOrPath)) return { src: nameOrPath, width: undefined, height: undefined, srcSet: undefined };
-    throw new Error(`Unknown image: ${nameOrPath}`);
+    // Content edited in the dashboard should never break a build; show the group photo instead.
+    console.warn(`Unknown image: ${nameOrPath}`);
+    return { src: '/images/hero/group-banner.webp', width: 1600, height: 900, srcSet: undefined };
   }
   const src = `/images/${key}.webp`;
   return { src, width: e.w, height: e.h, srcSet: e.sm ? `/images/${key}-sm.webp 720w, ${src} ${e.w}w` : undefined };

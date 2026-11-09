@@ -14,7 +14,7 @@ type Full = Platform & { resetPassword?: (email: string) => Promise<void>; updat
 let instance: Full | null = null;
 /** Supabase when its URL and anon key are set at build time, otherwise the in-browser demo. */
 export function platform(): Full {
-  if (!instance) instance = url && key ? supabasePlatform(url, key) : demoPlatform;
+  if (!instance) instance = url && key ? supabasePlatform() : demoPlatform;
   return instance;
 }
 export { demoPlatform };
