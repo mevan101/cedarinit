@@ -471,7 +471,6 @@ html.save-data .kenburns { animation: none; }
     opacity: calc(1 - var(--k));
     animation: none;
   }
-  html.motion .orbit-spin { animation: orbit-in 1.1s var(--ease-out) both; animation-delay: calc(var(--i) * 80ms); }
   html.motion .orbit-copy { --c: clamp(0, calc((var(--p, 0) - 0.06) / 0.28), 1); opacity: calc(1 - var(--c)); transform: translateY(calc(-8vh * var(--c))) scale(calc(1 - 0.06 * var(--c))); }
   html.motion .orbit-group {
     --g: clamp(0, calc((var(--p, 0) - 0.1) / 0.52), 1);
