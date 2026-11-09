@@ -43,4 +43,18 @@
     var sel = '.stack-card, .orbit-tile' + (sda ? '' : ', .place-name, .bar-fill, .draw-line, .track > *');
     document.querySelectorAll(sel).forEach(function (el) { io.observe(el); });
   }
+
+  // Buttons lean a few pixels toward the cursor (mouse only). Delegated, so buttons added later work too.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var mag = null;
+    addEventListener('pointermove', function (e) {
+      var t = e.target.closest && e.target.closest('.btn-primary, .btn-glass');
+      if (mag && mag !== t) { mag.style.transform = ''; mag = null; }
+      if (!t) return;
+      var r = t.getBoundingClientRect();
+      var x = (e.clientX - r.left - r.width / 2) / r.width, y = (e.clientY - r.top - r.height / 2) / r.height;
+      t.style.transform = 'translate(' + (x * 8).toFixed(1) + 'px,' + (y * 6).toFixed(1) + 'px)';
+      mag = t;
+    }, { passive: true });
+  }
 })();

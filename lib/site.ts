@@ -70,12 +70,12 @@ export const wings = [
 ] as const;
 
 export const values = [
-  { title: 'Sustainability', body: 'Championing environmentally sound practices and long-term ecological balance.' },
-  { title: 'Equity', body: 'Ensuring fair access to resources, opportunities, and well-being for all individuals and communities.' },
-  { title: 'Youth-Driven Leadership', body: 'Nurturing and amplifying the voices and innovative solutions of young leaders.' },
-  { title: 'Innovation', body: 'Embracing creative solutions, adaptive strategies, and technological advancements to address complex challenges.' },
-  { title: 'Integrity', body: 'Upholding the highest standards of ethics, honesty, and accountability in all operations.' },
-  { title: 'Transparency', body: 'Operating with openness, clarity, and full disclosure to build trust with all stakeholders.' },
+  { title: 'Sustainability', body: 'We choose work that still makes sense next year, and we try not to waste what people give us.' },
+  { title: 'Equity', body: 'We go where help is hardest to get: slums, schools with no computer teacher, campuses outside Dhaka.' },
+  { title: 'Youth-Driven Leadership', body: 'Students plan and run the programs, and they answer for how they go.' },
+  { title: 'Innovation', body: 'We use technology where it helps people, from AI hackathons to the certificates on this site.' },
+  { title: 'Integrity', body: 'We say what we did and what we didn’t, and we correct our mistakes in public.' },
+  { title: 'Transparency', body: 'Every program gets a financial report that lists where each taka went.' },
 ] as const;
 
 /** Headline numbers. Every one carries its period and a source link (strategy §5). */
@@ -103,10 +103,10 @@ export const giving = {
 };
 
 export const joinOptions = [
-  { title: 'Volunteer', body: 'Give your time and skills to campaigns, events and research.', image: 'join/volunteer', href: '/volunteer/', cta: 'See volunteer roles' },
-  { title: 'Regular Donor', body: 'Fuel programs every month with a recurring contribution.', image: 'join/regular-donor', href: '/give/', cta: 'How to give' },
-  { title: 'Lifetime & Donor Member', body: 'Stand with Cedar for the long run as a founding supporter.', image: 'join/lifetime-member', href: '/give/', cta: 'How to give' },
-  { title: 'Career', body: 'Grow with a youth-led team building the future of impact.', image: 'join/career', href: '/contact/?subject=Career', cta: 'Get in touch' },
+  { title: 'Volunteer', body: 'Help at a clothes drive, teach a session, run a hackathon or work on research.', image: 'join/volunteer', href: '/volunteer/', cta: 'See volunteer roles' },
+  { title: 'Regular Donor', body: 'Give a set amount each month so we can plan the next program before it starts.', image: 'join/regular-donor', href: '/give/', cta: 'How to give' },
+  { title: 'Lifetime & Donor Member', body: 'Support Cedar over several years. Talk to us about what that would look like.', image: 'join/lifetime-member', href: '/give/', cta: 'How to give' },
+  { title: 'Career', body: 'Want to take on more than one event? Tell us what you do and what you’d like to lead.', image: 'join/career', href: '/contact/?subject=Career', cta: 'Get in touch' },
 ] as const;
 
 export const press = [

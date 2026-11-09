@@ -93,7 +93,7 @@ export default function BrandPage() {
           </GlassCard>
           <GlassCard className="p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Text · Inter 400/500/600</p>
-            <p className="mt-4 text-3xl font-semibold tracking-[-0.02em] text-ink">Empowering communities for a sustainable future.</p>
+            <p className="mt-4 text-3xl font-semibold tracking-[-0.02em] text-ink">Warm clothes, computer classes and free hackathons.</p>
             <p className="mt-4 text-lg leading-relaxed text-ink-soft">Body copy sits at 17–21px with 1.6–1.8 line-height and a 68-character measure for comfortable reading on every screen.</p>
             <p lang="bn" className="mt-4 text-lg text-ink-soft">সিডার ইনিশিয়েটিভ: টেকসই ভবিষ্যতের অঙ্গীকার</p>
           </GlassCard>

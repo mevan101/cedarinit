@@ -118,6 +118,7 @@
     @apply inline-flex min-h-[48px] select-none items-center justify-center gap-2 rounded-full px-6 text-[0.95rem] font-semibold tracking-[-0.005em] transition duration-300 ease-out;
   }
   .btn-primary { @apply btn bg-cedar-700 text-white hover:bg-cedar-800; }
+  html.motion :is(.btn-primary, .btn-glass) { transition: transform .35s cubic-bezier(.2,.8,.2,1), background-color .2s, color .2s, border-color .2s, box-shadow .2s; }
   .btn-light { @apply btn bg-white text-cedar-900 hover:bg-cedar-50; }
   .btn-glass { @apply btn border border-ink/15 bg-white text-ink hover:border-cedar-700/40 hover:bg-cedar-50; }
   .btn-ghost-dark { @apply btn border border-white/30 text-white hover:bg-white/10; }
