@@ -17,6 +17,12 @@ import { getProgram, programs } from '@/lib/programs';
 import Blocks from '@/components/Blocks';
 import { PageHero } from '@/components/ui';
 import { site } from '@/lib/site';
+import fs from 'node:fs';
+
+// Share card made by scripts/og-cards.mjs, or the site card for stories added in the dashboard.
+const ogFor = (slug: string) => (fs.existsSync(`public/og/${slug}.jpg`) ? `/og/${slug}.jpg` : '/og/default.jpg');
+// Google shows about 60 characters; long story titles drop the site name.
+const seoTitle = (t: string) => (t.length > 48 ? { absolute: t.length > 65 ? `${t.slice(0, 62).replace(/\s+\S*$/, '')}…` : t } : t);
 
 export const dynamicParams = false;
 export const generateStaticParams = () => [...posts.map((p) => ({ slug: p.slug })), ...pages.map((p) => ({ slug: p.slug })), ...reports.map((r) => ({ slug: r.slug })), ...programs.map((p) => ({ slug: p.slug })), ...livePages.filter((lp) => !pages.some((p) => p.slug === lp.slug)).map((p) => ({ slug: p.slug }))];
@@ -25,15 +31,15 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const prog = getProgram(params.slug);
   if (prog)
     return {
-      title: { absolute: `${prog.seo_title || prog.title} · Cedar Initiative` },
+      title: seoTitle(prog.seo_title || prog.title),
       description: prog.description || prog.lead,
       alternates: { canonical: `/${prog.slug}/` },
-      openGraph: { title: prog.seo_title || prog.title, description: prog.description, images: [prog.cover] },
+      openGraph: { title: prog.seo_title || prog.title, description: prog.description, images: [{ url: ogFor(prog.slug), width: 1200, height: 630 }] },
     };
   const rep = getReport(params.slug);
   if (rep)
     return {
-      title: `${rep.title}: financial report`,
+      title: seoTitle(`${rep.title}: financial report`),
       description: `${rep.summary}`.slice(0, 158),
       alternates: { canonical: `/${rep.slug}/` },
     };
@@ -50,11 +56,11 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const p = getPost(params.slug);
   if (!p) return {};
   return {
-    title: p.title,
+    title: seoTitle(p.title),
     description: p.description,
     alternates: { canonical: `/${p.slug}/` },
-    openGraph: { type: 'article', title: p.title, description: p.description, publishedTime: p.date, images: [p.cover] },
-    twitter: { card: 'summary_large_image', title: p.title, description: p.description, images: [p.cover] },
+    openGraph: { type: 'article', title: p.title, description: p.description, publishedTime: p.date, images: [{ url: ogFor(p.slug), width: 1200, height: 630, alt: p.title }] },
+    twitter: { card: 'summary_large_image', title: p.title, description: p.description, images: [ogFor(p.slug)] },
   };
 }
 

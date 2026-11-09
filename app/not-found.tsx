@@ -1,6 +1,9 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Aurora } from '@/components/ui';
 import StoryRedirect from '@/components/StoryRedirect';
+
+export const metadata: Metadata = { title: 'Page not found', description: 'This page has moved or never existed.', robots: { index: false } };
 
 export default function NotFound() {
   return (
