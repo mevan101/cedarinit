@@ -78,6 +78,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <ChatWidget />
         <ViewTransitions />
+        {/* Scroll motion for every browser, incl. phones without CSS scroll timelines (public/motion.js). */}
+        <script src="/motion.js" defer />
       </body>
     </html>
   );

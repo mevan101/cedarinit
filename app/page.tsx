@@ -11,6 +11,7 @@ import { reports, money } from '@/lib/finance';
 import { founders, portraitOf } from '@/lib/team';
 import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
+import Intro from '@/components/Intro';
 
 export const metadata: Metadata = {
   title: { absolute: 'Cedar Initiative: youth-led nonprofit in Bangladesh' },
@@ -79,6 +80,7 @@ export default function Home() {
     <>
       {/* 1. What Cedar does. On large screens: field photos float around the headline, then drift away
              as the launch-day group photo grows to fill the screen (scroll-driven, CSS only). */}
+      <Intro />
       <section className="orbit" aria-labelledby="hero-title">
         <div className="orbit-stage">
           <div className="orbit-copy">
@@ -94,11 +96,13 @@ export default function Home() {
           </div>
           <ul className="orbit-tiles" aria-label="Photos from our programs">
             {tiles.map((t, i) => (
-              <li key={t.image} className={`orbit-tile orbit-t${i + 1}`}>
-                <figure>
-                  <Img name={t.image} alt={t.alt} priority={i < 2} sizes="(min-width: 1024px) 24vw, 50vw" className="h-full w-full object-cover" style={{ objectPosition: t.pos }} />
-                  <figcaption>{t.caption}</figcaption>
-                </figure>
+              <li key={t.image} className={`orbit-tile orbit-t${i + 1}`} style={{ ['--i' as string]: i }}>
+                <div className="orbit-spin">
+                  <figure>
+                    <Img name={t.image} alt={t.alt} priority={i < 2} sizes="(min-width: 1024px) 24vw, 50vw" className="h-full w-full object-cover" style={{ objectPosition: t.pos }} />
+                    <figcaption>{t.caption}</figcaption>
+                  </figure>
+                </div>
               </li>
             ))}
           </ul>

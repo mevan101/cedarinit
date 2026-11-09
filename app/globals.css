@@ -278,7 +278,7 @@ html.save-data .decorative-img { display: none !important; }
 
   /* Scene 4: diary cards drift in as they enter the track. */
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) and (min-height: 600px) {
+    @media (prefers-reduced-motion: no-preference) {
       .track > * { animation: card-in linear both; animation-timeline: view(inline); animation-range: entry 0% entry 60%; }
       .draw-line { animation: draw-line linear both; animation-timeline: view(); animation-range: entry 10% cover 50%; transform-origin: left; }
     }
@@ -387,14 +387,13 @@ html.save-data .decorative-img { display: none !important; }
 html.save-data .kenburns { animation: none; }
 
 /* ---------- Home: places fill in as they cross the screen ---------- */
-.place-name { color: transparent; -webkit-text-stroke: 1.5px rgb(var(--cedar-300) / 0.6); }
+.place-name { color: #fff; }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .place-name { animation: place-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
+    html.motion .place-name { color: transparent; -webkit-text-stroke: 1.5px rgb(var(--cedar-300) / 0.6); animation: place-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
     .place-row > span:last-child { animation: place-text linear both; animation-timeline: view(); animation-range: entry 50% cover 45%; }
   }
 }
-@supports not (animation-timeline: view()) { .place-name { color: #fff; -webkit-text-stroke: 0; } }
 @media (prefers-reduced-motion: reduce) { .place-name { color: #fff; -webkit-text-stroke: 0; } }
 @keyframes place-fill { from { color: transparent; transform: translateX(-2%); } to { color: #fff; -webkit-text-stroke-color: transparent; transform: none; } }
 @keyframes place-text { from { opacity: 0.2; } to { opacity: 1; } }
@@ -439,12 +438,12 @@ html.save-data .kenburns { animation: none; }
   .orbit-tile figure { aspect-ratio: var(--ar); border-radius: 1.75rem; box-shadow: 0 30px 60px -36px rgb(var(--cedar-950) / 0.45); }
   .orbit-t5, .orbit-t6 { display: block; }
   /* Positions around the edges, like a scattered photo table. --dx/--dy: where each one drifts to on scroll. */
-  .orbit-t1 { --w: 18vw; --ar: 4/3; --t: 15%; --l: 3%;   --dx: -30vw; --dy: -30vh; }
-  .orbit-t2 { --w: 15vw; --ar: 4/3; --t: 48%; --l: 2%; --dx: -32vw; --dy: 6vh; }
-  .orbit-t3 { --w: 16vw; --ar: 4/3; --t: 74%; --l: 14%;  --dx: -20vw; --dy: 34vh; }
-  .orbit-t4 { --w: 16vw; --ar: 4/3; --t: 15%; --l: 81%;  --dx: 30vw;  --dy: -32vh; }
-  .orbit-t5 { --w: 19vw; --ar: 16/10; --t: 57%; --l: 78%; --dx: 32vw; --dy: 28vh; }
-  .orbit-t6 { --w: 12vw; --ar: 4/3; --t: 77%; --l: 63%;  --dx: 12vw;  --dy: 40vh; }
+  .orbit-t1 { --w: 18vw; --ar: 4/3; --t: 15svh; --l: 3vw;   --dx: -30vw; --dy: -30vh; }
+  .orbit-t2 { --w: 15vw; --ar: 4/3; --t: 48svh; --l: 2vw; --dx: -32vw; --dy: 6vh; }
+  .orbit-t3 { --w: 16vw; --ar: 4/3; --t: 74svh; --l: 14vw;  --dx: -20vw; --dy: 34vh; }
+  .orbit-t4 { --w: 16vw; --ar: 4/3; --t: 15svh; --l: 81vw;  --dx: 30vw;  --dy: -32vh; }
+  .orbit-t5 { --w: 19vw; --ar: 16/10; --t: 57svh; --l: 78vw; --dx: 32vw; --dy: 28vh; }
+  .orbit-t6 { --w: 12vw; --ar: 4/3; --t: 77svh; --l: 63vw;  --dx: 12vw;  --dy: 40vh; }
   .orbit-group { position: absolute; inset: 0; z-index: 0; overflow: hidden; transform: translateY(41%) scale(0.21); border-radius: 7.5rem; transform-origin: 50% 50%; }
   .orbit-group img { aspect-ratio: auto; border-radius: 0; }
   .orbit-group::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgb(var(--cedar-950) / 0.7), transparent 45%); pointer-events: none; }
@@ -457,21 +456,101 @@ html.save-data .kenburns { animation: none; }
     .orbit-t2 { animation-delay: 0.1s; } .orbit-t3 { animation-delay: 0.2s; } .orbit-t4 { animation-delay: 0.15s; } .orbit-t5 { animation-delay: 0.25s; } .orbit-t6 { animation-delay: 0.3s; }
   }
 }
+@keyframes spin-in { from { transform: rotate(-150deg) scale(0.12); opacity: 0; } 35% { opacity: 1; } }
 @keyframes orbit-in { from { opacity: 0; transform: translate(calc(var(--dx) * -0.25), calc(var(--dy) * -0.25)) scale(0.9); } }
 @keyframes orbit-drift { from { transform: translate3d(0, -6px, 0) rotate(-0.6deg); } to { transform: translate3d(0, 8px, 0) rotate(0.6deg); } }
 
-/* The scroll scene itself: only where scroll timelines exist and motion is welcome. */
-@supports (animation-timeline: view()) {
-  @media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
-    .orbit { height: 260svh; view-timeline-name: --orbit; }
-    .orbit-stage { position: sticky; top: 0; }
-    .orbit-tile { animation: orbit-out linear both; animation-timeline: --orbit; animation-range: contain 8% contain 48%; }
-    .orbit-copy { animation: copy-out linear both; animation-timeline: --orbit; animation-range: contain 8% contain 34%; }
-    .orbit-group { animation: group-grow linear both; animation-timeline: --orbit; animation-range: contain 12% contain 64%; }
-    .orbit-group-caption { animation: caption-in linear both; animation-timeline: --orbit; animation-range: contain 55% contain 75%; }
+/* The scroll scene, driven by --p from public/motion.js (works in every browser). */
+@media (min-width: 1024px) and (min-height: 640px) {
+  html.motion .orbit { height: 260svh; }
+  html.motion .orbit-stage { position: sticky; top: 0; }
+  /* Tiles spin around the centre of the screen: spiralling in on load, spiralling out on scroll. */
+  .orbit-tile, .orbit-spin { transform-origin: calc(50vw - var(--l)) calc(50svh - var(--t)); }
+  html.motion .orbit-tile {
+    --k: clamp(0, calc((var(--p, 0) - 0.06) / 0.42), 1);
+    transform: rotate(calc(var(--k) * 38deg)) scale(calc(1 + 1.1 * var(--k)));
+    opacity: calc(1 - var(--k));
+    animation: none;
   }
+  html.motion .orbit-spin { animation: spin-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i) * 90ms + 0.15s); }
+  html.intro-on .orbit-spin { animation-delay: calc(var(--i) * 90ms + 2.75s); }
+  html.motion .orbit-copy { --c: clamp(0, calc((var(--p, 0) - 0.06) / 0.28), 1); opacity: calc(1 - var(--c)); transform: translateY(calc(-8vh * var(--c))) scale(calc(1 - 0.06 * var(--c))); }
+  html.motion .orbit-group {
+    --g: clamp(0, calc((var(--p, 0) - 0.1) / 0.52), 1);
+    transform: translateY(calc(41% * (1 - var(--g)))) scale(calc(0.21 + 0.79 * var(--g)));
+    border-radius: calc(7.5rem * (1 - var(--g)));
+  }
+  html.motion .orbit-group-caption { --t: clamp(0, calc((var(--p, 0) - 0.55) / 0.2), 1); opacity: var(--t); transform: translateY(calc(1.5rem * (1 - var(--t)))); }
 }
+/* Phones and tablets: tiles rise in one by one, then the group photo opens up as it scrolls into view. */
+@media not all and (min-width: 1024px) and (min-height: 640px) {
+  html.motion .orbit-tile { opacity: 0; transform: translateY(24px) scale(0.96); transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out); }
+  html.motion .orbit-tile.in { opacity: 1; transform: none; }
+  html.motion .orbit-t2 { transition-delay: 0.08s; } html.motion .orbit-t3 { transition-delay: 0.16s; } html.motion .orbit-t4 { transition-delay: 0.24s; }
+  html.motion .orbit-tile figure img { animation: kenburns 18s ease-in-out infinite alternate; }
+  html.motion .orbit-group img {
+    transform: scale(calc(0.86 + 0.14 * var(--gp, 1)));
+    border-radius: calc(1.5rem + 2.5rem * (1 - var(--gp, 1)));
+    opacity: calc(0.35 + 0.65 * var(--gp, 1));
+    transform-origin: 50% 70%;
+    will-change: transform;
+  }
+  html.motion .stack-card article { opacity: 0; transform: translateY(32px) scale(0.97); transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out); }
+  html.motion .stack-card.in article { opacity: 1; transform: none; }
+}
+
+/* Browsers without CSS scroll-driven animations (older iPhones, Firefox): same effects, triggered on entry. */
+html.no-sda .place-name { color: transparent; -webkit-text-stroke: 1.5px rgb(var(--cedar-300) / 0.6); transform: translateX(-2%); transition: color 1s var(--ease-out), -webkit-text-stroke-color 1s var(--ease-out), transform 1s var(--ease-out); }
+html.no-sda .place-name.in { color: #fff; -webkit-text-stroke-color: transparent; transform: none; }
+html.no-sda .bar-fill { transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out); }
+html.no-sda .bar-fill.in { transform: none; }
+html.no-sda .draw-line { transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out); }
+html.no-sda .draw-line.in { transform: none; }
+html.no-sda .track > * { opacity: 0.4; transform: translateX(24px) scale(0.97); transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out); }
+html.no-sda .track > *.in { opacity: 1; transform: none; }
+
 @keyframes orbit-out { to { transform: translate(var(--dx), var(--dy)) scale(1.15); opacity: 0; } }
 @keyframes copy-out { to { opacity: 0; transform: translateY(-8vh) scale(0.94); } }
 @keyframes group-grow { to { transform: none; border-radius: 0; } }
 @keyframes caption-in { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: none; } }
+
+/* ==========================================================================
+   Opening sequence (components/Intro.tsx). First home-page visit per session only.
+   ========================================================================== */
+.intro { display: none; }
+html.intro-on body { overflow: hidden; }
+html.intro-on .intro {
+  display: flex; position: fixed; inset: 0; z-index: 95; align-items: center; justify-content: center; overflow: hidden;
+  background: rgb(var(--paper)); animation: intro-out 0.8s var(--ease-out) 2.9s forwards;
+}
+@keyframes intro-out { to { opacity: 0; visibility: hidden; transform: scale(1.06); } }
+.intro-logo { position: relative; z-index: 2; display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.25rem); }
+.intro-mark { height: clamp(64px, 11vmin, 112px); width: auto; overflow: visible; }
+.intro-mark path { fill: rgb(var(--cedar-700)); transform-box: fill-box; }
+.intro-wedge-l { animation: wedge-up 1s cubic-bezier(0.16, 1, 0.3, 1) both 0.15s; }
+.intro-wedge-r { animation: wedge-down 1s cubic-bezier(0.16, 1, 0.3, 1) both 0.15s; }
+@keyframes wedge-up { from { transform: translateY(120%); opacity: 0; } }
+@keyframes wedge-down { from { transform: translateY(-120%); opacity: 0; } }
+.intro-word { display: flex; flex-direction: column; font-family: var(--font-display), Impact, sans-serif; text-transform: uppercase; color: rgb(var(--ink)); animation: word-in 0.9s var(--ease-out) both 0.75s; }
+.intro-cedar { font-size: clamp(2.6rem, 9vmin, 4.75rem); line-height: 0.88; letter-spacing: 0.02em; }
+.intro-initiative { font-size: clamp(0.8rem, 2.6vmin, 1.35rem); letter-spacing: 0.16em; text-transform: none; }
+@keyframes word-in { from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-10px); } to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; } }
+.intro-ring { --r: min(38vmin, 300px); position: absolute; left: 50%; top: 50%; width: 0; height: 0; animation: ring-spin 2.95s cubic-bezier(0.55, 0, 0.25, 1) both 0.2s; }
+@keyframes ring-spin {
+  0% { transform: rotate(-140deg) scale(0.2); opacity: 0; }
+  18% { opacity: 1; }
+  68% { transform: rotate(30deg) scale(1); opacity: 1; }
+  100% { transform: rotate(120deg) scale(2.1); opacity: 0; }
+}
+.intro-photo {
+  --s: clamp(54px, 11vmin, 92px);
+  position: absolute; left: calc(var(--s) / -2); top: calc(var(--s) / -2); width: var(--s); height: var(--s);
+  border-radius: 50%; overflow: hidden; border: 3px solid #fff; background: rgb(var(--paper-deep));
+  box-shadow: 0 14px 30px -14px rgb(var(--cedar-950) / 0.5);
+  transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a)));
+  animation: photo-pop 0.6s var(--ease-out) both; animation-delay: calc(0.35s + var(--i) * 70ms);
+}
+.intro-photo img { animation: counter-spin 2.95s cubic-bezier(0.55, 0, 0.25, 1) both 0.2s; }
+@keyframes photo-pop { from { scale: 0.3; opacity: 0; } }
+@keyframes counter-spin { 0% { transform: rotate(140deg); } 68% { transform: rotate(-30deg); } 100% { transform: rotate(-120deg); } }
+@media (prefers-reduced-motion: reduce) { html.intro-on .intro { display: none; } html.intro-on body { overflow: auto; } }
