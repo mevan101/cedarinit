@@ -1,3 +1,5 @@
+import { withBase } from '@/lib/base-path';
+
 const L = 'M260.25 513.04H479.85L260.25 1009.77Z';
 const R = 'M543.23 446.95V943.63H323.63Z';
 /**
@@ -23,7 +25,7 @@ export default function Intro() {
           <path d={R} className="intro-wedge-r" />
         </svg>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/brand/wordmark.svg" alt="Cedar Initiative" width={698} height={434} className="intro-word" />
+        <img src={withBase('/brand/wordmark.svg')} alt="Cedar Initiative" width={698} height={434} className="intro-word" />
       </div>
     </div>
     </>

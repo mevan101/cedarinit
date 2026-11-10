@@ -11,6 +11,7 @@ import { getPost } from '@/lib/posts';
 import { getReport, money } from '@/lib/finance';
 import type { Program } from '@/lib/programs';
 import { site } from '@/lib/site';
+import { withBase } from '@/lib/base-path';
 
 const dayOf = (slug: string) => Number(slug.match(/day-0?(\d+)/)?.[1] ?? NaN);
 
@@ -128,7 +129,7 @@ export default function ProgramView({ program: p }: { program: Program }) {
                     <p className="text-sm text-ink-muted">{[e.place, (e.end_date ?? e.date) >= today ? 'Upcoming' : 'Done'].filter(Boolean).join(' · ')}</p>
                     {e.body && <p className="mt-2 text-ink-soft">{e.body}</p>}
                   </div>
-                  {e.link && <a href={e.link} className="btn-glass">Details <Icon name="arrow" className="h-4 w-4" /></a>}
+                  {e.link && <a href={withBase(e.link)} className="btn-glass">Details <Icon name="arrow" className="h-4 w-4" /></a>}
                 </li>
               ))}
             </ol>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase-client';
 import { fromLive, type LivePost } from '@/lib/post-live';
 import { formatDate, type Post } from '@/lib/post-types';
+import { withBase } from '@/lib/base-path';
 
 export default function StoryReader() {
   const [post, setPost] = useState<Post | null | undefined>(undefined);
@@ -35,7 +36,7 @@ export default function StoryReader() {
         <p className="mt-6 text-sm text-ink-muted"><time dateTime={post.date}>{formatDate(post.date)}</time></p>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <div className="shell max-w-5xl"><img src={post.cover} alt={post.coverAlt} className="max-h-[70vh] w-full rounded-4xl object-cover" /></div>
+      <div className="shell max-w-5xl"><img src={withBase(post.cover)} alt={post.coverAlt} className="max-h-[70vh] w-full rounded-4xl object-cover" /></div>
       <div className="shell max-w-3xl py-16"><div className="prose-cedar" dangerouslySetInnerHTML={{ __html: post.html }} /></div>
     </article>
   );

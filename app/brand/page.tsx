@@ -4,6 +4,7 @@ import Reveal from '@/components/Reveal';
 import GlassCard from '@/components/GlassCard';
 import Icon from '@/components/Icon';
 import { PageHero, SectionHeading } from '@/components/ui';
+import { withBase } from '@/lib/base-path';
 
 export const metadata: Metadata = {
   title: 'Brand guide',
@@ -41,7 +42,7 @@ export default function BrandPage() {
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
           {['logo.svg', 'logo-white.svg', 'logo-reverse.svg', 'wordmark.svg', 'mark.svg', 'icon.svg', 'icon-512.png', 'logo.png'].map((f) => (
-            <a key={f} href={`/brand/${f}`} download className="btn-glass !min-h-[40px] text-sm"><Icon name="download" className="h-4 w-4" />{f}</a>
+            <a key={f} href={withBase(`/brand/${f}`)} download className="btn-glass !min-h-[40px] text-sm"><Icon name="download" className="h-4 w-4" />{f}</a>
           ))}
         </div>
         <div className="mt-10 rounded-[var(--radius-card)] border border-ink/10 bg-white p-6 sm:p-8">
@@ -52,11 +53,11 @@ export default function BrandPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Tile label="2025 wordmark, green" className="bg-white">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/legacy/wordmark-2025-green.png" alt="Cedar Initiative 2025 wordmark in green" className="h-24 w-auto" />
+              <img src={withBase('/brand/legacy/wordmark-2025-green.png')} alt="Cedar Initiative 2025 wordmark in green" className="h-24 w-auto" />
             </Tile>
             <Tile label="2025 wordmark, white" className="bg-cedar-700">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/legacy/wordmark-2025-white.png" alt="Cedar Initiative 2025 wordmark in white" className="h-24 w-auto" />
+              <img src={withBase('/brand/legacy/wordmark-2025-white.png')} alt="Cedar Initiative 2025 wordmark in white" className="h-24 w-auto" />
             </Tile>
           </div>
         </div>

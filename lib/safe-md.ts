@@ -1,4 +1,5 @@
 import { Marked } from 'marked';
+import { withBase } from './base-path';
 
 // Markdown written in the staff dashboard. Raw HTML is shown as text, and links and images may only use
 // web, mail and phone addresses, so a compromised editor account can't put scripts on the public site.
@@ -13,11 +14,11 @@ const safe = new Marked({
       const inner = this.parser.parseInline(tokens);
       if (!okUrl(href)) return inner;
       const ext = /^https?:/i.test(href) && !/^https?:\/\/(www\.)?cedar-initiative\.org/i.test(href);
-      return `<a href="${esc(href)}"${title ? ` title="${esc(title)}"` : ''}${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${inner}</a>`;
+      return `<a href="${esc(withBase(href))}"${title ? ` title="${esc(title)}"` : ''}${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${inner}</a>`;
     },
     image({ href, title, text }) {
       if (!okUrl(href)) return esc(text);
-      return `<img src="${esc(href)}" alt="${esc(text)}"${title ? ` title="${esc(title)}"` : ''} loading="lazy" decoding="async">`;
+      return `<img src="${esc(withBase(href))}" alt="${esc(text)}"${title ? ` title="${esc(title)}"` : ''} loading="lazy" decoding="async">`;
     },
   },
 });

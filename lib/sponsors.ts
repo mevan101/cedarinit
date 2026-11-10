@@ -1,4 +1,6 @@
 // Sponsors and supporters, past and present. Logos in public/images/sponsors (ML Bangladesh's from mlbangladesh.org/partners).
+import { withBase } from './base-path';
+
 export type Sponsor = { name: string; logo: string; url?: string; with: 'Cedar' | 'ML Bangladesh'; tall?: boolean; xl?: boolean };
 
 import liveSponsors from '@/content/live/sponsors.json';
@@ -29,6 +31,7 @@ const fileSponsors: Sponsor[] = [
 
 type LiveSponsor = { name: string; logo_url: string; url?: string | null; program: string; size: string };
 /** Edited in the staff dashboard (Website → Sponsors). The list above is the fallback. */
-export const sponsors: Sponsor[] = (liveSponsors as LiveSponsor[]).length
-  ? (liveSponsors as LiveSponsor[]).map((s) => ({ name: s.name, logo: s.logo_url, url: s.url || undefined, with: s.program === 'ML Bangladesh' ? 'ML Bangladesh' : 'Cedar', tall: s.size === 'tall', xl: s.size === 'xl' }))
+const listed = (liveSponsors as LiveSponsor[]).length
+  ? (liveSponsors as LiveSponsor[]).map((s) => ({ name: s.name, logo: s.logo_url, url: s.url || undefined, with: (s.program === 'ML Bangladesh' ? 'ML Bangladesh' : 'Cedar') as Sponsor['with'], tall: s.size === 'tall', xl: s.size === 'xl' }))
   : fileSponsors;
+export const sponsors: Sponsor[] = listed.map((s) => ({ ...s, logo: withBase(s.logo) }));

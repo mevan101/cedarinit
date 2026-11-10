@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { withoutBase } from '@/lib/base-path';
 
 type VTDocument = Document & { startViewTransition?: (cb: () => Promise<void> | void) => unknown };
 
@@ -53,7 +54,7 @@ export default function ViewTransitions() {
         () =>
           new Promise<void>((done) => {
             resolve.current = done;
-            router.push(url.pathname + url.search + url.hash);
+            router.push(withoutBase(url.pathname) + url.search + url.hash);
             setTimeout(done, 1500); // never hang the page if navigation stalls
           }),
       );

@@ -8,6 +8,7 @@ import type { Doc } from '@/lib/platform';
 import { kindLabel, linkedInAddUrl } from '@/lib/platform/templates';
 import { usePlatform, useQueryParam } from './usePlatform';
 import { DemoBanner, Notice, fmtDate } from './ui';
+import { withBase } from '@/lib/base-path';
 
 /** Branded, printable certificate or letter. "Save as PDF" uses the browser's print dialog. */
 export default function DocumentApp() {
@@ -46,7 +47,7 @@ export default function DocumentApp() {
             </svg>
             <div className="relative flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/logo.svg" alt="Cedar Initiative" className="h-[clamp(28px,5vw,48px)] w-auto" />
+              <img src={withBase('/brand/logo.svg')} alt="Cedar Initiative" className="h-[clamp(28px,5vw,48px)] w-auto" />
             </div>
             <p className="relative mt-[5%] text-[clamp(10px,1.4vw,14px)] font-semibold uppercase tracking-[0.3em] text-cedar-700">{kindLabel[doc.kind]}</p>
             <p className="relative mt-[2%] text-[clamp(10px,1.3vw,14px)] text-ink-soft">This is presented to</p>
@@ -69,7 +70,7 @@ export default function DocumentApp() {
           <div className="p-[8%]">
             <div className="flex items-start justify-between gap-6 border-b-2 border-cedar-700 pb-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/logo.svg" alt="Cedar Initiative" className="h-10 w-auto" />
+              <img src={withBase('/brand/logo.svg')} alt="Cedar Initiative" className="h-10 w-auto" />
               <div className="text-right text-xs leading-relaxed text-ink-muted">info@cedar-initiative.org<br />cedar-initiative.org<br />Dhaka, Bangladesh</div>
             </div>
             <div className="mt-8 flex justify-between text-sm text-ink-soft"><span>Ref. <span className="font-mono">{doc.id}</span></span><span>{fmtDate(doc.issued_on)}</span></div>

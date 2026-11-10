@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { safeMd } from '@/lib/safe-md';
+import { withBase } from '@/lib/base-path';
 import { Card, Notice, input } from '../ui';
 import { list, remove, save, slugify, upload, type Row } from './data';
 
@@ -81,7 +82,7 @@ export default function Collection(props: Props) {
             <li key={String(r.id)} className="flex flex-wrap items-center justify-between gap-3 py-3">
               <div className="min-w-0 flex-1">{summary(r)}</div>
               <span className="flex gap-2">
-                {viewHref?.(r) && <a href={viewHref(r)!} target="_blank" rel="noopener noreferrer" className="rounded-full border border-ink/15 px-3 py-1.5 text-sm font-semibold">View</a>}
+                {viewHref?.(r) && <a href={withBase(viewHref(r)!)} target="_blank" rel="noopener noreferrer" className="rounded-full border border-ink/15 px-3 py-1.5 text-sm font-semibold">View</a>}
                 <button type="button" className="rounded-full border border-ink/15 px-3 py-1.5 text-sm font-semibold" onClick={() => setEdit(r)}>{readOnly ? 'Open' : 'Edit'}</button>
               </span>
             </li>
@@ -205,7 +206,7 @@ function FieldInput({ f, value, onChange }: { f: FieldDef; value: unknown; onCha
       control = (
         <div className="mt-2 flex items-start gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          {text && <img src={text} alt="" className="h-20 w-28 shrink-0 rounded-xl object-cover ring-1 ring-ink/10" />}
+          {text && <img src={withBase(text)} alt="" className="h-20 w-28 shrink-0 rounded-xl object-cover ring-1 ring-ink/10" />}
           <div className="flex-1">
             <input id={id} className={`${input} !mt-0`} value={text} onChange={(e) => onChange(e.target.value)} placeholder="Upload, or paste an address" />
             <label className="mt-2 inline-block cursor-pointer rounded-full border border-ink/15 px-3 py-1 text-sm font-semibold">
@@ -223,7 +224,7 @@ function FieldInput({ f, value, onChange }: { f: FieldDef; value: unknown; onCha
           {items.map((g, i) => (
             <div key={i} className="flex items-center gap-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={g.image} alt="" className="h-12 w-16 shrink-0 rounded-lg object-cover ring-1 ring-ink/10" />
+              <img src={withBase(g.image)} alt="" className="h-12 w-16 shrink-0 rounded-lg object-cover ring-1 ring-ink/10" />
               <input aria-label="Photo description" className={`${input} !mt-0`} placeholder="Describe the photo" value={g.alt ?? ''} onChange={(e) => onChange(items.map((x, j) => (j === i ? { ...x, alt: e.target.value } : x)))} />
               <button type="button" aria-label="Move up" className="rounded-full border border-ink/15 px-2 py-1" disabled={!i} onClick={() => { const n = [...items]; [n[i - 1], n[i]] = [n[i], n[i - 1]]; onChange(n); }}>↑</button>
               <button type="button" aria-label="Remove photo" className="rounded-full border border-ink/15 px-2 py-1" onClick={() => onChange(items.filter((_, j) => j !== i))}>✕</button>

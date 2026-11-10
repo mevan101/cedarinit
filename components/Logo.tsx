@@ -1,3 +1,5 @@
+import { withBase } from '@/lib/base-path';
+
 type Props = { tone?: 'color' | 'white'; className?: string; title?: string };
 
 const L = 'M260.25 513.04H479.85L260.25 1009.77Z';
@@ -21,7 +23,7 @@ export default function Logo({ tone = 'color', className = '' }: Props) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={tone === 'white' ? '/brand/logo-white.svg' : '/brand/logo.svg'}
+      src={withBase(tone === 'white' ? '/brand/logo-white.svg' : '/brand/logo.svg')}
       alt="Cedar Initiative"
       width={1053}
       height={579}

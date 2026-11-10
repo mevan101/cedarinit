@@ -4,6 +4,7 @@ import Reveal from './Reveal';
 import PrintButton from './PrintButton';
 import { formatDate } from '@/lib/post-types';
 import { money, toCsv, type Report } from '@/lib/finance';
+import { withBase } from '@/lib/base-path';
 
 const typeLabel: Record<string, string> = { donation: 'Donations', sponsorship: 'Sponsorship', grant: 'Grants', 'in-kind': 'In kind', other: 'Other' };
 
@@ -57,7 +58,7 @@ export default function ReportView({ report: r }: { report: Report }) {
             <PrintButton />
             <a href={csv} download={`${r.slug}.csv`} className="btn-glass"><Icon name="file" className="h-4 w-4" /> Download spreadsheet (CSV)</a>
             {(r.attachments ?? []).map((a) => (
-              <a key={a.file} href={a.file} target="_blank" rel="noopener noreferrer" className="btn-glass">{a.label} <Icon name="external" className="h-4 w-4" /></a>
+              <a key={a.file} href={withBase(a.file)} target="_blank" rel="noopener noreferrer" className="btn-glass">{a.label} <Icon name="external" className="h-4 w-4" /></a>
             ))}
           </div>
         </div>
@@ -172,7 +173,7 @@ export default function ReportView({ report: r }: { report: Report }) {
                   <tr key={i}>
                     <td className="py-3 pr-4 text-ink-muted">{e.bill_no || '-'}</td>
                     <td className="py-3 pr-4 text-ink-soft">{e.category}{'program' in e && e.program ? <span className="block text-xs text-ink-muted">{String(e.program)}</span> : null}</td>
-                    <td className="py-3 pr-4 text-ink">{e.item}{e.receipt && <a href={e.receipt} className="ml-2 text-cedar-700 underline">receipt</a>}</td>
+                    <td className="py-3 pr-4 text-ink">{e.item}{e.receipt && <a href={withBase(e.receipt)} className="ml-2 text-cedar-700 underline">receipt</a>}</td>
                     <td className="py-3 text-right tabular-nums text-ink">{money(e.amount, r.currency)}</td>
                   </tr>
                 ))}

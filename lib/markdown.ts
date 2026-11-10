@@ -2,11 +2,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import { withBase } from './base-path';
 
 marked.setOptions({ gfm: true, breaks: false });
 
+/** Root-relative src/href in rendered markdown need the project-site prefix. */
+function prefixHtml(html: string) {
+  return html.replace(/(\s(?:src|href)=")(\/(?!\/)[^"]*)(")/g, (_, attr, url, end) => `${attr}${withBase(url)}${end}`);
+}
+
 /** Content written in the CMS is trusted (only signed-in editors can change it). */
-export const md = (s: string | undefined | null) => (s ? (marked.parse(s, { async: false }) as string) : '');
+export const md = (s: string | undefined | null) => (s ? prefixHtml(marked.parse(s, { async: false }) as string) : '');
 
 export const showDrafts = process.env.NEXT_PUBLIC_SHOW_DRAFTS === '1';
 

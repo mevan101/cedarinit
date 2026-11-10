@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react';
 import Icon from '../Icon';
 import { usePlatform } from './usePlatform';
 import { DemoBanner, Field, Notice, input } from './ui';
+import { withBase } from '@/lib/base-path';
 
 /** Firebase error codes in plain words. */
 function friendly(msg: string) {
@@ -38,7 +39,7 @@ export default function AuthForm({ next = '/account/' }: { next?: string }) {
         await p.sendLink(email);
         if (p.mode === 'live') return setState({ info: `Check ${email} for a sign-in link.` });
       }
-      location.href = next;
+      location.href = withBase(next);
     } catch (err) {
       setState({ error: (err as Error).message });
     }

@@ -5,6 +5,7 @@ import Collection, { type FieldDef } from './Collection';
 import { Badge, Card, Field, Notice, fmtDate, input } from '../ui';
 import { getSetting, isLive, publishSite, setSetting, type Row } from './data';
 import type { LiveAnnouncement, LiveContact, LiveLink, LiveTeamGroup } from '@/lib/live';
+import { withBase } from '@/lib/base-path';
 
 const CATEGORIES = ['News', 'Project', 'Education', 'ML Bangladesh', 'Climate', 'Event'].map((c) => ({ value: c, label: c }));
 
@@ -31,7 +32,7 @@ export default function Website({ isAdmin }: { isAdmin: boolean }) {
   const [fileStories, setFileStories] = useState<Row[]>([]);
   const [teams, setTeams] = useState<LiveTeamGroup[]>([]);
   useEffect(() => {
-    fetch('/staff/file-stories.json').then((r) => (r.ok ? r.json() : []), () => []).then(setFileStories);
+    fetch(withBase('/staff/file-stories.json')).then((r) => (r.ok ? r.json() : []), () => []).then(setFileStories);
     if (isLive()) getSetting<LiveTeamGroup[]>('teams').then((t) => setTeams(t ?? []), () => {});
   }, []);
 
@@ -106,7 +107,7 @@ export default function Website({ isAdmin }: { isAdmin: boolean }) {
           summary={(r) => (
             <span className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={String(r.logo_url)} alt="" className="h-8 w-20 object-contain" />
+              <img src={withBase(String(r.logo_url))} alt="" className="h-8 w-20 object-contain" />
               <span className="font-semibold text-ink">{String(r.name)}</span><span className="text-ink-muted">· {String(r.program)}</span>
               {!r.visible && <Badge status="hidden" />}
             </span>

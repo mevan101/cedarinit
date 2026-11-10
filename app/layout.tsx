@@ -9,6 +9,7 @@ import announcement from '@/content/settings/announcement.json';
 import { mlbd } from '@/lib/mlbd';
 import { founders } from '@/lib/team';
 import { site, socials } from '@/lib/site';
+import { withBase } from '@/lib/base-path';
 import './globals.css';
 
 // Self-hosted (SIL OFL) so the site has no third-party font requests.
@@ -31,7 +32,13 @@ export const metadata: Metadata = {
   keywords: ['Cedar Initiative', 'youth-led nonprofit Bangladesh', 'volunteer Dhaka', 'winter clothes donation Bangladesh', 'Ushnota Abhijan', 'CSEdWeek Bangladesh', 'ML Bangladesh', 'AI hackathon Bangladesh'],
   openGraph: { type: 'website', siteName: site.name, locale: 'en_US', images: [{ url: '/og/default.jpg', width: 1200, height: 630, alt: 'Cedar Initiative volunteers with the Cedar banner in Dhaka' }] },
   twitter: { card: 'summary_large_image', site: '@CedarInitiative', images: ['/og/default.jpg'] },
-  icons: { icon: [{ url: '/brand/icon.svg', type: 'image/svg+xml' }, { url: '/brand/icon-512.png', sizes: '512x512', type: 'image/png' }], apple: '/brand/icon-512.png' },
+  icons: {
+    icon: [
+      { url: withBase('/brand/icon.svg'), type: 'image/svg+xml' },
+      { url: withBase('/brand/icon-512.png'), sizes: '512x512', type: 'image/png' },
+    ],
+    apple: withBase('/brand/icon-512.png'),
+  },
   // Same Search Console verification as the old WordPress site, so ownership carries over.
   verification: { google: 'qC7-assEJn3xKmrglFDkRaA2Du9folnVe0xXNNnMybE' },
   alternates: { canonical: '/', types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Cedar Initiative news' }] } },
@@ -79,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ChatWidget />
         <ViewTransitions />
         {/* Scroll motion for every browser, incl. phones without CSS scroll timelines (public/motion.js). */}
-        <script src="/motion.js" defer />
+        <script src={withBase('/motion.js')} defer />
       </body>
     </html>
   );

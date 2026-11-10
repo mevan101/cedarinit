@@ -8,6 +8,7 @@ import { isStaff } from '@/lib/platform';
 import { kindLabel, linkedInAddUrl } from '@/lib/platform/templates';
 import { usePlatform } from './usePlatform';
 import { Badge, Card, DemoBanner, Field, Notice, fmtDate, input } from './ui';
+import { withBase } from '@/lib/base-path';
 
 const AREAS = ['Collection', 'Sorting', 'Distribution', 'Teaching', 'Facilitation', 'Events', 'Mentoring', 'Communications', 'Design', 'Research', 'Data', 'Outreach', 'Leadership', 'Fundraising'];
 const PROGRAMS = ['Ushnota Abhijan', 'CSEdWeek', 'ML Bangladesh', 'Climate', 'Communications', 'Other'];
@@ -140,7 +141,7 @@ function NewPassword({ onDone }: { onDone: () => void }) {
 function Avatar({ me, size = 'h-14 w-14' }: { me: Pick<Profile, 'photo_url' | 'full_name' | 'email'>; size?: string }) {
   return me.photo_url ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={me.photo_url} alt="" className={`${size} rounded-full object-cover ring-2 ring-white`} />
+    <img src={withBase(me.photo_url)} alt="" className={`${size} rounded-full object-cover ring-2 ring-white`} />
   ) : (
     <span className={`${size} inline-flex items-center justify-center rounded-full bg-cedar-700 font-display text-xl text-white`}>{(me.full_name || me.email)[0]?.toUpperCase()}</span>
   );
