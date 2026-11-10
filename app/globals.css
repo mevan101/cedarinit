@@ -527,16 +527,15 @@ html.intro-on .intro {
   background: rgb(var(--paper)); animation: intro-out 0.8s var(--ease-out) 2.9s forwards;
 }
 @keyframes intro-out { to { opacity: 0; visibility: hidden; transform: scale(1.06); } }
-.intro-logo { position: relative; z-index: 2; display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.25rem); }
-.intro-mark { height: clamp(64px, 11vmin, 112px); width: auto; overflow: visible; }
-.intro-mark path { fill: rgb(var(--cedar-700)); transform-box: fill-box; }
+/* Same proportions as the logo file: wordmark 75% of the mark's height, gap 9%. */
+.intro-logo { --h: clamp(72px, 13vmin, 128px); position: relative; z-index: 2; display: flex; align-items: center; gap: calc(var(--h) * 0.088); }
+.intro-mark { height: var(--h); width: auto; overflow: visible; }
+.intro-mark path { fill: #1A502A; transform-box: fill-box; }
 .intro-wedge-l { animation: wedge-up 1s cubic-bezier(0.16, 1, 0.3, 1) both 0.15s; }
 .intro-wedge-r { animation: wedge-down 1s cubic-bezier(0.16, 1, 0.3, 1) both 0.15s; }
 @keyframes wedge-up { from { transform: translateY(120%); opacity: 0; } }
 @keyframes wedge-down { from { transform: translateY(-120%); opacity: 0; } }
-.intro-word { display: flex; flex-direction: column; font-family: var(--font-display), Impact, sans-serif; text-transform: uppercase; color: rgb(var(--ink)); animation: word-in 0.9s var(--ease-out) both 0.75s; }
-.intro-cedar { font-size: clamp(2.6rem, 9vmin, 4.75rem); line-height: 0.88; letter-spacing: 0.02em; }
-.intro-initiative { font-size: clamp(0.8rem, 2.6vmin, 1.35rem); letter-spacing: 0.16em; text-transform: none; }
+.intro-word { display: block; height: calc(var(--h) * 0.75); width: auto;animation: word-in 0.9s var(--ease-out) both 0.75s; }
 @keyframes word-in { from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-10px); } to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; } }
 .intro-ring { --r: min(38vmin, 300px); position: absolute; left: 50%; top: 50%; width: 0; height: 0; animation: ring-spin 2.95s cubic-bezier(0.55, 0, 0.25, 1) both 0.2s; }
 @keyframes ring-spin {

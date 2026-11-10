@@ -16,7 +16,8 @@ const ramp = [
   ['600', '#0A6E40'], ['700', '#025730'], ['800', '#024326'], ['900', '#01331C'], ['950', '#011E11'],
 ];
 const core = [
-  { name: 'Cedar 700', hex: '#025730', role: 'Primary: logo, buttons, links', cls: 'bg-cedar-700 text-white', ratio: '9.1:1 on Paper' },
+  { name: 'Logo green', hex: '#1A502A', role: 'The logo mark only, as in the original logo file', cls: 'bg-[#1A502A] text-white', ratio: '8.8:1 on Paper' },
+  { name: 'Cedar 700', hex: '#025730', role: 'Primary: buttons, links', cls: 'bg-cedar-700 text-white', ratio: '9.1:1 on Paper' },
   { name: 'Ink', hex: '#0B1A12', role: 'Headlines & body text', cls: 'bg-ink text-white', ratio: '16.9:1 on Paper' },
   { name: 'Paper', hex: '#F8F7F2', role: 'Page background', cls: 'bg-paper text-ink border border-ink/10', ratio: 'Base' },
   { name: 'Cedar 950', hex: '#011E11', role: 'Dark sections & footer', cls: 'bg-cedar-950 text-white', ratio: '17.8:1 with white' },
@@ -28,7 +29,7 @@ export default function BrandPage() {
     <>
       <PageHero eyebrow="Brand guide v2" title="Cedar Editorial design system" lead="One set of rules for every page, post, slide and social graphic, so Cedar Initiative looks as trustworthy as the work it does. Built to scale from a youth movement to an international nonprofit." />
 
-      <Block id="logo" n="01" title="Logo" lead="Two opposing cedar-green wedges rise past each other: a split “C” and “I” that reads as growth, balance and two hands meeting. Set beside an Anton wordmark.">
+      <Block id="logo" n="01" title="Logo" lead="Two opposing cedar-green wedges rise past each other: a split “C” and “I” that reads as growth, balance and two hands meeting. Set beside the CEDAR / Initiative wordmark. Always use the logo files below; never retype the wordmark.">
         <div className="grid gap-4 md:grid-cols-3">
           <Tile label="Primary, on light" className="bg-white"><Logo className="scale-125" /></Tile>
           <Tile label="Reverse, on Cedar 950" className="bg-cedar-950"><Logo tone="white" className="scale-125" /></Tile>
@@ -39,7 +40,7 @@ export default function BrandPage() {
           <Rules title="Don’t" items={['Recolour the mark outside the Cedar ramp, white or black.', 'Stretch, rotate, outline or add effects to the logo.', 'Place the colour logo on busy imagery without a scrim.']} />
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
-          {['logo.svg', 'logo-white.svg', 'logo-reverse.svg', 'mark.svg', 'icon.svg', 'icon-512.png', 'logo.png'].map((f) => (
+          {['logo.svg', 'logo-white.svg', 'logo-reverse.svg', 'wordmark.svg', 'mark.svg', 'icon.svg', 'icon-512.png', 'logo.png'].map((f) => (
             <a key={f} href={`/brand/${f}`} download className="btn-glass !min-h-[40px] text-sm"><Icon name="download" className="h-4 w-4" />{f}</a>
           ))}
         </div>
@@ -84,7 +85,7 @@ export default function BrandPage() {
         <p className="mt-4 text-sm text-ink-muted">Text colours must meet WCAG 2.2 AA: 4.5:1 for body copy, 3:1 for large text and UI. On light surfaces use Cedar 600+ for text; on dark use Cedar 300 or lighter.</p>
       </Block>
 
-      <Block id="type" n="03" title="Typography" lead="Anton, the logo face, for short display lines in uppercase. Inter for everything people actually read. Noto Sans Bengali for Bangla.">
+      <Block id="type" n="03" title="Typography" lead="Anton for short display lines in uppercase. Inter for everything people actually read. Noto Sans Bengali for Bangla.">
         <div className="grid gap-4 lg:grid-cols-2">
           <GlassCard className="p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Display · Anton 400 · uppercase</p>

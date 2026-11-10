@@ -32,14 +32,12 @@ export default function Intro() {
         ))}
       </div>
       <div className="intro-logo">
-        <svg viewBox="240 427 323 603" className="intro-mark">
+        <svg viewBox="252 439 299 579" className="intro-mark">
           <path d={L} className="intro-wedge-l" />
           <path d={R} className="intro-wedge-r" />
         </svg>
-        <span className="intro-word">
-          <span className="intro-cedar">Cedar</span>
-          <span className="intro-initiative">Initiative</span>
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/wordmark.svg" alt="Cedar Initiative" width={698} height={434} className="intro-word" />
       </div>
     </div>
     </>
