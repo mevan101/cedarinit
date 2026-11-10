@@ -6,9 +6,48 @@
   var d = document.documentElement;
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   d.classList.add('motion');
-  // Any click, key or scroll skips the opening sequence.
+  // Opening sequence: the hero photos start as small dots by the logo, spiral out as they grow,
+  // then fly into their places and turn from circles into cards. Any click, key or scroll skips it.
   if (d.classList.contains('intro-on')) {
-    var skip = function () { d.classList.remove('intro-on'); ['click', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { removeEventListener(t, skip); }); };
+    var anims = [];
+    var tiles = [].slice.call(document.querySelectorAll('.orbit-tile .orbit-spin')).filter(function (el) {
+      var r = el.getBoundingClientRect();
+      return r.width > 0 && r.top < innerHeight && r.bottom > 0;
+    });
+    if (tiles.length && Element.prototype.animate) {
+      var W = innerWidth, H = innerHeight, cx = W / 2, cy = H / 2;
+      var R = Math.min(Math.min(W, H) * 0.34, 300), dot = Math.max(52, Math.min(92, Math.min(W, H) * 0.115));
+      var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+      var out = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var t0 = performance.now();
+      tiles.forEach(function (el, i) {
+        var r = el.getBoundingClientRect(), w = r.width, h = r.height, side = Math.min(w, h);
+        var fig = el.querySelector('figure'), rad = fig ? parseFloat(getComputedStyle(fig).borderTopLeftRadius) || 24 : 24;
+        var tx = r.left + w / 2, ty = r.top + h / 2, ix = (w - side) / 2, iy = (h - side) / 2;
+        var base = (i / tiles.length) * Math.PI * 2 - Math.PI / 2, kf = [], N = 10, M = 8;
+        var at = function (ang, rr) { return [cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr]; };
+        var circle = 'inset(' + iy + 'px ' + ix + 'px round ' + side / 2 + 'px)';
+        // 1. Spiral out from the logo, growing from a speck to a dot.
+        for (var k = 0; k <= N; k++) {
+          var u = out(k / N), p = at(base - 2.6 * (1 - u), R * (0.12 + 0.88 * u)), sc = (dot / side) * (0.18 + 0.82 * u);
+          kf.push({ offset: 0.6 * (k / N), opacity: Math.min(1, k / 2), transform: 'translate(' + (p[0] - tx) + 'px,' + (p[1] - ty) + 'px) scale(' + sc + ')', clipPath: circle });
+        }
+        // 2. Keep turning while flying to its place, opening from a circle into the card.
+        for (var m = 1; m <= M; m++) {
+          var v = ease(m / M), q = at(base + 0.7 * v, R), x = q[0] + (tx - q[0]) * v, y = q[1] + (ty - q[1]) * v, s2 = dot / side + (1 - dot / side) * v;
+          var c = 'inset(' + iy * (1 - v) + 'px ' + ix * (1 - v) + 'px round ' + (side / 2 + (rad - side / 2) * v) + 'px)';
+          kf.push({ offset: 0.6 + 0.4 * (m / M), opacity: 1, transform: 'translate(' + (x - tx) + 'px,' + (y - ty) + 'px) scale(' + s2 + ')', clipPath: c });
+        }
+        kf[kf.length - 1].transform = 'none';
+        kf[kf.length - 1].clipPath = 'inset(0px 0px round ' + rad + 'px)';
+        anims.push(el.animate(kf, { duration: 2900, delay: Math.max(0, 250 + i * 70 - (performance.now() - t0)), easing: 'linear', fill: 'both' }));
+      });
+    }
+    var skip = function () {
+      anims.forEach(function (a) { a.cancel(); });
+      d.classList.remove('intro-on');
+      ['click', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { removeEventListener(t, skip); });
+    };
     ['click', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { addEventListener(t, skip, { passive: true }); });
   }
   var sda = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));

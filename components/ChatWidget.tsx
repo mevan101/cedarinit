@@ -22,7 +22,7 @@ export default function ChatWidget() {
   }, [open]);
 
   return (
-    <div ref={ref} className="hide-tiny no-print fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+    <div ref={ref} className="chat-launcher hide-tiny no-print fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div
         id="chat-options"
         hidden={!open}
