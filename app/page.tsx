@@ -1,245 +1,295 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Img from '@/components/Img';
 import Icon from '@/components/Icon';
 import Reveal, { RiseText } from '@/components/Reveal';
-import Counter from '@/components/Counter';
-import GlassCard from '@/components/GlassCard';
+import Stat from '@/components/Stat';
 import PostCard from '@/components/PostCard';
-import { Aurora, ArrowLink, CTA, SectionHeading } from '@/components/ui';
-import { about, impact, joinOptions, press, site, wings } from '@/lib/site';
-import { programs } from '@/lib/programs';
+import { ArrowLink, SectionHeading } from '@/components/ui';
+import { impact, press, site } from '@/lib/site';
+import { reports, money } from '@/lib/finance';
+import { founders, portraitOf } from '@/lib/team';
+import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
+import Intro from '@/components/Intro';
+import { LogoMarquee } from '@/components/LogoWall';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Cedar Initiative: youth-led nonprofit in Bangladesh' },
+  description:
+    'Student volunteers in Bangladesh running winter relief in Dhaka, computer science classes in Rangpur and free AI hackathons on campuses through ML Bangladesh.',
+  alternates: { canonical: '/', types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Cedar Initiative news' }] } },
+};
+
+const work = [
+  {
+    href: '/ushnota-abhijan-2025/',
+    kicker: 'Relief',
+    title: 'Winter clothes for families in Dhaka',
+    body: 'Ushnota Abhijan collected winter clothes in Dhaka schools in November 2025. When fire tore through Karail slum, volunteers took them straight to the families who lost their homes.',
+    image: 'ushnota/distribution',
+    alt: 'Cedar volunteers record aid for a family in Karail after the fire',
+    caption: 'Karail, Dhaka · November 2025',
+  },
+  {
+    href: '/ml-bangladesh/',
+    kicker: 'STEM · ML Bangladesh',
+    title: 'Free AI hackathons on university campuses',
+    body: 'ML Bangladesh joined Cedar in September 2026. Its one-day build events have run at universities in Dhaka, Rajshahi, Mymensingh, Chattogram and Dinajpur.',
+    ext: mlbd.gallery[0],
+    caption: mlbd.gallery[0].caption,
+  },
+  {
+    href: '/csedweek2025/',
+    kicker: 'Education',
+    title: 'Computer science week in Rangpur',
+    body: 'For CSEdWeek 2025 we taught coding and the basics of AI to students at JAAGO Foundation School, Rangpur, with a facilitator and the school’s own computer lab.',
+    image: 'csedweek/rangpur-1',
+    alt: 'Students and Cedar volunteers at JAAGO Foundation School, Rangpur',
+    caption: 'JAAGO Foundation School, Rangpur · CSEdWeek 2025',
+  },
+] as const;
+
+const tiles = [
+  { image: 'mlbd/hacktoberfest-dhaka', alt: 'Students building projects at Hacktoberfest Hack Day in Dhaka', caption: 'Hack day · Dhaka', pos: '50% 40%' },
+  { image: 'ushnota/day-4a', alt: 'Schoolgirls queue to hand over winter clothes to Cedar volunteers', caption: 'Winter drive · Dhaka', pos: '55% 30%' },
+  { image: 'csedweek/rangpur-1', alt: 'Students and volunteers at JAAGO Foundation School, Rangpur', caption: 'CSEdWeek · Rangpur', pos: '50% 35%' },
+  { image: 'ushnota/distribution', alt: 'Cedar volunteers record aid for a family in Karail after the fire', caption: 'Fire response · Karail', pos: '50% 40%' },
+  { image: 'mlbd/tech-for-her-auw', alt: 'Participants at the Tech For Her hackathon at the Asian University for Women', caption: 'Tech For Her · Chattogram', pos: '50% 45%' },
+  { image: 'mlbd/build-with-gemma-uiu', alt: 'Teams at Build With Gemma at United International University', caption: 'Build With Gemma · Dhaka', pos: '50% 40%' },
+];
+
+const places = [
+  { name: 'Dhaka', when: 'Since November 2025', what: 'Winter clothes drives in four schools, the Karail fire response, and ML Bangladesh hack days at UIU, DIU, UITS, SEU and the EMK Center.' },
+  { name: 'Rangpur', when: 'December 2025', what: 'CSEdWeek: coding and AI for students at JAAGO Foundation School.' },
+  { name: 'Rajshahi', when: 'July–August 2026', what: 'Build With AI Hack Days at Rajshahi University and RUET.' },
+  { name: 'Mymensingh', when: 'August 2026', what: 'Build With AI Hack Days at Bangladesh Agricultural University.' },
+  { name: 'Chattogram', when: 'September 2026', what: 'Tech For Her hackathon at the Asian University for Women.' },
+  { name: 'Dinajpur', when: 'October 2026', what: 'Hacktoberfest Hack Days at HSTU.' },
+];
+
+
+const paths = [
+  { href: '/give/', title: 'Give', body: 'Pay for warm clothes, transport and teaching materials. Every campaign gets a public financial report.', cta: 'How giving works' },
+  { href: '/opportunities/', title: 'Volunteer', body: 'Help at a collection drive, teach a session, or run a hackathon. Apply here, log your hours, get a verifiable certificate.', cta: 'See open roles' },
+  { href: '/partner/', title: 'Partner', body: 'Schools, universities, NGOs and companies: host a program, co-run a campaign, or sponsor one.', cta: 'How partnerships work' },
+];
 
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40 lg:min-h-[100svh] lg:pb-24">
-        <Aurora />
-        <div className="shell relative grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-6 xl:col-span-6">
-            <Reveal as="p" className="chip mb-6">
-              <span className="h-2 w-2 rounded-full bg-cedar-500 shadow-[0_0_0_4px_rgb(var(--cedar-500)/0.2)]" aria-hidden="true" />
-              Youth-led · Volunteer-powered · Bangladesh
+      {/* 1. What Cedar does. On large screens: field photos float around the headline, then drift away
+             as the launch-day group photo grows to fill the screen (scroll-driven, CSS only). */}
+      <Intro />
+      <section className="orbit" aria-labelledby="hero-title">
+        <div className="orbit-stage">
+          <div className="orbit-copy">
+            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="orbit-title t-display text-ink" />
+            <Reveal as="p" delay={300} className="hero-lead t-lead mx-auto mt-6 max-w-[40rem]">
+              We&rsquo;re student volunteers. Last winter we brought warm clothes to families in Dhaka&rsquo;s Karail slum and ran a computer
+              science week in Rangpur. Through ML Bangladesh, we now run free AI hackathons on campuses across the country.
             </Reveal>
-            <RiseText as="h1" text="Be the force for good" className="t-display text-ink" />
-            <Reveal as="p" delay={350} className="t-lead mt-7 max-w-xl">
-              {site.promise} We are a youth-led movement turning climate action, education, wellness and innovation into
-              real change for communities across Bangladesh. <span className="font-semibold text-ink">{site.subTagline}</span>
-            </Reveal>
-            <Reveal delay={450} className="mt-9 flex flex-col gap-3 xs:flex-row">
-              <Link href="/our-work/" className="btn-primary">
-                See our work <Icon name="arrow" className="h-4 w-4" />
-              </Link>
-              <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass">
-                Join as a volunteer <Icon name="external" className="h-4 w-4" />
-              </a>
+            <Reveal delay={400} className="hero-cta mt-8 flex flex-col justify-center gap-3 xs:flex-row">
+              <Link href="#work" className="btn-primary">See our work <Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="#help" className="btn-glass">Ways to help</Link>
             </Reveal>
           </div>
-
-          <div className="relative lg:col-span-6">
-            <Reveal variant="mask" delay={200} className="relative overflow-hidden rounded-5xl shadow-[0_50px_100px_-40px_rgb(var(--cedar-950)/0.55)]">
-              <div className="aspect-[4/5] sm:aspect-[16/12] lg:aspect-[4/5]">
-                <Img name="hero/group-banner" alt="Cedar Initiative volunteers and students gathered together at a community event" priority sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full object-cover" />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-cedar-950/45 via-transparent to-transparent" />
-            </Reveal>
-            <Reveal delay={600} className="absolute -bottom-6 left-4 right-4 xs:left-auto xs:right-6 xs:w-[18rem] sm:-left-6 sm:right-auto lg:-left-10">
-              <GlassCard className="p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Impact so far</p>
-                <p className="mt-1 font-display text-5xl text-ink"><Counter value={4250} suffix="+" /></p>
-                <p className="text-sm text-ink-soft">people reached through our programs</p>
-              </GlassCard>
-            </Reveal>
-            <Reveal delay={750} className="absolute -top-5 right-4 hidden sm:block lg:-right-4">
-              <GlassCard className="flex items-center gap-3 p-3 pr-5">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-cedar-700 text-white"><Icon name="leaf" /></span>
-                <span className="text-sm"><span className="block font-semibold text-ink">Ushnota Abhijan</span><span className="text-ink-muted">Winter campaign · live</span></span>
-              </GlassCard>
-            </Reveal>
-          </div>
+          <ul className="orbit-tiles" aria-label="Photos from our programs">
+            {tiles.map((t, i) => (
+              <li key={t.image} className={`orbit-tile orbit-t${i + 1}`} style={{ ['--i' as string]: i }}>
+                <div className="orbit-spin">
+                  <figure>
+                    <Img name={t.image} alt={t.alt} priority={i < 2} sizes="(min-width: 1024px) 24vw, 50vw" className="h-full w-full object-cover" style={{ objectPosition: t.pos }} />
+                    <figcaption>{t.caption}</figcaption>
+                  </figure>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <figure className="orbit-group">
+            <Img name="hero/group-banner" alt="Cedar Initiative volunteers with the Cedar banner on launch day" sizes="100vw" className="h-full w-full object-cover" />
+            <figcaption className="orbit-group-caption">
+              <span className="block font-display text-[clamp(1.75rem,3.4vw,3rem)] uppercase leading-none">Every one of us is a volunteer</span>
+              <span className="mt-2 block text-sm text-white/80">Launch day, Dhaka · September 2025</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      {/* Mission statement */}
-      <section className="section pt-20">
+      {/* 2. One act to a movement: places fill in as you scroll */}
+      <section aria-labelledby="places-title" className="on-dark relative overflow-hidden bg-cedar-950 py-[var(--section-y)] text-white">
         <div className="shell">
-          <Reveal as="p" className="t-eyebrow">Our mission</Reveal>
-          <Reveal as="p" delay={100} className="mt-6 max-w-5xl text-[clamp(1.6rem,3.6vw,3.25rem)] font-medium leading-[1.15] tracking-[-0.025em] text-ink">
-            {about.mission.replace('.', '')}<span className="text-cedar-600">.</span>{' '}
-            <span className="text-ink-muted">A world where youth and communities lead sustainable progress — with resilience, equity and well-being for all.</span>
-          </Reveal>
+          <p className="t-eyebrow !text-cedar-300">Where we&rsquo;ve worked</p>
+          <h2 id="places-title" className="t-h2 mt-5 max-w-3xl">From one winter drive to six cities</h2>
+          <ol className="mt-12 divide-y divide-white/10 border-y border-white/10">
+            {places.map((pl) => (
+              <li key={pl.name} className="place-row grid gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] sm:items-baseline sm:gap-8">
+                <span className="place-name font-display text-[clamp(2.75rem,8vw,6.5rem)] uppercase leading-[0.9]">{pl.name}</span>
+                <span className="text-white/70"><span className="block text-sm font-semibold uppercase tracking-[0.14em] text-cedar-300">{pl.when}</span>{pl.what}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* Impact */}
-      <section aria-labelledby="impact-title" className="pb-[var(--section-y)]">
+      {/* 3. The work: panels stack as you scroll on large screens */}
+      <section id="work" className="section bg-white">
         <div className="shell">
-          <h2 id="impact-title" className="sr-only">Our impact in numbers</h2>
-          <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {impact.map((m, i) => (
-              <Reveal as="li" key={m.label} delay={i * 80} className={i === 0 ? 'col-span-2 md:col-span-1' : ''}>
-                <GlassCard className="flex h-full flex-col justify-between gap-6 p-6 sm:p-7">
-                  <span className="font-display text-[clamp(2.75rem,5vw,4rem)] leading-none text-cedar-700">
-                    <Counter value={m.value} suffix={'suffix' in m ? m.suffix : ''} />
-                  </span>
-                  <span className="text-sm font-medium text-ink-soft">{m.label}</span>
-                </GlassCard>
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading eyebrow="What we do" title="Three programs, real places" />
+            <Reveal><ArrowLink href="/our-work/">All programs and reports</ArrowLink></Reveal>
+          </div>
+          <ul className="stack mt-12">
+            {work.map((w, i) => (
+              <li key={w.href} className="stack-card" style={{ ['--n' as string]: i }}>
+                <article className="group relative grid overflow-hidden rounded-5xl border border-ink/10 bg-paper lg:grid-cols-2">
+                  <figure className="relative overflow-hidden bg-paper-deep lg:order-2">
+                    {'ext' in w ? (
+                      <Img name={w.ext.src} alt={w.ext.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04]" />
+                    ) : (
+                      <Img name={w.image} alt={w.alt} sizes="(min-width: 1024px) 45vw, 100vw" className="aspect-[4/3] h-full w-full object-cover transition duration-1000 group-hover:scale-[1.04]" />
+                    )}
+                    <figcaption className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-3 py-1 text-xs text-white backdrop-blur-sm">{w.caption}</figcaption>
+                  </figure>
+                  <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14">
+                    <p className="font-display text-6xl leading-none text-cedar-700/25">0{i + 1}</p>
+                    <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">{w.kicker}</p>
+                    <h3 className="mt-2 font-display text-[clamp(2rem,3.6vw,3.25rem)] uppercase leading-[0.95] text-ink">
+                      <Link href={w.href} className="after:absolute after:inset-0">{w.title}</Link>
+                    </h3>
+                    <p className="t-lead mt-4">{w.body}</p>
+                    <span aria-hidden="true" className="mt-8 inline-flex items-center gap-2 font-semibold text-cedar-700">
+                      Read more <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 4. Proof, every number with its period and source */}
+      <section className="on-dark section bg-cedar-950 text-white">
+        <div className="shell">
+          <SectionHeading tone="dark" eyebrow="The evidence" title="What the work adds up to" lead="Each figure shows when it was counted and where it comes from. Follow the source to check it." />
+          <ul className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {impact.map((s, i) => (
+              <Reveal as="li" key={s.label} delay={i * 80}>
+                <Stat stat={s} tone="dark" />
               </Reveal>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Who we are */}
-      <section className="section bg-white">
-        <div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <Reveal variant="left" className="relative">
-            <div className="overflow-hidden rounded-5xl">
-              <div className="aspect-[5/4]">
-                <Img name="about/who-we-are" alt="Members of Cedar Initiative during a community session" className="parallax h-full w-full object-cover" />
-              </div>
-            </div>
-            <div className="absolute -bottom-8 -right-2 hidden w-44 overflow-hidden rounded-3xl border-4 border-white shadow-xl sm:block lg:-right-8 lg:w-52">
-              <Img name="hero/circle-session" alt="" sizes="200px" className="aspect-square h-full w-full object-cover" />
-            </div>
-          </Reveal>
-          <div>
-            <SectionHeading eyebrow="Who we are" title="Rooted in community, built to last" lead={about.whoWeAre} />
-            <Reveal delay={200} className="mt-6 text-ink-soft">{about.whoWeAre2}</Reveal>
-            <Reveal delay={300} className="mt-8"><ArrowLink href="/about-us/">More about Cedar</ArrowLink></Reveal>
-          </div>
-        </div>
+      {/* Partners and supporters */}
+      <section aria-label="Sponsors and supporters" className="border-b border-ink/10 bg-white py-12">
+        <p className="shell text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Sponsored and supported by</p>
+        <div className="mt-7"><LogoMarquee /></div>
       </section>
 
-      {/* Wings */}
-      <section className="section relative overflow-hidden">
+      {/* 4. How to help: three separate paths */}
+      <section id="help" className="section">
         <div className="shell">
-          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-            <SectionHeading eyebrow="Programmatic wings" title="Four wings. One movement." lead="Every initiative we run grows from one of four focus areas, so effort compounds into lasting change." />
-          </div>
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {wings.map((w, i) => (
-              <Reveal key={w.title} delay={i * 90} className="h-full">
-                <GlassCard className="group flex h-full flex-col gap-10 p-7">
-                  <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-cedar-700 text-white shadow-lg shadow-cedar-700/30 transition duration-500 group-hover:rotate-[-6deg] group-hover:scale-110">
-                    <Icon name={w.icon} className="h-6 w-6" />
+          <SectionHeading eyebrow="How to help" title="Give, volunteer or partner" lead="Three separate paths. Pick the one that fits and you’ll only see what you need." />
+          <ul className="mt-12 grid gap-4 md:grid-cols-3">
+            {paths.map((p, i) => (
+              <Reveal as="li" key={p.href} delay={i * 90}>
+                <Link href={p.href} className="group flex h-full flex-col rounded-[var(--radius-card)] border border-ink/10 bg-white p-7 transition hover:border-cedar-700/40 sm:p-8">
+                  <span className="font-display text-4xl uppercase text-ink">{p.title}</span>
+                  <span className="mt-4 flex-1 text-ink-soft">{p.body}</span>
+                  <span className="mt-6 inline-flex items-center gap-2 font-semibold text-cedar-700">
+                    {p.cta} <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
-                  <div>
-                    <p className="font-display text-sm text-cedar-600">0{i + 1}</p>
-                    <h3 className="t-h3 mt-2 text-ink">{w.title}</h3>
-                    <p className="mt-3 text-[0.97rem] leading-relaxed text-ink-soft">{w.body}</p>
-                  </div>
-                </GlassCard>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Programs */}
-      <section className="on-dark section relative overflow-hidden bg-cedar-950 text-white">
-        <Aurora tone="dark" />
-        <div className="shell relative">
-          <SectionHeading tone="dark" eyebrow="Key programs" title="Work that meets people where they are" lead="From winter relief in Dhaka’s slums to AI classrooms in Rangpur — our programs are designed with communities, delivered by volunteers and reported in the open." />
-          <div className="mt-14 grid gap-6 lg:grid-cols-2">
-            {programs.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 120} variant="zoom">
-                <Link href={`/${p.slug}/`} className="group relative block overflow-hidden rounded-5xl">
-                  <div className="aspect-[4/5] xs:aspect-[4/3]">
-                    <Img name={p.cover} alt="" sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full object-cover transition duration-1000 ease-out group-hover:scale-105" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-cedar-950 via-cedar-950/40 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
-                    <span className="chip !border-white/20 !bg-white/10 !text-white backdrop-blur">{p.status}</span>
-                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-cedar-300">{p.kicker}</p>
-                    <h3 className="mt-2 font-display text-[clamp(2rem,4vw,3.25rem)] uppercase leading-none text-white">{p.title}</h3>
-                    <p className="mt-4 max-w-lg text-white/75">{p.short}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 font-semibold text-white">
-                      Explore program <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </div>
                 </Link>
               </Reveal>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Get involved */}
-      <section className="section">
-        <div className="shell">
-          <SectionHeading align="center" eyebrow="Get involved" title="There’s a place for you here" lead="Whether you have an hour, a skill or a monthly gift to share, you can help a youth-led movement grow." />
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {joinOptions.map((o, i) => (
-              <Reveal key={o.title} delay={i * 90}>
-                <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[0_20px_40px_-28px_rgb(var(--cedar-950)/0.35)]">
-                  <div className="grain relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-cedar-600 via-cedar-700 to-cedar-900">
-                    <Img name={o.image} alt="" sizes="200px" className="h-full w-full object-contain p-8 transition duration-700 group-hover:scale-110 group-hover:-rotate-3" />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="t-h3 text-ink">{o.title}</h3>
-                    <p className="mt-2 flex-1 text-[0.97rem] text-ink-soft">{o.body}</p>
-                    {'external' in o && o.external ? (
-                      <a href={o.href} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 font-semibold text-cedar-700 after:absolute after:inset-0">
-                        {o.cta} <Icon name="external" className="h-4 w-4" /><span className="sr-only"> (opens Google Form in a new tab)</span>
-                      </a>
-                    ) : (
-                      <Link href={o.href} className="mt-5 inline-flex items-center gap-2 font-semibold text-cedar-700 after:absolute after:inset-0">
-                        {o.cta} <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    )}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* News */}
+      {/* 5. Why Cedar can be trusted */}
       <section className="section bg-white">
         <div className="shell">
+          <SectionHeading eyebrow="Accountability" title="Who we are, in plain terms" />
+          <div className="mt-12 grid gap-10 lg:grid-cols-3">
+            <Reveal>
+              <h3 className="t-h3 text-ink">Legal status</h3>
+              <p className="mt-3 text-ink-soft">
+                Cedar is a volunteer group founded in {site.founded}. We are <strong className="font-semibold text-ink">not yet a registered organisation</strong>, so we
+                never take donations into a personal account. We are setting up a fiscal sponsor to receive gifts for us.
+              </p>
+              <ArrowLink href="/give/" className="mt-4">How giving works</ArrowLink>
+            </Reveal>
+            <Reveal delay={90}>
+              <h3 className="t-h3 text-ink">Financial reports</h3>
+              <ul className="mt-3 divide-y divide-ink/10 border-y border-ink/10">
+                {reports.map((r) => (
+                  <li key={r.slug}>
+                    <Link href={`/${r.slug}/`} className="group flex min-h-[56px] items-center justify-between gap-4 py-3">
+                      <span>
+                        <span className="block font-semibold text-ink group-hover:text-cedar-700">{r.title}</span>
+                        <span className="text-sm text-ink-muted">{r.kind === 'annual' ? 'Annual statement' : 'Program report'} · {money(r.spent, r.currency)} spent</span>
+                      </span>
+                      <Icon name="file" className="h-5 w-5 shrink-0 text-cedar-700" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={180}>
+              <h3 className="t-h3 text-ink">The people responsible</h3>
+              <p className="mt-3 text-ink-soft">Founded in {site.founded}. Cedar is led by its {founders.length} co-founders, each responsible for one part of the work.</p>
+              <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5" aria-label="Co-founders">
+                {founders.map((f) => (
+                  <li key={f.name} className="flex items-center gap-3">
+                    <span className="shrink-0 overflow-hidden rounded-full bg-paper-deep ring-1 ring-ink/10">
+                      <Img name={portraitOf(f)} alt="" sizes="56px" className="h-14 w-14 object-cover object-top" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold leading-tight text-ink">{f.name}</span>
+                      <span className="block text-xs leading-snug text-ink-muted">{f.role.replace(/^Lead of /, '')}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <ArrowLink href="/our-team/" className="mt-4">Meet the team</ArrowLink>
+            </Reveal>
+          </div>
+
+          <Reveal className="mt-16 border-t border-ink/10 pt-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">In the press</p>
+            <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+              {[...press.map((p) => ({ outlet: p.outlet, href: p.href })), ...mlbd.press.map((p) => ({ outlet: `${p.outlet} (ML Bangladesh)`, href: p.href }))].map((p) => (
+                <li key={p.href}>
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-ink hover:text-cedar-700">
+                    {p.outlet} <Icon name="external" className="h-4 w-4 text-ink-muted" />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 6. Latest */}
+      <section className="section">
+        <div className="shell">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading eyebrow="News & updates" title="Latest from the field" />
+            <SectionHeading eyebrow="From the field" title="Latest stories" />
             <Reveal><ArrowLink href="/outreach/">All stories</ArrowLink></Reveal>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((p, i) => (
-              <Reveal key={p.slug} delay={i * 100} className="h-full"><PostCard post={p} /></Reveal>
+              <Reveal key={p.slug} delay={i * 100} className={`h-full ${i === 2 ? 'md:hidden lg:block' : ''}`}>
+                <PostCard post={p} />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Press */}
-      <section className="section">
-        <div className="shell">
-          <SectionHeading eyebrow="In the media" title="As featured in" />
-          <ul className="mt-12 grid gap-5 md:grid-cols-3">
-            {press.map((p, i) => (
-              <Reveal as="li" key={p.outlet} delay={i * 100}>
-                <a href={p.href} target="_blank" rel="noopener noreferrer" className="group block h-full">
-                  <GlassCard className="flex h-full flex-col gap-5 p-7">
-                    <p className="font-display text-2xl uppercase text-cedar-700">{p.outlet}</p>
-                    <p lang={p.lang} className="flex-1 text-lg font-medium leading-snug text-ink">“{p.title}”</p>
-                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-ink-soft group-hover:text-cedar-700">
-                      Read the coverage <Icon name="external" className="h-4 w-4" />
-                      <span className="sr-only">(opens in a new tab)</span>
-                    </span>
-                  </GlassCard>
-                </a>
-              </Reveal>
-            ))}
-          </ul>
-          <Reveal className="mt-16 overflow-hidden rounded-4xl bg-white p-4 sm:p-6">
-            <p className="mb-4 text-center text-sm font-medium text-ink-muted">Our work advances the UN Sustainable Development Goals</p>
-            <Img name="sdg/strip" alt="UN Sustainable Development Goals icons" sizes="100vw" className="mx-auto h-auto w-full max-w-5xl" />
-          </Reveal>
-        </div>
-      </section>
-
-      <CTA />
     </>
   );
 }

@@ -1,4 +1,13 @@
-# Cedar Initiative — Brand Guide (Cedar Glass v1.0)
+# Cedar Initiative — Brand Guide (Cedar Editorial v2)
+
+> **v2 (Nov 2026): documentary editorial.** Real photos with a caption giving place and date, solid flat cards, one accent colour.
+> Glass blur is used only for floating chrome (`.chrome`: sticky header, menus, chat). The aurora and grain effects are retired (`<Aurora>` renders nothing).
+> `.glass` / `<GlassCard>` remain as names but now render solid surfaces. Every impact number uses `<Stat>` and shows its period and source.
+> Screen-class rules (short screens, dual-screen `viewport-segments`, coarse pointers, Save-Data) live at the end of `app/globals.css`.
+> Hover styles apply only on devices that can hover (`future.hoverOnlyWhenSupported`).
+> Motion (Nov 2026): hero mosaic reveal with slow Ken Burns drift; place names fill as they scroll in; program panels stack on large screens;
+> report bars grow on view; verify seal draws itself. All transform/opacity/clip-path, all switched off under reduced motion.
+> Team portraits: white, faint contour lines, two Cedar-green (#5DB88C) blades, person bottom-aligned. Generated, never hand-made.
 
 The live, interactive version of this guide is at [`/brand`](https://cedar-initiative.org/brand/) (`app/brand/page.tsx`).
 All values below are implemented as tokens in `app/globals.css` and `tailwind.config.ts`. **Never hard-code
@@ -8,7 +17,7 @@ colours, radii or easing in components — use the tokens.**
 
 - **Name:** Cedar Initiative — *Community Empowerment for Development & Advocacy Resilience*
 - **What:** a youth-led, volunteer-based nonprofit working in Bangladesh (currently unregistered; path to 501(c)(3) via fiscal sponsorship).
-- **Founder:** Shahriar Azad Evan
+- **Co-founders:** Shahriar Azad Evan, Sharafat Karim, Sabbir Ahmed, Naimur Rahman Durjoy (credit the team, not one person)
 - **Tagline:** Be the Force for Good · *Built by U. Powered by purpose.*
 - **Mission:** Empowering communities through climate action, education, wellness, and innovation to drive sustainable progress globally.
 - **Vision:** A world where empowered youth and communities lead sustainable progress, fostering resilience, equity, and well-being for all.

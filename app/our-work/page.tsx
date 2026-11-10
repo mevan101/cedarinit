@@ -1,32 +1,43 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Img from '@/components/Img';
+import { mlbd } from '@/lib/mlbd';
 import Icon from '@/components/Icon';
 import Reveal from '@/components/Reveal';
 import PostCard from '@/components/PostCard';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { programs } from '@/lib/programs';
 import { posts } from '@/lib/posts';
-import { reports } from '@/lib/site';
+import {} from '@/lib/site';
+import { reports, money } from '@/lib/finance';
 
 export const metadata: Metadata = {
   title: 'Our work',
-  description: 'Programs, campaigns and financial reports from Cedar Initiative — including Ushnota Abhijan 2025 and CSEdWeek 2025.',
+  description: 'Cedar Initiative programs: Ushnota Abhijan winter relief in Dhaka, CSEdWeek in Rangpur and ML Bangladesh AI hackathons, with financial reports for each.',
   alternates: { canonical: '/our-work/' },
 };
+
+const items = [
+  ...programs.map((p) => ({ slug: p.slug, status: p.status ?? '', kicker: p.kicker ?? '', title: p.title, short: p.short, cover: p.cover as string | null, ext: null as null | { src: string; alt: string } })),
+  { slug: mlbd.slug, status: mlbd.status, kicker: `${mlbd.kicker} · since ${mlbd.joined}`, title: mlbd.short, short: mlbd.lead, cover: null, ext: { src: mlbd.hero.src, alt: '' } },
+];
 
 export default function WorkPage() {
   return (
     <>
-      <PageHero eyebrow="Our work" title="Built by you, powered by purpose" lead="Every program is designed with the community it serves, delivered by volunteers, and reported openly." />
+      <PageHero eyebrow="Our work" title="Relief, education and STEM" lead="Three programs, run by volunteers, each with dates, places and a report you can check." />
 
       <section className="pb-[var(--section-y)]">
         <div className="shell space-y-6">
-          {programs.map((p, i) => (
+          {items.map((p, i) => (
             <Reveal key={p.slug} variant="zoom">
               <article className="group grid overflow-hidden rounded-5xl bg-white shadow-[0_30px_60px_-40px_rgb(var(--cedar-950)/0.5)] lg:grid-cols-2">
-                <div className={`relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:min-h-[32rem] ${i % 2 ? 'lg:order-2' : ''}`}>
-                  <Img name={p.cover} alt="" sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105" />
+                <div className={`relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:min-h-[28rem] ${i % 2 ? 'lg:order-2' : ''}`}>
+                  {p.ext ? (
+                    <Img name={p.ext.src} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105" />
+                  ) : (
+                    <Img name={p.cover!} alt="" sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full object-cover transition duration-1000 group-hover:scale-105" />
+                  )}
                 </div>
                 <div className="flex flex-col justify-center gap-5 p-8 sm:p-12 lg:p-16">
                   <span className="chip w-fit">{p.status}</span>
@@ -53,7 +64,7 @@ export default function WorkPage() {
                   <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-cedar-700 text-white"><Icon name="file" className="h-6 w-6" /></span>
                   <span className="flex-1">
                     <span className="block text-lg font-semibold text-ink">{r.title}</span>
-                    <span className="text-sm text-ink-muted">{r.subtitle} · PDF</span>
+                    <span className="text-sm text-ink-muted">{r.kind === 'annual' ? 'Annual statement' : 'Program report'} · {money(r.spent, r.currency)} spent · PDF</span>
                   </span>
                   <Icon name="arrow" className="h-5 w-5 text-cedar-700 transition group-hover:translate-x-1" />
                 </Link>

@@ -1,0 +1,55 @@
+{
+  "title": "CSEdWeek 2025",
+  "kind": "program",
+  "program": "csedweek2025",
+  "year": "2025",
+  "period_start": "2025-12-08",
+  "period_end": "2025-12-08",
+  "currency": "BDT",
+  "status": "final",
+  "summary": "The Rangpur session was paid for by our sponsor Enhanfy Global Ltd and our partner Youth for NextGen. The money covered food, certificates and transport.",
+  "prepared_by": "Cedar Initiative finance team",
+  "approved_by": "",
+  "published": "2026-01-25",
+  "budget": [],
+  "income": [
+    {
+      "source": "Enhanfy Global Ltd",
+      "type": "sponsorship",
+      "amount": 3500
+    },
+    {
+      "source": "Youth for NextGen",
+      "type": "sponsorship",
+      "amount": 350
+    }
+  ],
+  "expenses": [
+    {
+      "bill_no": "",
+      "category": "Food",
+      "item": "Food for students, Rangpur",
+      "amount": 2800
+    },
+    {
+      "bill_no": "",
+      "category": "Certificates",
+      "item": "Participation certificates, Rangpur",
+      "amount": 800
+    },
+    {
+      "bill_no": "",
+      "category": "Transport",
+      "item": "Transport, Rangpur",
+      "amount": 250
+    }
+  ],
+  "outputs": [],
+  "internal_notes": "",
+  "attachments": [
+    {
+      "label": "Annual statement 2025 (PDF)",
+      "file": "/reports/Financial-Report-Cedar-Initiative-2025.pdf"
+    }
+  ]
+}

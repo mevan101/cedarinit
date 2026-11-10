@@ -1,0 +1,11 @@
+// Cloudflare Workers static-assets deployment for the site (`npm run build` then `npx wrangler deploy`).
+// _redirects in public/ is honoured. No server code: everything dynamic talks to Supabase from the browser.
+{
+  "name": "cedar-initiative",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

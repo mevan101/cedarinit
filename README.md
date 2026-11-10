@@ -4,6 +4,10 @@ The website for [Cedar Initiative](https://cedar-initiative.org), a youth-led, v
 
 Next.js 14 (App Router, static export) · TypeScript · Tailwind CSS. No server or database. `npm run build` writes a static site to `out/` that any host can serve (Hostinger, Netlify, Vercel, GitHub Pages, Cloudflare Pages).
 
+## GitHub Pages
+
+The temporary public preview is [https://mevan101.github.io/cedarinit/](https://mevan101.github.io/cedarinit/). `.github/workflows/pages.yml` builds with `NEXT_PUBLIC_BASE_PATH=/cedarinit` (so assets and routes keep that prefix) and deploys `out/` with GitHub Actions. In the repository settings, Pages must use **GitHub Actions** as the source. Leave `NEXT_PUBLIC_BASE_PATH` empty for local dev and for `https://cedar-initiative.org`. This workflow does not change DNS.
+
 ## Develop
 
 ```bash

@@ -1,0 +1,162 @@
+[
+ {
+  "name": "Enhanfy Global Ltd.",
+  "logo_url": "/images/sponsors/enhanfy.png",
+  "url": null,
+  "program": "Cedar",
+  "size": "normal",
+  "sort": 10
+ },
+ {
+  "name": "Youth for NextGen",
+  "logo_url": "/images/sponsors/youth-for-nextgen.png",
+  "url": null,
+  "program": "Cedar",
+  "size": "tall",
+  "sort": 20
+ },
+ {
+  "name": "Google for Developers",
+  "logo_url": "/images/sponsors/google-for-developers.png",
+  "url": "https://developers.google.com/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 30
+ },
+ {
+  "name": "Major League Hacking",
+  "logo_url": "/images/sponsors/mlh.png",
+  "url": "https://mlh.io/",
+  "program": "ML Bangladesh",
+  "size": "tall",
+  "sort": 40
+ },
+ {
+  "name": "Google Gemini",
+  "logo_url": "/images/sponsors/gemini.png",
+  "url": "https://gemini.google.com/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 50
+ },
+ {
+  "name": "Gemma",
+  "logo_url": "/images/sponsors/gemma.png",
+  "url": "https://deepmind.google/models/gemma/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 60
+ },
+ {
+  "name": "DataCamp Donates",
+  "logo_url": "/images/sponsors/datacamp-donates.png",
+  "url": "https://www.datacamp.com/donates",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 70
+ },
+ {
+  "name": "O’Reilly Media",
+  "logo_url": "/images/sponsors/oreilly.png",
+  "url": "https://www.oreilly.com/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 80
+ },
+ {
+  "name": "ElevenLabs",
+  "logo_url": "/images/sponsors/elevenlabs.png",
+  "url": "https://elevenlabs.io/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 90
+ },
+ {
+  "name": "Featherless AI",
+  "logo_url": "/images/sponsors/featherless.png",
+  "url": "https://featherless.ai/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 100
+ },
+ {
+  "name": "Firecrawl",
+  "logo_url": "/images/sponsors/firecrawl.png",
+  "url": "https://firecrawl.dev/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 110
+ },
+ {
+  "name": "Gen.xyz",
+  "logo_url": "/images/sponsors/xyz.png",
+  "url": "https://gen.xyz/",
+  "program": "ML Bangladesh",
+  "size": "tall",
+  "sort": 120
+ },
+ {
+  "name": "EMK Center",
+  "logo_url": "/images/sponsors/emk-center.png",
+  "url": "https://emkcenter.org/",
+  "program": "ML Bangladesh",
+  "size": "xl",
+  "sort": 130
+ },
+ {
+  "name": "HerWILL",
+  "logo_url": "/images/sponsors/herwill.png",
+  "url": "https://www.herwill.org/",
+  "program": "ML Bangladesh",
+  "size": "tall",
+  "sort": 140
+ },
+ {
+  "name": "CHS Education",
+  "logo_url": "/images/sponsors/chs-education.png",
+  "url": "https://chseducation.com/",
+  "program": "ML Bangladesh",
+  "size": "tall",
+  "sort": 150
+ },
+ {
+  "name": "DianaHost",
+  "logo_url": "/images/sponsors/dianahost.png",
+  "url": "https://www.dianahost.com/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 160
+ },
+ {
+  "name": "Open Dimension",
+  "logo_url": "/images/sponsors/opendimension.png",
+  "url": null,
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 170
+ },
+ {
+  "name": "DigitalOcean",
+  "logo_url": "/images/sponsors/digitalocean.png",
+  "url": "https://www.digitalocean.com/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 180
+ },
+ {
+  "name": "DEV Community",
+  "logo_url": "/images/sponsors/dev.png",
+  "url": "https://dev.to/",
+  "program": "ML Bangladesh",
+  "size": "tall",
+  "sort": 190
+ },
+ {
+  "name": "Genspark",
+  "logo_url": "/images/sponsors/genspark.png",
+  "url": "https://www.genspark.ai/",
+  "program": "ML Bangladesh",
+  "size": "normal",
+  "sort": 200
+ }
+]

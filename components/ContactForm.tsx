@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import Icon from './Icon';
 import { site } from '@/lib/site';
+import { formToObject, sendForm } from '@/lib/send-form';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 type Errors = Partial<Record<'name' | 'email' | 'subject' | 'message', string>>;
@@ -11,7 +12,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * Contact form. Posts the original Contact Form 7 field names to the existing
- * CF7 endpoint (which forwards to Google Sheets). If the endpoint is unreachable,
+ * CF7 endpoint only when the site runs without Supabase. If sending fails,
  * the visitor is offered a pre-filled email so no message is ever lost.
  */
 export default function ContactForm() {
@@ -41,7 +42,7 @@ export default function ContactForm() {
 
   const mailto = (fd: FormData) =>
     `mailto:${site.email}?subject=${encodeURIComponent(String(fd.get('your-subject') ?? ''))}&body=${encodeURIComponent(
-      `${fd.get('your-message') ?? ''}\n\n— ${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
+      `${fd.get('your-message') ?? ''}\n\n${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
     )}`;
 
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
@@ -57,6 +58,24 @@ export default function ContactForm() {
       return;
     }
     fd.delete('website');
+    setStatus('sending');
+    try {
+      const f = formToObject(fd);
+      const saved = await sendForm('contact', { name: f['your-name'], email: f['your-email'], subject: f['your-subject'], message: f['your-message'] });
+      if (saved) {
+        setStatus('sent');
+        setServerMsg('');
+        form.reset();
+        setSubject('');
+        requestAnimationFrame(() => statusRef.current?.focus());
+        return;
+      }
+    } catch {
+      setStatus('error');
+      setServerMsg(mailto(fd));
+      requestAnimationFrame(() => statusRef.current?.focus());
+      return;
+    }
     fd.append('_wpcf7', site.contactFormId);
     fd.append('_wpcf7_unit_tag', site.contactUnitTag);
     fd.append('_wpcf7_container_post', '1287');
@@ -127,7 +146,7 @@ export default function ContactForm() {
       </div>
 
       <p id={`${id}-note`} className="text-sm leading-relaxed text-ink-muted">
-        Your information will be securely sent to and stored in Google Sheets for record-keeping and follow-up. We aim to respond within 1–2 days.
+        Your message goes to the Cedar team’s inbox and is only seen by the team. We usually reply within one or two days.
       </p>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -153,7 +172,7 @@ export default function ContactForm() {
         )}
         {status === 'error' && (
           <p className="rounded-2xl border border-amber-500/40 bg-amber-50 p-4 text-amber-950">
-            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a> — it’s pre-filled for you.
+            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a>. It’s pre-filled for you.
           </p>
         )}
       </div>

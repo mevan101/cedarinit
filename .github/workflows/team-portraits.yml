@@ -1,0 +1,31 @@
+name: Team portraits
+
+# When someone adds or changes a team photo in the CMS, make the branded portrait and commit it,
+# so the next build doesn't have to.
+on:
+  push:
+    branches: [main]
+    paths: ['content/team.json', 'public/uploads/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  portraits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run portraits
+      - name: Commit new portraits
+        run: |
+          git config user.name "cedar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/images/team/auto content/team-portraits.json
+          git diff --cached --quiet || git commit -m "Generate team portraits"
+          git push

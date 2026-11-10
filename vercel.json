@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    { "source": "/feed", "destination": "/feed.xml", "permanent": true },
+    { "source": "/feed/", "destination": "/feed.xml", "permanent": true },
+    { "source": "/category/:path*", "destination": "/outreach/", "permanent": true },
+    { "source": "/tag/:path*", "destination": "/outreach/", "permanent": true },
+    { "source": "/author/:path*", "destination": "/our-team/", "permanent": true },
+    { "source": "/2025/:path*", "destination": "/outreach/", "permanent": true },
+    { "source": "/2026/:path*", "destination": "/outreach/", "permanent": true },
+    { "source": "/wp-admin/:path*", "destination": "/admin/", "permanent": false },
+    { "source": "/wp-login.php", "destination": "/admin/", "permanent": false },
+    { "source": "/home", "destination": "/", "permanent": true }
+  ]
+}

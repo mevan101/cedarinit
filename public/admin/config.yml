@@ -1,0 +1,552 @@
+# Cedar Initiative content manager (Decap CMS). Open /admin/ on the live site.
+# Everything you edit here is saved as a file in the GitHub repo, so every change has history and can be undone.
+# Local editing without GitHub: run `npm run cms` and `npm run dev`, then open http://localhost:3000/admin/
+
+backend:
+  name: github
+  repo: mevan101/cedarinit
+  branch: main
+  # TODO(Evan): set base_url to the OAuth helper once it is deployed (see docs/cms.md).
+  # base_url: https://cedar-cms-auth.example.workers.dev
+  commit_messages:
+    create: 'Add {{collection}} "{{slug}}"'
+    update: 'Update {{collection}} "{{slug}}"'
+    delete: 'Delete {{collection}} "{{slug}}"'
+    uploadMedia: 'Upload "{{path}}"'
+    deleteMedia: 'Delete "{{path}}"'
+
+local_backend: true
+
+# Drafts → In review → Ready. Publishing a "Ready" item puts it live.
+publish_mode: editorial_workflow
+
+site_url: https://cedar-initiative.org
+display_url: https://cedar-initiative.org
+logo_url: /brand/logo.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: posts
+    label: Articles
+    label_singular: Article
+    description: News, campaign diaries and stories. Each article gets its own page at cedar-initiative.org/<slug>/.
+    folder: content/posts
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}} · {{date}} · {{category}}'
+    sortable_fields: [date, title, category]
+    view_filters:
+      - { label: Drafts, field: draft, pattern: true }
+      - { label: ML Bangladesh, field: category, pattern: ML Bangladesh }
+      - { label: Projects, field: category, pattern: Project }
+    view_groups:
+      - { label: Year, field: date, pattern: '\d{4}' }
+      - { label: Category, field: category }
+    fields:
+      - { name: title, label: Title, widget: string, hint: 'Say what happened, where. Under 65 characters works best in Google.' }
+      - name: slug
+        label: Web address
+        widget: string
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only']
+        hint: 'e.g. winter-drive-2026-day-1. Must not match a page address. Changing it later breaks old links.'
+      - { name: description, label: Search description, widget: text, required: false, hint: '140–160 characters, shown under the title in Google. Leave empty to use the excerpt.' }
+      - { name: date, label: Date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMMM YYYY', time_format: false, picker_utc: true }
+      - name: category
+        label: Category
+        widget: select
+        options: [News, Project, Education, Announcement, ML Bangladesh, Climate]
+        default: News
+      - { name: cover, label: Cover photo, widget: image, hint: 'Landscape, at least 1600px wide. JPG or WebP under 500 KB.' }
+      - { name: cover_alt, label: Cover photo description, widget: string, required: false, hint: 'Describe the photo for screen readers, e.g. "Volunteers sorting clothes in a school hall".' }
+      - { name: excerpt, label: Short summary, widget: text, required: false, hint: 'Shown on cards. Leave empty to use the opening lines.' }
+      - name: gallery
+        label: Photo gallery
+        widget: list
+        required: false
+        summary: '{{fields.alt}}'
+        fields:
+          - { name: image, label: Photo, widget: image }
+          - { name: alt, label: Description, widget: string, required: false }
+      - { name: draft, label: Hide from the site, widget: boolean, default: false, required: false }
+      - { name: original_title, label: Original title, widget: hidden, required: false }
+      - name: body
+        label: Article
+        widget: markdown
+        hint: 'Use the toolbar for headings, bold, lists, links, quotes and photos.'
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    description: Build new pages from blocks (text, photos, galleries, buttons, forms, videos, team lists). Each page lives at cedar-initiative.org/<slug>/.
+    folder: content/pages
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}}'
+    fields:
+      - { name: title, label: Page title, widget: string }
+      - name: slug
+        label: Web address
+        widget: string
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only']
+        hint: 'e.g. campus-ambassadors. Do not reuse: about-us, our-work, ml-bangladesh, our-team, outreach, contact, give, volunteer, partner, brand.'
+      - { name: description, label: Search description, widget: text, hint: '140–160 characters.' }
+      - { name: eyebrow, label: Small label above the title, widget: string, required: false }
+      - { name: lead, label: Intro sentence, widget: text, required: false }
+      - { name: hero_image, label: Top photo, widget: image, required: false }
+      - { name: hero_alt, label: Top photo description, widget: string, required: false }
+      - { name: hero_caption, label: Top photo caption (place · date), widget: string, required: false }
+      - { name: draft, label: Hide from the site, widget: boolean, default: false, required: false }
+      - name: blocks
+        label: Page sections
+        label_singular: section
+        widget: list
+        required: false
+        types:
+          - label: Text
+            name: text
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: body, label: Text, widget: markdown }
+          - label: Photo
+            name: image
+            widget: object
+            summary: '{{fields.caption}}'
+            fields:
+              - { name: image, label: Photo, widget: image }
+              - { name: alt, label: Description, widget: string }
+              - { name: caption, label: Caption (place · date), widget: string, required: false }
+              - { name: wide, label: Extra wide, widget: boolean, default: false, required: false }
+          - label: Photo gallery
+            name: gallery
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - name: images
+                label: Photos
+                widget: list
+                fields:
+                  - { name: image, label: Photo, widget: image }
+                  - { name: alt, label: Description, widget: string, required: false }
+          - label: Call to action
+            name: cta
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: body, label: Text, widget: text, required: false }
+              - { name: button_label, label: Button text, widget: string, required: false }
+              - { name: button_link, label: Button link, widget: string, required: false, hint: 'e.g. /give/ or https://…' }
+          - label: Form
+            name: form
+            widget: object
+            summary: '{{fields.form}}'
+            fields:
+              - { name: form, label: Form, widget: relation, collection: forms, value_field: id, search_fields: [title, id], display_fields: [title] }
+          - label: YouTube video
+            name: video
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: url, label: YouTube link, widget: string }
+          - label: Team members
+            name: people
+            widget: object
+            summary: '{{fields.team}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - name: team
+                label: Team
+                widget: select
+                options: [founders, research, communication, programs, community, ml-bangladesh, ambassadors, advisers]
+      - { name: body, label: Extra text at the top (optional), widget: markdown, required: false }
+
+  - name: programs
+    label: Programs
+    label_singular: Program
+    description: Campaigns and programs (Ushnota Abhijan, CSEdWeek, and new ones). Each gets its own page with dates, places, events, field diary, partners, photos and its financial report.
+    folder: content/programs
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}} · {{status}}'
+    sortable_fields: [order, title, start_date]
+    fields:
+      - { name: title, label: Program name, widget: string }
+      - name: slug
+        label: Web address
+        widget: string
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only']
+        hint: 'e.g. ushnota-abhijan-2026'
+      - { name: seo_title, label: Google title, widget: string, required: false, hint: 'Say what and where, under 65 characters.' }
+      - { name: description, label: Search description, widget: text, hint: '140–160 characters.' }
+      - { name: kicker, label: Program type, widget: string, hint: 'e.g. Winter relief, CS education' }
+      - { name: status, label: Status, widget: select, options: [Planned, Open for volunteers, Ongoing, Completed], default: Planned }
+      - { name: start_date, label: Start date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: end_date, label: End date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: places, label: Places, widget: list, required: false, hint: 'Districts or venues, one per line' }
+      - { name: cover, label: Cover photo, widget: image }
+      - { name: cover_alt, label: Cover photo description, widget: string }
+      - { name: cover_caption, label: Cover caption (place · date), widget: string, required: false }
+      - { name: lead, label: One-sentence summary, widget: text }
+      - { name: order, label: Order on the Our work page, widget: number, value_type: int, default: 10 }
+      - { name: draft, label: Hide from the site, widget: boolean, default: false, required: false }
+      - name: facts
+        label: Key facts
+        widget: list
+        required: false
+        summary: '{{fields.value}} {{fields.label}}'
+        fields:
+          - { name: value, label: Number or short fact, widget: string }
+          - { name: label, label: Label, widget: string }
+      - { name: body, label: Overview, widget: markdown, required: false }
+      - name: objectives
+        label: Objectives
+        widget: list
+        required: false
+        summary: '{{fields.heading}}'
+        fields:
+          - { name: heading, label: Heading, widget: string }
+          - { name: items, label: Points, widget: list }
+      - { name: audience_heading, label: Who it serves (heading), widget: string, required: false }
+      - { name: audience, label: Who it serves, widget: list, required: false }
+      - name: events
+        label: Events
+        label_singular: event
+        widget: list
+        required: false
+        summary: '{{fields.date}} · {{fields.title}}'
+        fields:
+          - { name: date, label: Date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false }
+          - { name: end_date, label: End date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+          - { name: title, label: Event, widget: string }
+          - { name: place, label: Place, widget: string, required: false }
+          - { name: body, label: Details, widget: text, required: false }
+          - { name: link, label: Link (sign-up, photos, article), widget: string, required: false }
+      - { name: diary_heading, label: Field diary heading, widget: string, required: false }
+      - { name: diary, label: Field diary articles, widget: relation, collection: posts, value_field: '{{slug}}', search_fields: [title], display_fields: [title], multiple: true, required: false, hint: 'Pick the articles to show day by day, in order.' }
+      - name: partners
+        label: Partners
+        widget: list
+        required: false
+        summary: '{{fields.name}} · {{fields.role}}'
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: role, label: Role, widget: string, required: false, hint: 'e.g. Sponsor, Host school' }
+          - { name: logo, label: Logo, widget: image, required: false }
+          - { name: url, label: Website, widget: string, required: false }
+      - name: gallery
+        label: Photos
+        widget: list
+        required: false
+        summary: '{{fields.caption}} · {{fields.alt}}'
+        fields:
+          - { name: image, label: Photo, widget: image }
+          - { name: alt, label: Description, widget: string }
+          - { name: caption, label: Group (e.g. Day 1, Distribution), widget: string, required: false }
+      - name: blocks
+        label: Extra sections
+        label_singular: section
+        widget: list
+        required: false
+        types:
+          - label: Text
+            name: text
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: body, label: Text, widget: markdown }
+          - label: Photo
+            name: image
+            widget: object
+            summary: '{{fields.caption}}'
+            fields:
+              - { name: image, label: Photo, widget: image }
+              - { name: alt, label: Description, widget: string }
+              - { name: caption, label: Caption (place · date), widget: string, required: false }
+              - { name: wide, label: Extra wide, widget: boolean, default: false, required: false }
+          - label: Photo gallery
+            name: gallery
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - name: images
+                label: Photos
+                widget: list
+                fields:
+                  - { name: image, label: Photo, widget: image }
+                  - { name: alt, label: Description, widget: string, required: false }
+          - label: Call to action
+            name: cta
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: body, label: Text, widget: text, required: false }
+              - { name: button_label, label: Button text, widget: string, required: false }
+              - { name: button_link, label: Button link, widget: string, required: false, hint: 'e.g. /give/ or https://…' }
+          - label: Form
+            name: form
+            widget: object
+            summary: '{{fields.form}}'
+            fields:
+              - { name: form, label: Form, widget: relation, collection: forms, value_field: id, search_fields: [title, id], display_fields: [title] }
+          - label: YouTube video
+            name: video
+            widget: object
+            summary: '{{fields.heading}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: url, label: YouTube link, widget: string }
+          - label: Team members
+            name: people
+            widget: object
+            summary: '{{fields.team}}'
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - name: team
+                label: Team
+                widget: select
+                options: [founders, research, communication, programs, community, ml-bangladesh, ambassadors, advisers]
+      - { name: report, label: Financial report, widget: relation, collection: reports, value_field: '{{slug}}', search_fields: [title], display_fields: [title], required: false }
+      - { name: cta_heading, label: Closing call to action, widget: string, required: false }
+      - { name: cta_body, label: Closing text, widget: text, required: false }
+
+  - name: forms
+    label: Forms
+    label_singular: Form
+    description: Build a form once, then add it to any page with a "Form" section.
+    folder: content/forms
+    format: json
+    extension: json
+    create: true
+    identifier_field: id
+    slug: '{{fields.id}}'
+    summary: '{{title}}'
+    fields:
+      - { name: id, label: Form ID, widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes'], hint: 'e.g. campus-ambassador' }
+      - { name: title, label: Title, widget: string }
+      - { name: intro, label: Intro text, widget: text, required: false }
+      - name: action
+        label: Where submissions go
+        widget: string
+        required: false
+        hint: 'A form endpoint URL (e.g. Formspree or Google Apps Script). Leave empty to send each submission as an email draft to info@cedar-initiative.org.'
+      - { name: method, label: Method, widget: hidden, default: POST }
+      - { name: submit_label, label: Button text, widget: string, default: Send }
+      - { name: success, label: Thank-you message, widget: string, default: 'Thanks, we received your message.' }
+      - name: fields
+        label: Questions
+        label_singular: question
+        widget: list
+        summary: '{{fields.label}} ({{fields.type}})'
+        fields:
+          - { name: label, label: Question, widget: string }
+          - { name: name, label: Field key, widget: string, pattern: ['^[a-z0-9_]+$', 'Lowercase, numbers, underscores'], hint: 'Short and unique within the form, e.g. full_name' }
+          - name: type
+            label: Answer type
+            widget: select
+            options:
+              - { label: Short text, value: text }
+              - { label: Long text, value: textarea }
+              - { label: Email, value: email }
+              - { label: Phone, value: tel }
+              - { label: Number, value: number }
+              - { label: Date, value: date }
+              - { label: Link, value: url }
+              - { label: Dropdown, value: select }
+              - { label: Tick box, value: checkbox }
+            default: text
+          - { name: required, label: Required, widget: boolean, default: false }
+          - { name: options, label: Dropdown choices, widget: list, required: false, hint: 'Only for Dropdown' }
+          - { name: help, label: Help text, widget: string, required: false }
+
+  - name: opportunities
+    label: Open roles
+    label_singular: Role
+    description: Volunteer roles people can apply for on the site. Applications arrive in the staff area at /staff/.
+    folder: content/opportunities
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}} · {{status}}'
+    fields:
+      - { name: title, label: Role title, widget: string }
+      - { name: slug, label: Web address, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only'] }
+      - { name: status, label: Status, widget: select, options: [open, closed], default: open }
+      - { name: program, label: Program, widget: string }
+      - { name: location, label: Where, widget: string }
+      - { name: commitment, label: Time needed, widget: string, hint: 'e.g. One day per event' }
+      - { name: deadline, label: Apply by (optional), widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: summary, label: Summary, widget: text }
+      - { name: responsibilities, label: What you'll do, widget: list }
+      - { name: requirements, label: Who we're looking for, widget: list, required: false }
+      - { name: benefits, label: What you get, widget: list, required: false }
+      - { name: areas, label: Areas (used on certificates), widget: list, required: false }
+      - name: questions
+        label: Application questions
+        label_singular: question
+        widget: list
+        summary: '{{fields.label}} ({{fields.type}})'
+        fields:
+          - { name: label, label: Question, widget: string }
+          - { name: name, label: Field key, widget: string, pattern: ['^[a-z0-9_]+$', 'Lowercase, numbers, underscores'], hint: 'Short and unique within the form, e.g. full_name' }
+          - name: type
+            label: Answer type
+            widget: select
+            options:
+              - { label: Short text, value: text }
+              - { label: Long text, value: textarea }
+              - { label: Email, value: email }
+              - { label: Phone, value: tel }
+              - { label: Number, value: number }
+              - { label: Date, value: date }
+              - { label: Link, value: url }
+              - { label: Dropdown, value: select }
+              - { label: Tick box, value: checkbox }
+            default: text
+          - { name: required, label: Required, widget: boolean, default: false }
+          - { name: options, label: Dropdown choices, widget: list, required: false, hint: 'Only for Dropdown' }
+          - { name: help, label: Help text, widget: string, required: false }
+
+
+  - name: reports
+    label: Financial reports
+    label_singular: Report
+    description: Enter what came in and what went out, line by line. The website adds it up, draws the charts and makes the PDF and spreadsheet versions.
+    folder: content/reports
+    format: json
+    extension: json
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}} · {{year}} · {{status}}'
+    fields:
+      - { name: title, label: Report title, widget: string, hint: 'e.g. Ushnota Abhijan 2026' }
+      - name: slug
+        label: Web address
+        widget: string
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lowercase letters, numbers and dashes only']
+        hint: 'e.g. financial-report-ushnota-abhijan-2026'
+      - { name: kind, label: Type, widget: select, options: [{ label: One program or event, value: program }, { label: Whole-year statement, value: annual }], default: program }
+      - { name: program, label: Program page this belongs to, widget: relation, collection: programs, value_field: '{{slug}}', search_fields: [title], display_fields: [title], required: false }
+      - { name: year, label: Financial year, widget: string, default: '2026' }
+      - { name: period_start, label: Period start, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: period_end, label: Period end, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: currency, label: Currency, widget: select, options: [BDT, USD], default: BDT }
+      - { name: status, label: Status, widget: select, options: [{ label: 'Draft (hidden)', value: draft }, { label: Final, value: final }], default: draft }
+      - { name: summary, label: One-paragraph summary, widget: text }
+      - { name: prepared_by, label: Prepared by, widget: string, required: false }
+      - { name: approved_by, label: Approved by, widget: string, required: false }
+      - { name: published, label: Date published, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+      - { name: includes, label: 'Program reports included (whole-year statements only)', widget: relation, collection: reports, value_field: '{{slug}}', search_fields: [title], display_fields: [title], multiple: true, required: false }
+      - name: budget
+        label: Budget (optional)
+        label_singular: budget line
+        widget: list
+        required: false
+        hint: 'Plan by category. Spending in the same category is compared automatically.'
+        summary: '{{fields.category}}: {{fields.amount}}'
+        fields:
+          - { name: category, label: Category, widget: string }
+          - { name: amount, label: Budgeted amount, widget: number, value_type: float, min: 0 }
+          - { name: note, label: Note, widget: string, required: false }
+      - name: income
+        label: Money in
+        label_singular: contribution
+        widget: list
+        required: false
+        summary: '{{fields.source}}: {{fields.amount}}'
+        fields:
+          - { name: source, label: From, widget: string, hint: 'Person or organisation. Write "Anonymous" if they asked.' }
+          - { name: type, label: Type, widget: select, options: [donation, sponsorship, grant, in-kind, other], default: donation }
+          - { name: amount, label: Amount, widget: number, value_type: float, min: 0 }
+          - { name: date, label: Date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+          - { name: note, label: Note, widget: string, required: false }
+      - name: expenses
+        label: Money out
+        label_singular: expense
+        widget: list
+        required: false
+        summary: '{{fields.category}} · {{fields.item}}: {{fields.amount}}'
+        fields:
+          - { name: bill_no, label: Bill or receipt number, widget: string, required: false }
+          - { name: date, label: Date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMM YYYY', time_format: false, required: false }
+          - { name: category, label: Category, widget: string, hint: 'Keep names consistent, e.g. Transport, Food, Printing' }
+          - { name: item, label: What it was, widget: string }
+          - { name: amount, label: Amount, widget: number, value_type: float, min: 0 }
+          - { name: receipt, label: Receipt (photo or PDF), widget: file, required: false }
+          - { name: note, label: Note, widget: string, required: false }
+      - name: outputs
+        label: What it delivered
+        widget: list
+        required: false
+        summary: '{{fields.value}} {{fields.label}}'
+        fields:
+          - { name: value, label: Number, widget: string }
+          - { name: label, label: Description, widget: string }
+      - name: attachments
+        label: Attached files
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: Label, widget: string }
+          - { name: file, label: File, widget: file }
+      - { name: internal_notes, label: Internal notes (never shown on the site), widget: text, required: false }
+
+  - name: team
+    label: Team
+    description: Add people to teams, reorder them, or create a new team.
+    files:
+      - name: team
+        label: Teams and members
+        file: content/team.json
+        fields:
+          - name: teams
+            label: Teams
+            label_singular: team
+            widget: list
+            summary: '{{fields.name}}'
+            fields:
+              - { name: name, label: Team name, widget: string }
+              - { name: slug, label: Team ID, widget: string, hint: 'Lowercase with dashes, used in links like /our-team/#research' }
+              - { name: description, label: Description, widget: text, required: false }
+              - { name: layout, label: Card size, widget: select, options: [{ label: Large portraits, value: large }, { label: Grid, value: grid }], default: grid }
+              - name: members
+                label: Members
+                label_singular: member
+                widget: list
+                required: false
+                summary: '{{fields.name}} · {{fields.role}}'
+                fields:
+                  - { name: name, label: Name, widget: string }
+                  - { name: role, label: Role, widget: string }
+                  - { name: badge, label: Badge (e.g. Founder, Team lead), widget: string, required: false }
+                  - { name: photo, label: Photo, widget: image, hint: 'Any portrait photo or transparent PNG, at least 800px tall. The Cedar background is added automatically when the site is published.' }
+                  - { name: keep_original_background, label: Keep the photo's own background, widget: boolean, default: false, required: false }
+                  - { name: bio, label: Short bio, widget: text, required: false }
+                  - { name: linkedin, label: LinkedIn URL, widget: string, required: false }
+                  - { name: facebook, label: Facebook URL, widget: string, required: false }
+                  - { name: email, label: Public email, widget: string, required: false }
+
+  - name: settings
+    label: Settings
+    files:
+      - name: announcement
+        label: Announcement bar
+        file: content/settings/announcement.json
+        fields:
+          - { name: enabled, label: Show the bar, widget: boolean, default: false }
+          - { name: text, label: Message, widget: string }
+          - { name: link_label, label: Link text, widget: string, required: false }
+          - { name: link, label: Link, widget: string, required: false }
+          - { name: tone, label: Tone, widget: hidden, default: green }
