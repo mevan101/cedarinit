@@ -11,6 +11,7 @@ import { reports, money } from '@/lib/finance';
 import { founders, portraitOf } from '@/lib/team';
 import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
+import Intro from '@/components/Intro';
 import { LogoMarquee } from '@/components/LogoWall';
 
 export const metadata: Metadata = {
@@ -79,6 +80,7 @@ export default function Home() {
     <>
       {/* 1. What Cedar does. On large screens: field photos float around the headline, then drift away
              as the launch-day group photo grows to fill the screen (scroll-driven, CSS only). */}
+      <Intro />
       <section className="orbit" aria-labelledby="hero-title">
         <div className="orbit-stage">
           <div className="orbit-copy">

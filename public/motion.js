@@ -6,6 +6,11 @@
   var d = document.documentElement;
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   d.classList.add('motion');
+  // Any click, key or scroll skips the opening sequence.
+  if (d.classList.contains('intro-on')) {
+    var skip = function () { d.classList.remove('intro-on'); ['click', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { removeEventListener(t, skip); }); };
+    ['click', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { addEventListener(t, skip, { passive: true }); });
+  }
   var sda = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));
   if (!sda) d.classList.add('no-sda');
 
