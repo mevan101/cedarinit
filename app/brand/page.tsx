@@ -52,11 +52,11 @@ export default function BrandPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Tile label="2025 wordmark, green" className="bg-white">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/legacy/wordmark-2025-green.png" alt="Cedar Initiative 2025 wordmark in green" className="h-24 w-auto" />
+              <img src="/brand/legacy/wordmark-2025-green.png" width={563} height={375} alt="Cedar Initiative 2025 wordmark in green" className="h-24 w-auto" />
             </Tile>
             <Tile label="2025 wordmark, white" className="bg-cedar-700">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/legacy/wordmark-2025-white.png" alt="Cedar Initiative 2025 wordmark in white" className="h-24 w-auto" />
+              <img src="/brand/legacy/wordmark-2025-white.png" width={563} height={375} alt="Cedar Initiative 2025 wordmark in white" className="h-24 w-auto" />
             </Tile>
           </div>
         </div>

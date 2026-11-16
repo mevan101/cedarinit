@@ -21,7 +21,7 @@ export default function PublicProfileApp() {
       <div className="flex flex-col gap-6 rounded-[var(--radius-card)] border border-ink/10 bg-white p-6 sm:flex-row sm:items-center sm:p-8">
         {pp.photo_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={pp.photo_url} alt="" className="h-28 w-28 rounded-full object-cover" />
+          <img src={pp.photo_url} alt="" width={112} height={112} className="h-28 w-28 rounded-full object-cover" />
         ) : <span className="inline-flex h-28 w-28 items-center justify-center rounded-full bg-cedar-700 font-display text-5xl text-white">{pp.full_name[0]}</span>}
         <div className="flex-1">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Cedar Initiative volunteer</p>

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase-client';
+import { supabaseLazy } from '@/lib/supabase-lazy';
 import { fromLive, type LivePost } from '@/lib/post-live';
 import { formatDate, type Post } from '@/lib/post-types';
 
@@ -10,9 +10,8 @@ export default function StoryReader() {
   const [post, setPost] = useState<Post | null | undefined>(undefined);
   useEffect(() => {
     const slug = new URLSearchParams(location.search).get('s') ?? '';
-    const sb = supabase();
-    if (!sb || !/^[a-z0-9-]{2,92}$/.test(slug)) return setPost(null);
-    sb.from('site_posts').select('*').eq('slug', slug).maybeSingle().then(({ data }) => {
+    if (!/^[a-z0-9-]{2,92}$/.test(slug)) return setPost(null);
+    supabaseLazy().then(async (sb) => (sb ? (await sb.from('site_posts').select('*').eq('slug', slug).maybeSingle()).data : null)).then((data) => {
       setPost(data ? fromLive(data as LivePost) : null);
       if (data) document.title = `${data.title} · Cedar Initiative`;
     }, () => setPost(null));
@@ -35,7 +34,7 @@ export default function StoryReader() {
         <p className="mt-6 text-sm text-ink-muted"><time dateTime={post.date}>{formatDate(post.date)}</time></p>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <div className="shell max-w-5xl"><img src={post.cover} alt={post.coverAlt} className="max-h-[70vh] w-full rounded-4xl object-cover" /></div>
+      <div className="shell max-w-5xl"><img src={post.cover} alt={post.coverAlt} width={1600} height={1000} fetchPriority="high" className="aspect-[16/10] max-h-[70vh] w-full rounded-4xl object-cover" /></div>
       <div className="shell max-w-3xl py-16"><div className="prose-cedar" dangerouslySetInnerHTML={{ __html: post.html }} /></div>
     </article>
   );

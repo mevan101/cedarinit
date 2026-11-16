@@ -31,6 +31,7 @@ export function LogoGrid({ only, className = '' }: { only?: Sponsor['with']; cla
 /** A slow moving strip of every sponsor logo (static row under reduced motion). */
 export function LogoMarquee() {
   return (
+    <div className="relative">
     <div className="mask-fade-x overflow-hidden">
       <ul className="marquee flex w-max items-center gap-14 pr-14 motion-reduce:flex-wrap" style={{ ['--marquee-duration' as string]: '70s' }}>
         {[...sponsors, ...sponsors].map((s, k) => (
@@ -39,6 +40,9 @@ export function LogoMarquee() {
           </li>
         ))}
       </ul>
+    </div>
+    {/* Moving content needs a way to stop it (WCAG 2.2.2). public/motion.js wires this up. */}
+    <button type="button" data-marquee-toggle aria-pressed="false" className="marquee-toggle">Pause logos</button>
     </div>
   );
 }

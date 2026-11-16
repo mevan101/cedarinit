@@ -70,7 +70,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
         {notice}
         <div className="shell pt-3 short:pt-2 sm:pt-4">
           <div
-            className={`flex h-16 short:h-14 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-all duration-500 ease-out sm:pl-5 ${
+            className={`flex h-16 short:h-14 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-[background-color,border-color,box-shadow] duration-500 ease-out sm:pl-5 ${
               scrolled || open ? 'chrome' : 'border border-transparent'
             }`}
           >
@@ -129,7 +129,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
         aria-modal="true"
         aria-label="Site menu"
         hidden={!open}
-        className="fixed inset-0 z-40 overflow-y-auto scroll-pb-10 scroll-pt-28 bg-paper px-[var(--gutter)] pb-10 pt-28 short:pt-20 lg:hidden"
+        className="fixed inset-0 z-40 overflow-y-auto overscroll-contain scroll-pb-10 scroll-pt-28 bg-paper px-[var(--gutter)] pb-10 pt-28 short:pt-20 lg:hidden"
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">

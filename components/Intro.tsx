@@ -13,7 +13,7 @@ export default function Intro() {
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "try{var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro-on');setTimeout(function(){d.classList.remove('intro-on');d.classList.add('intro-end');setTimeout(function(){d.classList.remove('intro-end')},1200)},3300)}}catch(e){}",
+            "try{var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro-on');setTimeout(function(){d.classList.remove('intro-on');d.classList.add('intro-end');setTimeout(function(){d.classList.remove('intro-end')},1100)},2550)}}catch(e){}",
         }}
       />
     <div className="intro" aria-hidden="true">

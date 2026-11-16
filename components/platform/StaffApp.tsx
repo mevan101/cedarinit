@@ -311,7 +311,7 @@ function MessageDialog({ to, app, onClose }: { to: Profile; app?: Application; o
     setState(r.delivered ? 'sent' : 'logged');
   }
   return (
-    <div role="dialog" aria-modal="true" aria-label={`Email ${to.full_name}`} className="fixed inset-0 z-[70] flex items-end justify-center bg-ink/40 p-4 sm:items-center" onClick={onClose}>
+    <div role="dialog" aria-modal="true" aria-label={`Email ${to.full_name}`} className="fixed inset-0 z-[70] flex items-end justify-center overscroll-contain bg-ink/40 p-4 sm:items-center" onClick={onClose} onKeyDown={(e) => e.key === 'Escape' && onClose()}>
       <form onSubmit={send} onClick={(e) => e.stopPropagation()} className="w-full max-w-lg space-y-4 rounded-[var(--radius-card)] bg-white p-6 sm:p-8">
         <h2 className="t-h3 text-ink">Email {to.full_name || to.email}</h2>
         <Field id="m-subject" text="Subject"><input id="m-subject" name="subject" required defaultValue={app ? `Your application: ${app.opportunity_title}` : 'Message from Cedar Initiative'} className={input} /></Field>

@@ -20,27 +20,30 @@
       var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
       var out = function (t) { return 1 - Math.pow(1 - t, 3); };
       var t0 = performance.now();
+      // Uneven stagger reads as natural; even steps read as mechanical.
+      var gaps = [0, 45, 100, 135, 195, 240, 290, 330];
       tiles.forEach(function (el, i) {
         var r = el.getBoundingClientRect(), w = r.width, h = r.height, side = Math.min(w, h);
         var fig = el.querySelector('figure'), rad = fig ? parseFloat(getComputedStyle(fig).borderTopLeftRadius) || 24 : 24;
         var tx = r.left + w / 2, ty = r.top + h / 2, ix = (w - side) / 2, iy = (h - side) / 2;
-        var base = (i / tiles.length) * Math.PI * 2 - Math.PI / 2, kf = [], N = 10, M = 8;
+        var base = (i / tiles.length) * Math.PI * 2 - Math.PI / 2, kf = [], N = 10, M = 8, dotS = dot / side;
         var at = function (ang, rr) { return [cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr]; };
         var circle = 'inset(' + iy + 'px ' + ix + 'px round ' + side / 2 + 'px)';
-        // 1. Spiral out from the logo, growing from a speck to a dot.
+        // 1. Spiral out from the logo, growing from a small dot (never from nothing), sharpening as it goes.
         for (var k = 0; k <= N; k++) {
-          var u = out(k / N), p = at(base - 2.6 * (1 - u), R * (0.12 + 0.88 * u)), sc = (dot / side) * (0.18 + 0.82 * u);
-          kf.push({ offset: 0.6 * (k / N), opacity: Math.min(1, k / 2), transform: 'translate(' + (p[0] - tx) + 'px,' + (p[1] - ty) + 'px) scale(' + sc + ')', clipPath: circle });
+          var f = k / N, u = out(f), p = at(base - 2.4 * (1 - u), R * (0.2 + 0.8 * u)), sc = dotS * (0.45 + 0.55 * u);
+          kf.push({ offset: 0.56 * f, opacity: Math.min(1, f * 4), filter: 'blur(' + (6 * Math.max(0, 1 - f * 2.2)).toFixed(2) + 'px)', transform: 'translate(' + (p[0] - tx) + 'px,' + (p[1] - ty) + 'px) scale(' + sc + ')', clipPath: circle });
         }
         // 2. Keep turning while flying to its place, opening from a circle into the card.
         for (var m = 1; m <= M; m++) {
-          var v = ease(m / M), q = at(base + 0.7 * v, R), x = q[0] + (tx - q[0]) * v, y = q[1] + (ty - q[1]) * v, s2 = dot / side + (1 - dot / side) * v;
+          var v = ease(m / M), q = at(base + 0.6 * v, R), x = q[0] + (tx - q[0]) * v, y = q[1] + (ty - q[1]) * v, s2 = dotS + (1 - dotS) * v;
           var c = 'inset(' + iy * (1 - v) + 'px ' + ix * (1 - v) + 'px round ' + (side / 2 + (rad - side / 2) * v) + 'px)';
-          kf.push({ offset: 0.6 + 0.4 * (m / M), opacity: 1, transform: 'translate(' + (x - tx) + 'px,' + (y - ty) + 'px) scale(' + s2 + ')', clipPath: c });
+          kf.push({ offset: 0.56 + 0.44 * (m / M), opacity: 1, filter: 'blur(0px)', transform: 'translate(' + (x - tx) + 'px,' + (y - ty) + 'px) scale(' + s2 + ')', clipPath: c });
         }
         kf[kf.length - 1].transform = 'none';
+        kf[kf.length - 1].filter = 'none';
         kf[kf.length - 1].clipPath = 'inset(0px 0px round ' + rad + 'px)';
-        anims.push(el.animate(kf, { duration: 2900, delay: Math.max(0, 250 + i * 70 - (performance.now() - t0)), easing: 'linear', fill: 'both' }));
+        anims.push(el.animate(kf, { duration: 2250, delay: Math.max(0, 180 + (gaps[i] || i * 45) - (performance.now() - t0)), easing: 'linear', fill: 'both' }));
       });
     }
     var skip = function () {
@@ -96,4 +99,14 @@
       mag = t;
     }, { passive: true });
   }
+
+  // Pause/play for the sponsor logo strip.
+  addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-marquee-toggle]');
+    if (!b) return;
+    var list = b.parentElement.querySelector('.marquee'), on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.textContent = on ? 'Play logos' : 'Pause logos';
+    if (list) list.classList.toggle('is-paused', on);
+  });
 })();

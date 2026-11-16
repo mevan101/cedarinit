@@ -100,7 +100,7 @@ export default function ContactForm() {
   };
 
   const field = 'peer block w-full rounded-2xl border border-ink/10 bg-white/80 px-4 pb-3 pt-6 text-base text-ink shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)] outline-none transition placeholder:text-transparent focus:border-cedar-500 focus:bg-white focus:ring-4 focus:ring-cedar-500/15 aria-[invalid=true]:border-red-600';
-  const label = 'pointer-events-none absolute left-4 top-2 text-xs font-semibold text-ink-muted transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-xs peer-focus:font-semibold peer-focus:text-cedar-700';
+  const label = 'pointer-events-none absolute left-4 top-2 text-xs font-semibold text-ink-muted transition-[top,font-size,color] duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-xs peer-focus:font-semibold peer-focus:text-cedar-700';
 
   const Err = ({ k }: { k: keyof Errors }) =>
     errors[k] ? (

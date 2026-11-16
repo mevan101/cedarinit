@@ -152,7 +152,7 @@ export default function Home() {
                     <figcaption className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-3 py-1 text-xs text-white backdrop-blur-sm">{w.caption}</figcaption>
                   </figure>
                   <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14">
-                    <p className="font-display text-6xl leading-none text-cedar-700/25">0{i + 1}</p>
+                    <p aria-hidden="true" className="font-display text-6xl leading-none text-cedar-700/25">0{i + 1}</p>
                     <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">{w.kicker}</p>
                     <h3 className="mt-2 font-display text-[clamp(2rem,3.6vw,3.25rem)] uppercase leading-[0.95] text-ink">
                       <Link href={w.href} className="after:absolute after:inset-0">{w.title}</Link>

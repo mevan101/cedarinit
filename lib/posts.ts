@@ -2,6 +2,7 @@ import { md, readDir, showDrafts } from './markdown';
 import type { Post } from './post-types';
 import livePosts from '@/content/live/posts.json';
 import { fromLive, type LivePost } from './post-live';
+import { levelHeadings } from './safe-md';
 
 export type { Post } from './post-types';
 export { formatDate } from './post-types';
@@ -17,7 +18,7 @@ const plain = (html: string) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' 
 const filePosts: Post[] = readDir<Front>('content/posts', '.md')
   .filter((p) => showDrafts || !p.draft)
   .map((p) => {
-    const html = md(p.body);
+    const html = levelHeadings(md(p.body));
     const excerpt = p.excerpt || plain(html).slice(0, 220) + '…';
     return {
       slug: p.slug,

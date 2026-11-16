@@ -1,13 +1,13 @@
 'use client';
 
-import { supabase } from './supabase-client';
+import { supabaseLazy } from './supabase-lazy';
 
 /**
  * Saves a form submission to Supabase (staff read it in the dashboard: Inbox). Returns false when the site has no
  * backend, so the caller can fall back. Throws with a readable message if the database refuses (e.g. too many messages).
  */
 export async function sendForm(form: string, fields: Record<string, string>): Promise<boolean> {
-  const sb = supabase();
+  const sb = await supabaseLazy();
   if (!sb) return false;
   const pick = (...keys: string[]) => keys.map((k) => fields[k]).find((v) => v && v.trim())?.trim().slice(0, 300) || null;
   const { error } = await sb.from('form_submissions').insert({

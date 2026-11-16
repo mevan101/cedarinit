@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
 import type { Post } from '@/lib/post-types';
-import { supabase } from '@/lib/supabase-client';
+import { supabaseLazy } from '@/lib/supabase-lazy';
 import { fromLive, type LivePost } from '@/lib/post-live';
 
 export default function NewsList({ posts: built, categories: builtCats }: { posts: Post[]; categories: string[] }) {
@@ -12,8 +12,8 @@ export default function NewsList({ posts: built, categories: builtCats }: { post
   // Stories published in the dashboard since the last build appear straight away, linked to the live reader.
   useEffect(() => {
     const have = new Set(built.map((p) => p.slug));
-    supabase()?.from('site_posts').select('*').eq('kind', 'story').order('published_at', { ascending: false }).limit(20).then(({ data }) => {
-      const fresh = ((data ?? []) as LivePost[]).filter((p) => !have.has(p.slug)).map((p) => ({ ...fromLive(p), href: `/story/?s=${p.slug}` }));
+    supabaseLazy().then((sb) => sb?.from('site_posts').select('*').eq('kind', 'story').order('published_at', { ascending: false }).limit(20)).then((r) => {
+      const fresh = ((r?.data ?? []) as LivePost[]).filter((p) => !have.has(p.slug)).map((p) => ({ ...fromLive(p), href: `/story/?s=${p.slug}` }));
       if (fresh.length) setPosts([...fresh, ...built].sort((a, b) => b.date.localeCompare(a.date)));
     }, () => {});
   }, [built]);

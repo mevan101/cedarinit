@@ -146,7 +146,7 @@ function PostView({ slug }: { slug: string }) {
       </div>
       <div className="shell grid max-w-5xl gap-12 py-16 lg:grid-cols-[1fr_12rem]">
         <div className="prose-cedar" dangerouslySetInnerHTML={{ __html: post.html }} />
-        <aside className="lg:sticky lg:top-32 lg:self-start">
+        <div role="group" aria-label="Share this story" className="lg:sticky lg:top-32 lg:self-start">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Share</p>
           <ul className="mt-3 flex gap-2 lg:flex-col">
             <li><a className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:text-cedar-700" target="_blank" rel="noopener noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=${share}`}><Icon name="facebook" className="h-4 w-4" /><span className="sr-only">Share on Facebook</span></a></li>
@@ -154,7 +154,7 @@ function PostView({ slug }: { slug: string }) {
             <li><a className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:text-cedar-700" target="_blank" rel="noopener noreferrer" href={`https://x.com/intent/post?url=${share}&text=${encodeURIComponent(post.title)}`}><Icon name="x" className="h-4 w-4" /><span className="sr-only">Share on X</span></a></li>
             <li><a className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:text-cedar-700" target="_blank" rel="noopener noreferrer" href={`https://wa.me/?text=${share}`}><Icon name="whatsapp" className="h-4 w-4" /><span className="sr-only">Share on WhatsApp</span></a></li>
           </ul>
-        </aside>
+        </div>
       </div>
       {gallery.length > 0 && (
         <section aria-labelledby="gallery-title" className="pb-16">

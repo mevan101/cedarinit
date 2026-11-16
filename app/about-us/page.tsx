@@ -78,7 +78,7 @@ export default function AboutPage() {
           <ol className="mt-14 grid gap-px overflow-hidden rounded-4xl bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((v, i) => (
               <Reveal as="li" key={v.title} delay={(i % 3) * 90} className="bg-paper p-8 transition-colors hover:bg-white sm:p-10">
-                <p className="font-display text-5xl text-cedar-200">0{i + 1}</p>
+                <p aria-hidden="true" className="font-display text-5xl text-cedar-200">0{i + 1}</p>
                 <h3 className="t-h3 mt-6 text-ink">{v.title}</h3>
                 <p className="mt-3 text-ink-soft">{v.body}</p>
               </Reveal>
