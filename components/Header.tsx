@@ -12,6 +12,9 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
+  // History navigation can change the route without activating a menu link.
+  useEffect(() => setOpen(false), [pathname]);
+
   useEffect(() => {
     const dialog = dialogRef.current;
     if (open) {
