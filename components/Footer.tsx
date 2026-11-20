@@ -54,6 +54,28 @@ export default function Footer() {
                     {site.phone}
                   </a>
                 </li>
+                <li>
+                  <a
+                    className="link-underline inline-flex items-center gap-2 text-white"
+                    href={site.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="whatsapp" className="h-4 w-4" /> WhatsApp
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="link-underline inline-flex items-center gap-2 text-white"
+                    href={site.messenger}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="messenger" className="h-4 w-4" /> Messenger
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
                 <li>{site.location}</li>
               </ul>
               <h2 className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">
