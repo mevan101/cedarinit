@@ -321,7 +321,8 @@
     line-height: 1.06;
     letter-spacing: -0.015em;
     text-transform: uppercase;
-    text-wrap: nowrap;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
   }
   .hero-title > span {
     color: rgb(var(--cedar-700));
