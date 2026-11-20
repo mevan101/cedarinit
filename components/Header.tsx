@@ -10,146 +10,156 @@ import { nav, site } from '@/lib/site';
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const toggleRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    let last = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 12);
-      setHidden(y > 320 && y > last + 4);
-      if (y < last - 4) setHidden(false);
-      last = y;
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
+  // History navigation can change the route without activating a menu link.
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = 'hidden';
-    const first = menuRef.current?.querySelector<HTMLElement>('a, button');
-    first?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpen(false);
-        toggleRef.current?.focus();
-      }
-      if (e.key === 'Tab' && menuRef.current) {
-        const items = Array.from(menuRef.current.querySelectorAll<HTMLElement>('a, button'));
-        const [f, l] = [items[0], items[items.length - 1]];
-        if (e.shiftKey && document.activeElement === f) { e.preventDefault(); l.focus(); }
-        else if (!e.shiftKey && document.activeElement === l) { e.preventDefault(); f.focus(); }
-      }
-    };
-    document.addEventListener('keydown', onKey);
+    const dialog = dialogRef.current;
+    if (open) {
+      dialog?.showModal();
+      document.body.style.overflow = 'hidden';
+    } else {
+      dialog?.close();
+      document.body.style.overflow = '';
+    }
     return () => {
       document.body.style.overflow = '';
-      document.removeEventListener('keydown', onKey);
     };
   }, [open]);
 
-  const isActive = (href: string) => pathname === href || pathname === href.replace(/\/$/, '') || (href !== '/' && pathname.startsWith(href));
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  const isActive = (href: string) =>
+    pathname === href || pathname === href.replace(/\/$/, '') || pathname.startsWith(href);
 
   return (
     <>
       <a href="#main" className="btn-primary fixed left-4 top-3 z-[100] -translate-y-24 focus:translate-y-0">
         Skip to content
       </a>
-      <div className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-cedar-500 via-cedar-400 to-ember" aria-hidden="true" />
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ease-out ${hidden && !open ? '-translate-y-full' : ''}`}
-      >
-        <div className="shell pt-3 sm:pt-4">
-          <div
-            className={`flex h-16 items-center justify-between gap-4 rounded-full pl-4 pr-2 transition-all duration-500 ease-out sm:pl-5 ${
-              scrolled || open ? 'glass' : 'border border-transparent'
-            }`}
-          >
-            <Link href="/" className="rounded-full" aria-label={`${site.name} — home`}>
-              <Logo />
+      <header className="site-header">
+        <div className="shell flex h-20 items-center justify-between gap-5">
+          <Link href="/" className="shrink-0" aria-label={`${site.name} — home`}>
+            <Logo />
+          </Link>
+          <nav aria-label="Primary" className="hidden lg:block">
+            <ul className="flex gap-6 xl:gap-8">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                    className="nav-link"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="flex items-center gap-5">
+            <a
+              href={site.volunteerForm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden text-sm font-semibold text-cedar-700 lg:block"
+            >
+              Volunteer<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <Link
+              href="/contact/?subject=Donation"
+              className="btn-primary hidden !min-h-[44px] !px-4 xs:inline-flex"
+            >
+              Support us <Icon name="arrow" className="h-4 w-4" />
             </Link>
-
-            <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-1">
-                {nav.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={isActive(item.href) ? 'page' : undefined}
-                      className={`relative rounded-full px-4 py-2 text-[0.94rem] font-medium transition-colors ${
-                        isActive(item.href) ? 'bg-cedar-700/10 text-cedar-800' : 'text-ink-soft hover:bg-white/70 hover:text-ink'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div className="flex items-center gap-2">
-              <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass hidden !min-h-[44px] !px-5 text-sm md:inline-flex">
-                Volunteer
-              </a>
-              <Link href="/contact/?subject=Donation" className="btn-primary hidden !min-h-[44px] !px-5 text-sm xs:inline-flex">
-                Support us
-              </Link>
-              <button
-                ref={toggleRef}
-                type="button"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink transition hover:bg-white/70 lg:hidden"
-                aria-expanded={open}
-                aria-controls="mobile-menu"
-                aria-label={open ? 'Close menu' : 'Open menu'}
-                onClick={() => setOpen((o) => !o)}
-              >
-                <Icon name={open ? 'close' : 'menu'} className="h-6 w-6" />
-              </button>
-            </div>
+            <button
+              type="button"
+              className="flex h-11 w-11 items-center justify-center rounded-md border border-ink/20 lg:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label="Open menu"
+              onClick={() => setOpen(true)}
+            >
+              <Icon name="menu" className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </header>
-
-      <div
+      <dialog
+        ref={dialogRef}
         id="mobile-menu"
-        ref={menuRef}
-        role="dialog"
-        aria-modal="true"
         aria-label="Site menu"
-        hidden={!open}
-        className="fixed inset-0 z-40 overflow-y-auto scroll-pb-10 scroll-pt-28 bg-paper/80 px-[var(--gutter)] pb-10 pt-28 backdrop-blur-2xl lg:hidden"
+        onClose={() => setOpen(false)}
+        className="mobile-dialog"
       >
-        <nav aria-label="Mobile">
-          <ul className="space-y-1">
-            {[{ href: '/', label: 'Home' }, ...nav, { href: '/fiscal-sponsors/', label: 'Fiscal Sponsors' }].map((item, i) => (
-              <li key={item.href} className="reveal is-visible" style={{ ['--delay' as string]: `${i * 40}ms` }}>
+        <div className="flex items-center justify-between border-b border-ink/20 pb-5">
+          <Link href="/" aria-label={`${site.name} — home`} onClick={() => setOpen(false)}>
+            <Logo />
+          </Link>
+          <button
+            type="button"
+            autoFocus
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="flex h-11 w-11 items-center justify-center rounded-md border border-ink/20"
+          >
+            <Icon name="close" />
+          </button>
+        </div>
+        <nav aria-label="Mobile" className="mt-6">
+          <ul>
+            {[
+              { href: '/', label: 'Home' },
+              ...nav,
+              { href: '/fiscal-sponsors/', label: 'Fiscal Sponsors' },
+              { href: '/brand/', label: 'Brand guide' },
+            ].map((item) => (
+              <li key={item.href}>
                 <Link
                   href={item.href}
-                  aria-current={isActive(item.href) && item.href !== '/' ? 'page' : pathname === '/' && item.href === '/' ? 'page' : undefined}
-                  className="flex items-center justify-between border-b border-ink/10 py-4 font-display text-4xl uppercase text-ink aria-[current=page]:text-cedar-700"
+                  onClick={() => setOpen(false)}
+                  aria-current={
+                    item.href === '/'
+                      ? pathname === '/'
+                        ? 'page'
+                        : undefined
+                      : isActive(item.href)
+                        ? 'page'
+                        : undefined
+                  }
+                  className="flex items-center justify-between border-b border-ink/15 py-3 font-display text-3xl uppercase aria-[current=page]:text-cedar-700"
                 >
                   {item.label}
-                  <Icon name="arrow" className="h-6 w-6 text-cedar-600" />
+                  <Icon name="arrow" className="h-5 w-5 text-cedar-700" />
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="mt-8 grid gap-3 xs:grid-cols-2">
-          <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-glass">Volunteer</a>
-          <Link href="/contact/?subject=Donation" className="btn-primary">Support us</Link>
+        <div className="mt-7 grid gap-3 xs:grid-cols-2">
+          <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-primary">
+            Become a volunteer<span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <Link href="/contact/?subject=Donation" className="btn-glass" onClick={() => setOpen(false)}>
+            Support our work
+          </Link>
         </div>
-        <p className="mt-8 text-sm text-ink-muted">
-          <a href={`mailto:${site.email}`} className="link-underline">{site.email}</a>
-        </p>
-      </div>
+        <a
+          href={`mailto:${site.email}`}
+          className="mt-7 inline-flex min-h-[44px] items-center text-sm text-ink-soft"
+        >
+          {site.email}
+        </a>
+      </dialog>
     </>
   );
 }

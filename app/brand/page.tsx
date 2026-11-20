@@ -1,152 +1,411 @@
 import type { Metadata } from 'next';
 import Logo, { Mark } from '@/components/Logo';
 import Reveal from '@/components/Reveal';
-import GlassCard from '@/components/GlassCard';
 import Icon from '@/components/Icon';
-import { Aurora, PageHero, SectionHeading } from '@/components/ui';
+import Img from '@/components/Img';
+import CopyColor from '@/components/CopyColor';
+import { PageHero } from '@/components/ui';
 
 export const metadata: Metadata = {
-  title: 'Brand guide',
-  description: 'The Cedar Initiative brand system: logo, colour, typography, liquid-glass surfaces, motion and accessibility.',
+  title: 'Brand guide — Cedar Fieldnotes',
+  description:
+    'Cedar Fieldnotes: our visual identity, downloadable logos, colour palette, typography, photography and voice. A practical guide to showing up as Cedar.',
   alternates: { canonical: '/brand/' },
 };
 
-const ramp = [
-  ['50', '#F0FAF4'], ['100', '#DCF3E6'], ['200', '#B8E6CC'], ['300', '#7FD6A4'], ['400', '#3FA872'], ['500', '#16884F'],
-  ['600', '#0A6E40'], ['700', '#025730'], ['800', '#024326'], ['900', '#01331C'], ['950', '#011E11'],
+const colors = [
+  {
+    name: 'Cedar',
+    hex: '#025730',
+    role: 'Our signature. Logos, links, primary actions.',
+    cls: 'bg-cedar-700 text-white',
+  },
+  {
+    name: 'Paper',
+    hex: '#F6F4EB',
+    role: 'Warm, open space. The canvas for our stories.',
+    cls: 'bg-paper text-ink border border-ink/20',
+  },
+  {
+    name: 'Seedling',
+    hex: '#DCEE8F',
+    role: 'Optimism in small doses. Calls to get involved.',
+    cls: 'bg-lime text-cedar-900',
+  },
+  {
+    name: 'Ink',
+    hex: '#0B1A12',
+    role: 'Clarity first. Headlines and reading text.',
+    cls: 'bg-ink text-white',
+  },
+  {
+    name: 'Clay',
+    hex: '#B74928',
+    role: 'A human touch. Editorial symbols and details.',
+    cls: 'bg-clay text-white',
+  },
 ];
-const core = [
-  { name: 'Cedar 700', hex: '#025730', role: 'Primary — logo, buttons, links', cls: 'bg-cedar-700 text-white', ratio: '9.1:1 on Paper' },
-  { name: 'Ink', hex: '#0B1A12', role: 'Headlines & body text', cls: 'bg-ink text-white', ratio: '16.9:1 on Paper' },
-  { name: 'Paper', hex: '#F8F7F2', role: 'Page background', cls: 'bg-paper text-ink border border-ink/10', ratio: 'Base' },
-  { name: 'Cedar 950', hex: '#011E11', role: 'Dark sections & footer', cls: 'bg-cedar-950 text-white', ratio: '17.8:1 with white' },
-  { name: 'Ember', hex: '#F2B544', role: 'Accent — highlights on dark only', cls: 'bg-ember text-ink', ratio: 'Decorative' },
+const sections = [
+  ['identity', 'Identity'],
+  ['colour', 'Colour'],
+  ['type', 'Type'],
+  ['layout', 'Layout'],
+  ['photography', 'Photography'],
+  ['voice', 'Voice'],
+  ['access', 'Access & motion'],
 ];
 
 export default function BrandPage() {
   return (
     <>
-      <PageHero eyebrow="Brand guide v1.0" title="Cedar Glass design system" lead="One set of rules for every page, post, slide and social graphic — so Cedar Initiative looks as trustworthy as the work it does. Built to scale from a youth movement to an international nonprofit." />
+      <PageHero
+        eyebrow="The Cedar brand / Edition 02"
+        title="Rooted in purpose. Recognisably Cedar."
+        lead="Meet Cedar Fieldnotes. An identity for people who care enough to act: grounded in green, open like a notebook, and full of the energy of a new generation."
+      />
+      <div className="shell pt-8">
+        <nav aria-label="Brand guide sections" className="brand-nav">
+          {sections.map(([id, label], i) => (
+            <a key={id} href={`#${id}`}>
+              <span className="mr-2 text-ink-muted">0{i + 1}</span>
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
 
-      <Block id="logo" n="01" title="Logo" lead="Two opposing cedar-green wedges rise past each other — a split “C” and “I” that reads as growth, balance and two hands meeting. Set beside an Anton wordmark.">
+      <Block
+        id="identity"
+        n="01"
+        title="A mark of shared purpose."
+        lead="Keep the Cedar mark and Anton wordmark together. Our existing identity stays; the world around it becomes more confident, useful and human."
+      >
         <div className="grid gap-4 md:grid-cols-3">
-          <Tile label="Primary — on light" className="bg-white"><Logo className="scale-125" /></Tile>
-          <Tile label="Reverse — on Cedar 950" className="bg-cedar-950"><Logo tone="white" className="scale-125" /></Tile>
-          <Tile label="Mark — avatars & favicons" className="bg-cedar-700"><Mark tone="white" className="h-20 w-auto" /></Tile>
+          <Tile label="Primary / light backgrounds" className="bg-paper">
+            <Logo className="scale-125" />
+          </Tile>
+          <Tile label="Reverse / dark backgrounds" className="bg-cedar-950">
+            <Logo tone="white" className="scale-125" />
+          </Tile>
+          <Tile label="Mark / compact applications" className="bg-cedar-700">
+            <Mark tone="white" className="h-20 w-auto" />
+          </Tile>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          <Rules title="Do" good items={['Keep clear space equal to the height of the “C” on all sides.', 'Minimum width 96px (digital) / 25mm (print); mark-only below that.', 'Use the reverse lockup on photos with a Cedar 950 scrim.']} />
-          <Rules title="Don’t" items={['Recolour the mark outside the Cedar ramp, white or black.', 'Stretch, rotate, outline or add effects to the logo.', 'Place the colour logo on busy imagery without a scrim.']} />
+          <Rules
+            good
+            title="Give it room."
+            items={[
+              'Keep clear space equal to the height of the wordmark’s “C”.',
+              'Use the full lockup at 96px wide or larger; use the mark below that.',
+              'Choose Cedar on light backgrounds and white on dark backgrounds.',
+            ]}
+          />
+          <Rules
+            title="Keep it honest."
+            items={[
+              'Never stretch, rotate, outline or add shadows to the logo.',
+              'Don’t recolour the logo with accent colours.',
+              'Don’t place it over a busy photo without a solid panel.',
+            ]}
+          />
         </div>
-        <div className="mt-6 flex flex-wrap gap-3">
-          {['logo.svg', 'logo-white.svg', 'logo-reverse.svg', 'mark.svg', 'icon.svg', 'logo.png'].map((f) => (
-            <a key={f} href={`/brand/${f}`} download className="btn-glass !min-h-[40px] text-sm"><Icon name="download" className="h-4 w-4" />{f}</a>
-          ))}
+        <div className="mt-8 flex flex-wrap gap-3">
+          {['logo.svg', 'logo-white.svg', 'logo-reverse.svg', 'mark.svg', 'icon.svg', 'logo.png'].map(
+            (file) => (
+              <a key={file} href={`/brand/${file}`} download className="btn-glass text-xs">
+                <Icon name="download" className="h-4 w-4" />
+                {file}
+                <span className="sr-only"> download</span>
+              </a>
+            ),
+          )}
         </div>
       </Block>
 
-      <Block id="colour" n="02" title="Colour" lead="Cedar green carries the brand. Neutrals do the reading work. Ember is a rare spark — never more than 5% of a layout." tint>
+      <Block
+        id="colour"
+        n="02"
+        title="Earth, paper, possibility."
+        lead="Cedar green anchors everything. Warm paper makes space for people. Seedling adds energy; Clay adds warmth. Let neutrals lead and never use colour alone to communicate."
+        tint
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {core.map((c, i) => (
-            <Reveal key={c.name} delay={i * 60} className={`flex aspect-[4/5] flex-col justify-between rounded-4xl p-6 ${c.cls}`}>
-              <span className="text-sm opacity-80">{c.role}</span>
-              <span>
-                <span className="block text-xl font-semibold">{c.name}</span>
-                <span className="font-mono text-sm opacity-80">{c.hex}</span>
-                <span className="mt-1 block text-xs opacity-70">{c.ratio}</span>
-              </span>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal className="mt-8 grid grid-cols-6 overflow-hidden rounded-3xl sm:grid-cols-11">
-          {ramp.map(([k, hex]) => (
-            <div key={k} className={`flex aspect-square flex-col justify-end p-2 text-[0.7rem] font-semibold sm:aspect-[3/4] ${Number(k) >= 500 ? 'text-white' : 'text-ink'}`} style={{ background: hex }}>
-              <span>{k}</span><span className="hidden font-mono font-normal opacity-80 md:block">{hex}</span>
+          {colors.map((color) => (
+            <div
+              key={color.name}
+              className={`flex min-h-[21rem] flex-col justify-between rounded-lg p-6 ${color.cls}`}
+            >
+              <p className="max-w-[18ch] text-xs leading-relaxed">{color.role}</p>
+              <div>
+                <h3 className="text-xl font-semibold">{color.name}</h3>
+                <p className="mt-1 select-all font-mono text-sm">{color.hex}</p>
+                <CopyColor value={color.hex} name={color.name} />
+              </div>
             </div>
           ))}
-        </Reveal>
-        <p className="mt-4 text-sm text-ink-muted">Text colours must meet WCAG 2.2 AA: 4.5:1 for body copy, 3:1 for large text and UI. On light surfaces use Cedar 600+ for text; on dark use Cedar 300 or lighter.</p>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {[
+            ['Cedar on Paper', 'Primary text and links', 'bg-paper text-cedar-700', '7.9:1'],
+            ['Ink on Seedling', 'Highlight panels and labels', 'bg-lime text-ink', '14.2:1'],
+            ['White on Cedar', 'Buttons and dark sections', 'bg-cedar-700 text-white', '8.7:1'],
+          ].map(([name, use, cls, ratio]) => (
+            <div key={name} className={`rounded-lg border border-ink/15 p-6 ${cls}`}>
+              <p className="text-lg font-semibold">
+                Aa <span className="ml-2 text-sm font-normal">{name}</span>
+              </p>
+              <p className="mt-3 text-xs">
+                {use} · {ratio}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-sm leading-relaxed text-ink-muted">
+          Ratios are rounded. Normal text needs at least 4.5:1; large text and meaningful UI need 3:1.
+          Seedling is a background or a highlight on dark green — never light text on paper.
+        </p>
       </Block>
 
-      <Block id="type" n="03" title="Typography" lead="Anton — the logo face — for short, loud display lines in uppercase. Inter for everything people actually read. Noto Sans Bengali for Bangla.">
+      <Block
+        id="type"
+        n="03"
+        title="Say it with conviction."
+        lead="Anton is our rallying voice. Inter is our everyday voice. Noto Sans Bengali makes room for our language. All three are self-hosted: no third-party font requests."
+      >
         <div className="grid gap-4 lg:grid-cols-2">
-          <GlassCard className="p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Display · Anton 400 · uppercase</p>
-            <p className="t-display mt-4 text-ink">Force for good</p>
-            <p className="mt-4 text-sm text-ink-muted">Headlines only. Max ~6 words. Line-height 0.92–0.98.</p>
-          </GlassCard>
-          <GlassCard className="p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">Text · Inter 400/500/600</p>
-            <p className="mt-4 text-3xl font-semibold tracking-[-0.02em] text-ink">Empowering communities for a sustainable future.</p>
-            <p className="mt-4 text-lg leading-relaxed text-ink-soft">Body copy sits at 17–21px with 1.6–1.8 line-height and a 68-character measure for comfortable reading on every screen.</p>
-            <p lang="bn" className="mt-4 text-lg text-ink-soft">সিডার ইনিশিয়েটিভ — টেকসই ভবিষ্যতের অঙ্গীকার</p>
-          </GlassCard>
+          <div className="rounded-lg border border-ink/20 p-7 sm:p-10">
+            <p className="field-label">Anton / Display / 400</p>
+            <p className="mt-6 font-display text-[clamp(2.5rem,7vw,6rem)] uppercase leading-[1.05]">
+              Small acts.
+              <br />
+              <span className="text-cedar-700">Real change.</span>
+            </p>
+            <p className="mt-6 text-sm leading-relaxed text-ink-muted">
+              Short. Direct. Uppercase. Give the words room to land. Never set paragraphs in the display face.
+            </p>
+          </div>
+          <div className="rounded-lg border border-ink/20 p-7 sm:p-10">
+            <p className="field-label">Inter / Reading / 400–600</p>
+            <p className="mt-6 text-3xl font-medium leading-tight tracking-tight">
+              A generation that shows up.
+            </p>
+            <p className="mt-5 leading-relaxed text-ink-soft">
+              We’re students, volunteers and young changemakers. Our words should be as clear and approachable
+              as the people behind them.
+            </p>
+            <p lang="bn" className="mt-7 text-xl leading-relaxed text-cedar-700">
+              সিডার ইনিশিয়েটিভ — টেকসই ভবিষ্যতের অঙ্গীকার
+            </p>
+            <p className="mt-3 text-xs text-ink-muted">Noto Sans Bengali / 400, 600</p>
+          </div>
         </div>
-        <Reveal className="mt-6 overflow-x-auto rounded-3xl border border-ink/10 bg-white">
+        <div className="mt-6 overflow-x-auto rounded-lg border border-ink/20">
           <table className="w-full min-w-[34rem] text-left text-sm">
-            <caption className="sr-only">Type scale</caption>
-            <thead className="text-ink-muted"><tr><th scope="col" className="p-4">Token</th><th scope="col" className="p-4">Font</th><th scope="col" className="p-4">Size (320px → 1440px+)</th><th scope="col" className="p-4">Use</th></tr></thead>
-            <tbody className="divide-y divide-ink/10 text-ink-soft">
-              {[['t-display', 'Anton', '44 → 120px', 'Home hero'], ['t-h1', 'Anton', '40 → 84px', 'Page titles'], ['t-h2', 'Anton', '32 → 60px', 'Section titles'], ['t-h3', 'Inter 600', '20 → 24px', 'Card titles'], ['t-lead', 'Inter 400', '17 → 21px', 'Intros'], ['body', 'Inter 400', '16 → 17px', 'Paragraphs'], ['t-eyebrow', 'Inter 600', '12px · 0.18em', 'Section labels']].map((r) => (
-                <tr key={r[0]}>{r.map((c, i) => <td key={i} className={`p-4 ${i === 0 ? 'font-mono text-cedar-700' : ''}`}>{c}</td>)}</tr>
+            <caption className="sr-only">Cedar Fieldnotes type scale</caption>
+            <thead className="bg-paper-deep">
+              <tr>
+                {['Role', 'Typeface', 'Size', 'Character'].map((heading) => (
+                  <th key={heading} scope="col" className="p-4 font-medium">
+                    {heading}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink/15">
+              {[
+                ['Hero', 'Anton', '56–116px', 'Short, uppercase, 1.06 leading'],
+                ['Page title', 'Anton', '40–84px', 'One clear idea'],
+                ['Section title', 'Anton', '40–72px', 'Confident and brief'],
+                ['Statement', 'Inter 500', '30–44px', 'Sentence case, tight tracking'],
+                ['Body', 'Inter 400', '16–18px', '1.6–1.8 leading, max 68ch'],
+                ['Field label', 'Inter 600', '11px', 'Uppercase, 0.13em tracking'],
+              ].map((row) => (
+                <tr key={row[0]}>
+                  {row.map((cell) => (
+                    <td key={cell} className="p-4 text-ink-soft">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
               ))}
             </tbody>
           </table>
-        </Reveal>
-      </Block>
-
-      <Block id="surfaces" n="04" title="Liquid glass" lead="Glass is used for things that float above content — the navigation, stat cards, filters, chat. It is always translucent white over soft cedar auroras, never over text-heavy areas." tint>
-        <div className="on-dark relative overflow-hidden rounded-5xl bg-cedar-900 p-6 sm:p-12">
-          <Aurora tone="dark" />
-          <div className="relative grid gap-4 md:grid-cols-3">
-            <GlassCard className="p-7"><p className="font-semibold text-ink">.glass</p><p className="mt-2 text-sm text-ink-soft">White 78→48% gradient, 22px blur, 170% saturation, inner top highlight, soft cedar shadow.</p></GlassCard>
-            <GlassCard tone="dark" className="p-7 text-white"><p className="font-semibold">.glass-dark</p><p className="mt-2 text-sm text-white/75">White 14→4% over dark sections. Used for buttons and lists on Cedar 900/950.</p></GlassCard>
-            <div className="rounded-[var(--radius-card)] bg-white p-7"><p className="font-semibold text-ink">Solid card</p><p className="mt-2 text-sm text-ink-soft">For reading: posts, people, forms. Radius 28px, layered shadow, no blur.</p></div>
-          </div>
         </div>
-        <ul className="mt-6 grid gap-3 text-ink-soft sm:grid-cols-3">
-          <li className="rounded-3xl border border-ink/10 bg-white p-5"><strong className="text-ink">Radius</strong> — 999px pills (buttons, nav), 28px cards, 40px feature panels.</li>
-          <li className="rounded-3xl border border-ink/10 bg-white p-5"><strong className="text-ink">Spacing</strong> — 4px base grid; sections breathe with clamp(72px, 10vw, 144px).</li>
-          <li className="rounded-3xl border border-ink/10 bg-white p-5"><strong className="text-ink">Fallback</strong> — without backdrop-filter, glass becomes 94% opaque white.</li>
-        </ul>
       </Block>
 
-      <Block id="motion" n="05" title="Motion" lead="Motion explains, it doesn’t decorate. Everything eases out on cubic-bezier(0.22, 1, 0.36, 1) and settles in under a second.">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[['Reveal', 'Fade + 28px rise + blur clears as sections enter the viewport. Staggered 80–120ms.'], ['Rise', 'Headline words lift out of a mask, one by one.'], ['Parallax', 'Hero imagery drifts ±8% with the scroll (CSS scroll-driven animations).'], ['Count-up', 'Impact numbers ease from 0 when first seen. Screen readers get the final value immediately.']].map(([t, d], i) => (
-            <Reveal key={t} delay={i * 80} className="rounded-4xl border border-ink/10 bg-white p-7"><p className="t-h3 text-ink">{t}</p><p className="mt-2 text-sm text-ink-soft">{d}</p></Reveal>
+      <Block
+        id="layout"
+        n="04"
+        title="A field guide, not a showroom."
+        lead="Fine rules, numbered sections, generous margins. The layout should feel useful and composed — a record of real work, not a collection of effects."
+        tint
+      >
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            [
+              '01 / Structure',
+              'An 88rem shell, a 4px spacing rhythm, and 64–120px between sections. Asymmetric grids create emphasis; mobile returns to one clear column.',
+            ],
+            [
+              '02 / Surfaces',
+              'Solid Paper, white, or deep Cedar. Use 1px rules and 4–8px corners. Buttons are softly squared. No floating glass, gradient fog, or heavy shadows.',
+            ],
+            [
+              '03 / Action',
+              'One primary action per moment. Green for the next step; an arrow for direction. Links explain where they go. Hover is a refinement, never the only clue.',
+            ],
+          ].map(([title, body]) => (
+            <div key={title} className="rounded-lg border border-ink/20 bg-paper p-7">
+              <h3 className="field-label">{title}</h3>
+              <p className="mt-5 leading-relaxed text-ink-soft">{body}</p>
+            </div>
           ))}
         </div>
-        <p className="mt-6 rounded-3xl bg-cedar-50 p-5 text-cedar-900"><strong>prefers-reduced-motion:</strong> every animation, parallax and count-up is switched off and content appears instantly.</p>
+        <div className="join-panel mt-6">
+          <p className="field-label">A sample in practice</p>
+          <p className="mt-5 max-w-2xl font-display text-5xl uppercase leading-[1.05] text-cedar-900 sm:text-7xl">
+            The future needs all of us.
+          </p>
+          <p className="mt-5 max-w-md leading-relaxed text-cedar-900">
+            Seedling brings a moment of optimism to a practical invitation.
+          </p>
+          <a href="#identity" className="btn-primary mt-7">
+            Explore the identity <Icon name="arrow" className="h-4 w-4" />
+          </a>
+        </div>
       </Block>
 
-      <Block id="a11y" n="06" title="Accessibility & responsiveness" lead="The site targets WCAG 2.2 AA and is designed mobile-first from 320px phones to 4K displays." tint>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {['Semantic landmarks, one h1 per page, skip link', '3px Cedar focus ring on every interactive element', 'Touch targets at least 44×44px', 'Fluid type and spacing with clamp() — no fixed breakpoints for text', 'Breakpoints: 400 · 640 · 768 · 1024 · 1280 · 1536 · 1920px', 'Safe-area insets respected on notched phones', 'Descriptive alt text; decorative images use alt=""', 'Forms: visible labels, inline errors, aria-live status', 'External links announce “opens in a new tab”'].map((x) => (
-            <li key={x} className="flex gap-3 rounded-3xl bg-white p-5 text-ink-soft"><Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-cedar-600" />{x}</li>
-          ))}
-        </ul>
+      <Block
+        id="photography"
+        n="05"
+        title="Real people. Not stock purpose."
+        lead="Use documentary photography from our own work. Show collaboration, context and agency. Communities are partners in the story — never props."
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          <figure>
+            <div className="aspect-[4/3] overflow-hidden rounded-lg">
+              <Img
+                name="hero/circle-banner"
+                alt="Cedar volunteers exchanging ideas together on the grass in Dhaka"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 text-xs text-ink-muted">
+              Gathering, listening, planning. Show the work between the milestones.
+            </figcaption>
+          </figure>
+          <figure>
+            <div className="aspect-[4/3] overflow-hidden rounded-lg">
+              <Img
+                name="csedweek/rangpur-3"
+                alt="Students participating in a computer science activity in Rangpur"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 text-xs text-ink-muted">
+              A place, an activity, a human connection. Let context carry the meaning.
+            </figcaption>
+          </figure>
+        </div>
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-ink-soft">
+          Before publishing, confirm consent and appropriate permission, especially for children. Keep skin
+          tones natural. Avoid pity-led framing, misleading crops, and text across faces. Write alt text for
+          the meaning, not every pixel.
+        </p>
       </Block>
 
-      <Block id="voice" n="07" title="Voice" lead="Hopeful, honest and specific. We speak like the young people we are — warm, never cute; ambitious, never grandiose.">
+      <Block
+        id="voice"
+        n="06"
+        title="Heart on our sleeve. Feet on the ground."
+        lead="Warm, direct and specific. Ambitious without pretending we have every answer. We invite people into the work; we don’t guilt them into caring."
+        tint
+      >
         <div className="grid gap-4 md:grid-cols-2">
-          <Rules good title="We say" items={['“We distributed 1,000+ winter clothes in Karail.”', '“Join as a volunteer.”', 'Real names, places, numbers and dates.']} />
-          <Rules title="We avoid" items={['“We are changing the world!!!”', 'Jargon, acronyms without expansion, pity-driven imagery.', 'Photos of beneficiaries without consent or dignity.']} />
+          <Rules
+            good
+            title="Sound like us."
+            items={[
+              '“Give your time and skills. There’s a place for you here.”',
+              '“Volunteers collected winter clothes for families in Karail.”',
+              'Name the place, the program, and what actually happened.',
+            ]}
+          />
+          <Rules
+            title="Not like this."
+            items={[
+              '“We single-handedly changed thousands of lives.”',
+              '“Saving the helpless through revolutionary impact solutions.”',
+              'Unverified numbers, saviour language, or urgency without a real deadline.',
+            ]}
+          />
         </div>
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-ink-soft">
+          Trust is part of the identity. Keep our registration status clear. Date project updates. Separate
+          targets from outcomes. Publish sources for new impact claims and don’t imply a donation is
+          tax-deductible without a verified basis.
+        </p>
+      </Block>
+
+      <Block
+        id="access"
+        n="07"
+        title="Everyone belongs in the frame."
+        lead="Design for access before effects. The site targets WCAG 2.2 AA; good defaults are a starting point, not a certification."
+      >
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            'One h1, clear landmarks, and a skip-to-content link.',
+            'Visible focus rings and at least 44px interactive targets.',
+            'Readable contrast, visible form labels, and inline errors.',
+            'Layouts that work from 320px and respect text zoom.',
+            'A keyboard-operable menu, gallery, filters, and contact form.',
+            'Reduced-motion mode: content is visible immediately, without animation.',
+          ].map((rule) => (
+            <li
+              key={rule}
+              className="flex gap-3 rounded-lg border border-ink/20 p-6 text-sm leading-relaxed text-ink-soft"
+            >
+              <Icon name="check" className="h-5 w-5 shrink-0 text-cedar-700" />
+              {rule}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-ink-muted">
+          Motion is a quiet cue: short fades and small shifts, no endless marquees or decorative parallax.
+          Never make a visitor wait for the message.
+        </p>
       </Block>
     </>
   );
 }
 
-function Block({ id, n, title, lead, tint, children }: { id: string; n: string; title: string; lead: string; tint?: boolean; children: React.ReactNode }) {
+function Block({
+  id,
+  n,
+  title,
+  lead,
+  tint,
+  children,
+}: {
+  id: string;
+  n: string;
+  title: string;
+  lead: string;
+  tint?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <section id={id} className={`section ${tint ? 'bg-white' : ''}`} aria-labelledby={`${id}-t`}>
+    <section id={id} className={`section ${tint ? 'bg-paper-deep/50' : ''}`} aria-labelledby={`${id}-title`}>
       <div className="shell">
-        <div className="mb-12 grid gap-6 lg:grid-cols-12">
-          <Reveal as="p" className="font-display text-6xl text-cedar-200 lg:col-span-2">{n}</Reveal>
-          <div className="lg:col-span-8">
-            <Reveal as="h2" id={`${id}-t`} className="t-h2 text-ink">{title}</Reveal>
-            <Reveal as="p" delay={100} className="t-lead mt-4">{lead}</Reveal>
+        <div className="mb-10 grid gap-5 lg:grid-cols-12">
+          <p className="field-label lg:col-span-2">{n} / Fieldnotes</p>
+          <div className="lg:col-span-9">
+            <h2 id={`${id}-title`} className="t-h2">
+              {title}
+            </h2>
+            <p className="t-lead mt-5 max-w-3xl">{lead}</p>
           </div>
         </div>
         {children}
@@ -154,25 +413,39 @@ function Block({ id, n, title, lead, tint, children }: { id: string; n: string; 
     </section>
   );
 }
-
-function Tile({ label, className, children }: { label: string; className: string; children: React.ReactNode }) {
+function Tile({
+  label,
+  className,
+  children,
+}: {
+  label: string;
+  className: string;
+  children: React.ReactNode;
+}) {
   return (
-    <Reveal className={`flex aspect-[4/3] flex-col overflow-hidden rounded-4xl border border-ink/10 ${className}`}>
+    <Reveal
+      className={`flex aspect-[4/3] flex-col overflow-hidden rounded-lg border border-ink/15 ${className}`}
+    >
       <div className="flex flex-1 items-center justify-center">{children}</div>
-      <p className="bg-white/90 px-5 py-3 text-sm font-medium text-ink">{label}</p>
+      <p className="border-t border-ink/15 bg-paper px-5 py-3 text-xs font-medium text-ink">{label}</p>
     </Reveal>
   );
 }
-
 function Rules({ title, items, good }: { title: string; items: string[]; good?: boolean }) {
   return (
-    <Reveal className={`rounded-4xl border p-7 ${good ? 'border-cedar-500/30 bg-cedar-50/60' : 'border-red-700/20 bg-red-50/60'}`}>
-      <p className={`font-semibold ${good ? 'text-cedar-800' : 'text-red-800'}`}>{title}</p>
-      <ul className="mt-4 space-y-3">
-        {items.map((i) => (
-          <li key={i} className="flex gap-3 text-ink-soft"><Icon name={good ? 'check' : 'close'} className={`mt-0.5 h-5 w-5 shrink-0 ${good ? 'text-cedar-600' : 'text-red-700'}`} />{i}</li>
+    <div className={`rounded-lg border border-ink/20 p-7 ${good ? 'bg-cedar-50' : 'bg-paper'}`}>
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <ul className="mt-5 space-y-4">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-sm leading-relaxed text-ink-soft">
+            <Icon
+              name={good ? 'check' : 'close'}
+              className={`mt-0.5 h-4 w-4 shrink-0 ${good ? 'text-cedar-700' : 'text-clay'}`}
+            />
+            {item}
+          </li>
         ))}
       </ul>
-    </Reveal>
+    </div>
   );
 }
