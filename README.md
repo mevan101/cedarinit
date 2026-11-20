@@ -17,16 +17,16 @@ npm start          # preview ./out
 
 ## Structure
 
-| Path | What |
-| --- | --- |
-| `app/` | Routes. URLs match the original WordPress site (`/about-us/`, `/our-work/`, `/<post-slug>/`, …) |
-| `components/` | Shared UI: `Header`, `Footer`, `GlassCard`, `Reveal`, `Gallery`, `ContactForm`, … |
-| `lib/site.ts`, `lib/team.ts`, `lib/programs.ts` | Editable content: contact details, team, programs, impact numbers |
-| `content/posts.json` | News posts migrated from WordPress |
-| `public/images/` | Optimised WebP images (`lib/image-manifest.json` holds dimensions) |
-| `public/reports/` | Financial report PDFs |
-| `public/brand/` | Logo files (SVG/PNG) |
-| `BRAND.md` · `/brand` | Brand guide and design system |
+| Path                                            | What                                                                                            |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `app/`                                          | Routes. URLs match the original WordPress site (`/about-us/`, `/our-work/`, `/<post-slug>/`, …) |
+| `components/`                                   | Shared UI: `Header`, `Footer`, `GlassCard`, `Reveal`, `Gallery`, `ContactForm`, …               |
+| `lib/site.ts`, `lib/team.ts`, `lib/programs.ts` | Editable content: contact details, team, programs, impact numbers                               |
+| `content/posts.json`                            | News posts migrated from WordPress                                                              |
+| `public/images/`                                | Optimised WebP images (`lib/image-manifest.json` holds dimensions)                              |
+| `public/reports/`                               | Financial report PDFs                                                                           |
+| `public/brand/`                                 | Logo files (SVG/PNG)                                                                            |
+| `BRAND.md` · `/brand`                           | Cedar Fieldnotes brand guide, copyable colours, and logo downloads                              |
 
 ## Content updates
 

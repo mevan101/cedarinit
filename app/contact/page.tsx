@@ -3,7 +3,7 @@ import ContactForm from '@/components/ContactForm';
 import GlassCard from '@/components/GlassCard';
 import Icon from '@/components/Icon';
 import Reveal from '@/components/Reveal';
-import { Aurora, SectionHeading } from '@/components/ui';
+import { SectionHeading } from '@/components/ui';
 import { site, socials } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -22,17 +22,29 @@ const channels = [
 export default function ContactPage() {
   return (
     <section className="relative overflow-hidden pb-[var(--section-y)] pt-36 sm:pt-44">
-      <Aurora />
       <div className="shell relative grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <SectionHeading as="h1" eyebrow="Contact" title="Let’s build something good" lead="Questions, partnerships, donations or volunteering — we’d love to hear from you. We aim to respond within 1–2 days." />
+          <SectionHeading
+            as="h1"
+            eyebrow="Contact"
+            title="Let’s build something good"
+            lead="Questions, partnerships, donations or volunteering — we’d love to hear from you. We aim to respond within 1–2 days."
+          />
           <ul className="mt-10 grid gap-3 xs:grid-cols-2 lg:grid-cols-1">
             {channels.map((c, i) => (
               <Reveal as="li" key={c.label} delay={i * 80}>
-                <a href={c.href} {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className="group flex items-center gap-4 rounded-3xl border border-ink/10 bg-white/60 p-4 transition hover:border-cedar-500/40 hover:bg-white">
-                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cedar-700 text-white"><Icon name={c.icon} /></span>
+                <a
+                  href={c.href}
+                  {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="group flex items-center gap-4 rounded-3xl border border-ink/10 bg-white/60 p-4 transition hover:border-cedar-500/40 hover:bg-white"
+                >
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cedar-700 text-white">
+                    <Icon name={c.icon} />
+                  </span>
                   <span className="min-w-0">
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">{c.label}</span>
+                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">
+                      {c.label}
+                    </span>
                     <span className="block truncate font-medium text-ink">{c.value}</span>
                   </span>
                   {c.external && <span className="sr-only">(opens in a new tab)</span>}
@@ -45,8 +57,14 @@ export default function ContactPage() {
             <ul className="mt-3 flex flex-wrap gap-2">
               {socials.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:-translate-y-0.5 hover:text-cedar-700">
-                    <Icon name={s.icon} className="h-[18px] w-[18px]" /><span className="sr-only">{s.label} (opens in a new tab)</span>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:-translate-y-0.5 hover:text-cedar-700"
+                  >
+                    <Icon name={s.icon} className="h-[18px] w-[18px]" />
+                    <span className="sr-only">{s.label} (opens in a new tab)</span>
                   </a>
                 </li>
               ))}
@@ -63,8 +81,14 @@ export default function ContactPage() {
               <p className="text-lg font-semibold">Want to volunteer?</p>
               <p className="text-white/75">Apply through our volunteer form — it takes about 3 minutes.</p>
             </div>
-            <a href={site.volunteerForm} target="_blank" rel="noopener noreferrer" className="btn-light shrink-0">
-              Volunteer form <Icon name="external" className="h-4 w-4" /><span className="sr-only">(opens Google Form in a new tab)</span>
+            <a
+              href={site.volunteerForm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-light shrink-0"
+            >
+              Volunteer form <Icon name="external" className="h-4 w-4" />
+              <span className="sr-only">(opens Google Form in a new tab)</span>
             </a>
           </div>
         </Reveal>

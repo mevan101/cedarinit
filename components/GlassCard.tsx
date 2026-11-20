@@ -1,16 +1,17 @@
-'use client';
+import type { ReactNode } from 'react';
 
-import type { PointerEvent, ReactNode } from 'react';
-
-/** Glass surface with a specular highlight that tracks the pointer. */
-export default function GlassCard({ children, className = '', tone = 'light' }: { children: ReactNode; className?: string; tone?: 'light' | 'dark' }) {
-  const onMove = (e: PointerEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
-  };
+/** Solid card. The legacy name preserves imports across existing pages. */
+export default function GlassCard({
+  children,
+  className = '',
+  tone = 'light',
+}: {
+  children: ReactNode;
+  className?: string;
+  tone?: 'light' | 'dark';
+}) {
   return (
-    <div onPointerMove={onMove} className={`${tone === 'light' ? 'glass' : 'glass-dark'} sheen rounded-[var(--radius-card)] ${className}`}>
+    <div className={`${tone === 'light' ? 'glass' : 'glass-dark'} rounded-[var(--radius-card)] ${className}`}>
       {children}
     </div>
   );
