@@ -152,7 +152,7 @@ function Block({ id, n, title, lead, tint, children }: { id: string; n: string; 
     <section id={id} className={`section ${tint ? 'bg-white' : ''}`} aria-labelledby={`${id}-t`}>
       <div className="shell">
         <div className="mb-12 grid gap-6 lg:grid-cols-12">
-          <Reveal as="p" className="font-display text-6xl text-cedar-200 lg:col-span-2">{n}</Reveal>
+          <Reveal as="p" className="font-display text-6xl text-cedar-200 lg:col-span-2"><span aria-hidden="true">{n}</span></Reveal>
           <div className="lg:col-span-8">
             <Reveal as="h2" id={`${id}-t`} className="t-h2 text-ink">{title}</Reveal>
             <Reveal as="p" delay={100} className="t-lead mt-4">{lead}</Reveal>
