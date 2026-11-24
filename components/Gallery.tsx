@@ -61,7 +61,7 @@ export default function Gallery({ groups, label = 'Photo gallery' }: { groups: G
                 tab === i ? 'bg-cedar-700 text-white shadow-lg shadow-cedar-700/25' : 'glass text-ink-soft hover:text-ink'
               }`}
             >
-              {t.label} <span className="ml-1 opacity-60">{t.items.length}</span>
+              {t.label} <span className="ml-1 opacity-75">{t.items.length}</span>
             </button>
           ))}
         </div>
