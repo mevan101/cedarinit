@@ -11,7 +11,7 @@ function friendly(msg: string) {
   if (/invalid-credential|wrong-password|user-not-found|Invalid login credentials/i.test(msg)) return 'That email and password don’t match. Try again, or reset your password.';
   if (/weak-password|Password should be/i.test(msg)) return 'Choose a longer password (at least 8 characters).';
   if (/too-many-requests|rate limit/i.test(msg)) return 'Too many attempts. Wait a few minutes and try again.';
-  if (/network/.test(msg)) return 'We couldn’t reach the server. Check your connection and try again.';
+  if (/network|failed to fetch|load failed/i.test(msg)) return 'We couldn’t reach the server. Check your connection and try again.';
   return msg.replace(/^Firebase: /, '');
 }
 

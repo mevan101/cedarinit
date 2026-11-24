@@ -241,7 +241,7 @@ export default function Home() {
             <Reveal delay={180}>
               <h3 className="t-h3 text-ink">The people responsible</h3>
               <p className="mt-3 text-ink-soft">Founded in {site.founded}. Cedar is led by its {founders.length} co-founders, each responsible for one part of the work.</p>
-              <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5" aria-label="Co-founders">
+              <ul className="mt-5 grid grid-cols-1 gap-x-4 gap-y-5 xs:grid-cols-2" aria-label="Co-founders">
                 {founders.map((f) => (
                   <li key={f.name} className="flex items-center gap-3">
                     <span className="shrink-0 overflow-hidden rounded-full bg-paper-deep ring-1 ring-ink/10">
