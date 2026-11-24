@@ -91,6 +91,8 @@ function FooterCol({ title, links }: { title: string; links: readonly { href: st
           <li key={l.href}>
             {/^https?:/.test(l.href) ? (
               <a href={l.href} target="_blank" rel="noopener noreferrer" className="link-underline text-white">{l.label}<span className="sr-only"> (opens in a new tab)</span></a>
+            ) : /\.\w+$/.test(l.href) ? (
+              <a href={l.href} className="link-underline text-white">{l.label}</a>
             ) : (
               <Link href={l.href} className="link-underline text-white">{l.label}</Link>
             )}
