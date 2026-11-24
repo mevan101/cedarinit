@@ -306,6 +306,7 @@ html.save-data .decorative-img { display: none !important; }
 ::view-transition-group(site-header) { animation: none; }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal, .rise > span > span { animation: none !important; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; transition-delay: 0ms !important; }
   .reveal, .reveal[data-variant], .reveal[data-variant='mask'] > * { opacity: 1; transform: none; filter: none; clip-path: none; }
   .rise > span > span { transform: none; }
@@ -549,6 +550,9 @@ html.intro-on .intro-logo { animation: intro-out 0.5s var(--ease-out) 1.75s forw
 /* While the photos fly in, the rest of the hero waits, then fades in. */
 html.intro-on :is(.orbit-group, body > header, .chat-launcher) { opacity: 0; }
 html.intro-end :is(.orbit-group, body > header, .chat-launcher) { transition: opacity 0.6s var(--ease-out); }
+/* Hide the copy as a group: child reveal keyframes otherwise override its entrance opacity. */
+html.intro-on .orbit-copy { opacity: 0; pointer-events: none; }
+html.intro-end .orbit-copy { transition: opacity 0.3s var(--ease-out); }
 /* The headline, line and buttons arrive one after another as the photos land. */
 html.intro-on .orbit-copy > * { opacity: 0; transform: translateY(10px); }
 html.intro-end .orbit-copy > * { transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
