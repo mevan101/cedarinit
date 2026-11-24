@@ -446,7 +446,7 @@ html.save-data .kenburns { animation: none; }
 @media (min-width: 1024px) and (min-height: 640px) {
   .orbit-stage { position: relative; height: 100svh; min-height: 40rem; padding: 0; overflow: hidden; display: block; }
   .orbit-copy { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 26vw 9rem; pointer-events: none; }
-  .orbit-copy a { pointer-events: auto; }
+  html:not(.intro-on) .orbit-copy a { pointer-events: auto; }
   .orbit-tiles { display: block; position: absolute; inset: 0; }
   .orbit-tile { position: absolute; width: var(--w); top: var(--t); left: var(--l); z-index: 1; }
   .orbit-tile figure { aspect-ratio: var(--ar); border-radius: 1.75rem; box-shadow: 0 30px 60px -36px rgb(var(--cedar-950) / 0.45); }
