@@ -338,6 +338,8 @@ html.save-data .decorative-img { display: none !important; }
 .hero-copy { display: flex; flex-direction: column; }
 .site-menu { margin: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; background: rgb(var(--paper)); color: rgb(var(--ink)); overscroll-behavior: contain; }
 .site-menu::backdrop { background: rgb(var(--cedar-950) / 0.5); }
+.site-menu:not([open]) { display: none; }
+@media (max-width: 1023px) { .site-header[data-inline-menu='true'] { position: relative; } }
 .no-js .site-header { position: relative; }
 .no-js .menu-toggle { display: none; }
 @media (max-height: 640px) {

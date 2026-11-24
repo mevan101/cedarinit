@@ -10,13 +10,19 @@ import { nav, site, socials } from '@/lib/site';
 export default function Header({ notice }: { notice?: ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [dialogAvailable, setDialogAvailable] = useState(true);
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    setDialogAvailable(typeof dialog?.showModal === 'function' && typeof dialog?.close === 'function');
+  }, []);
 
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
-    if (!dialog) return;
+    if (!dialog || typeof dialog.showModal !== 'function' || typeof dialog.close !== 'function') return;
     if (!open) {
       if (dialog.open) dialog.close();
       return;
@@ -59,6 +65,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
         aria-hidden="true"
       />
       <header
+        data-inline-menu={!dialogAvailable ? 'true' : undefined}
         className="site-header fixed inset-x-0 top-0 z-50 border-b border-ink/15 bg-paper"
         style={{ viewTransitionName: 'site-header' }}
       >
@@ -99,19 +106,37 @@ export default function Header({ notice }: { notice?: ReactNode }) {
             <Link href="/give/" className="btn-glass hidden !min-h-11 !px-4 text-sm xs:inline-flex">
               Give
             </Link>
-            <button
-              type="button"
-              className="menu-toggle inline-flex h-12 w-12 items-center justify-center rounded border border-ink/15 text-ink transition-colors hover:bg-paper-deep lg:hidden"
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              aria-haspopup="dialog"
-              aria-label="Open menu"
-              onClick={() => setOpen(true)}
-            >
-              <Icon name="menu" className="h-6 w-6" />
-            </button>
+            {dialogAvailable && (
+              <button
+                type="button"
+                className="menu-toggle inline-flex h-12 w-12 items-center justify-center rounded border border-ink/15 text-ink transition-colors hover:bg-paper-deep lg:hidden"
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+                aria-haspopup="dialog"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
+                <Icon name="menu" className="h-6 w-6" />
+              </button>
+            )}
           </div>
         </div>
+        {!dialogAvailable && (
+          <nav
+            aria-label="Mobile navigation"
+            className="shell flex flex-wrap gap-x-6 gap-y-1 border-t border-ink/10 py-3 lg:hidden"
+          >
+            {mobileLinks.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="inline-flex min-h-11 items-center font-medium text-cedar-700"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        )}
         <noscript>
           <nav
             aria-label="Mobile navigation without JavaScript"
