@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Img from './Img';
 import Icon from './Icon';
-import { formatDate, type Post } from '@/lib/posts';
+import { formatDate, type Post } from '@/lib/post-types';
 
 export default function PostCard({ post, featured = false, headingLevel = 'h3' }: { post: Post; featured?: boolean; headingLevel?: 'h2' | 'h3' }) {
   const H = headingLevel;
@@ -17,7 +17,7 @@ export default function PostCard({ post, featured = false, headingLevel = 'h3' }
           <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
         <H className={`font-semibold leading-snug tracking-[-0.015em] text-ink ${featured ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'}`}>
-          <Link href={`/${post.slug}/`} className="after:absolute after:inset-0 after:content-['']">
+          <Link href={post.href ?? `/${post.slug}/`} className="after:absolute after:inset-0 after:content-['']">
             {post.title}
           </Link>
         </H>

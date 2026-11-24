@@ -4,6 +4,8 @@ import type { Config } from 'tailwindcss';
 const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
 
 const config: Config = {
+  // Hover styles only apply on devices that can actually hover (no sticky hover on touch).
+  future: { hoverOnlyWhenSupported: true },
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   theme: {
     screens: { xs: '400px', sm: '640px', md: '768px', lg: '1024px', xl: '1280px', '2xl': '1536px', '3xl': '1920px' },
@@ -23,7 +25,8 @@ const config: Config = {
         sans: ['var(--font-sans)', 'var(--font-bengali)', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
-      maxWidth: { prose: '68ch', shell: '80rem' },
+      maxWidth: { prose: '68ch', shell: '80rem', wide: '120rem' },
+      screens: { short: { raw: '(max-height: 560px)' }, tall: { raw: '(min-height: 561px)' } },
       transitionTimingFunction: { out: 'cubic-bezier(0.22, 1, 0.36, 1)', spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)' },
     },
   },

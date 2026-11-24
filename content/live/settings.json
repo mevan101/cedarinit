@@ -1,0 +1,95 @@
+{
+ "announcement": {
+  "link": "/give/",
+  "text": "Winter drive 2026: we're collecting clothes in Dhaka schools.",
+  "tone": "green",
+  "enabled": false,
+  "link_label": "How to help"
+ },
+ "contact": {
+  "email": "info@cedar-initiative.org",
+  "phone": "+880 1612-383345",
+  "location": "Dhaka, Bangladesh",
+  "whatsapp": "https://wa.me/8801612383345",
+  "messenger": "https://m.me/cedar.initiative",
+  "volunteer_form": "https://forms.gle/yA6EmMmDS4Yy1Pyh6"
+ },
+ "socials": [
+  {
+   "href": "https://www.facebook.com/cedar.initiative",
+   "icon": "facebook",
+   "label": "Facebook"
+  },
+  {
+   "href": "https://www.instagram.com/cedar.initiative/",
+   "icon": "instagram",
+   "label": "Instagram"
+  },
+  {
+   "href": "https://www.linkedin.com/company/cedar-initiative",
+   "icon": "linkedin",
+   "label": "LinkedIn"
+  },
+  {
+   "href": "https://x.com/CedarInitiative",
+   "icon": "x",
+   "label": "X (Twitter)"
+  },
+  {
+   "href": "https://www.youtube.com/@CEDARInitiative",
+   "icon": "youtube",
+   "label": "YouTube"
+  }
+ ],
+ "footer_links": [],
+ "teams": [
+  {
+   "name": "Founding team",
+   "slug": "founders",
+   "layout": "large",
+   "description": "The four people who started Cedar in 2025. Each leads one area of the work."
+  },
+  {
+   "name": "Research team",
+   "slug": "research",
+   "layout": "grid",
+   "description": ""
+  },
+  {
+   "name": "Communication team",
+   "slug": "communication",
+   "layout": "grid",
+   "description": ""
+  },
+  {
+   "name": "Program & partnership team",
+   "slug": "programs",
+   "layout": "grid",
+   "description": ""
+  },
+  {
+   "name": "Community mobiliser team",
+   "slug": "community",
+   "layout": "grid",
+   "description": ""
+  },
+  {
+   "name": "ML Bangladesh team",
+   "slug": "ml-bangladesh",
+   "layout": "grid",
+   "description": "The volunteers who run ML Bangladesh, Cedar's STEM program."
+  },
+  {
+   "name": "Campus ambassadors",
+   "slug": "ambassadors",
+   "layout": "grid",
+   "description": "Students who represent Cedar at their school or university."
+  },
+  {
+   "name": "Advisers",
+   "slug": "advisers",
+   "layout": "grid",
+   "description": ""
+  }
+ ]
+}

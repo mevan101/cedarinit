@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import Icon from './Icon';
 import { site } from '@/lib/site';
+import { formToObject, sendForm } from '@/lib/send-form';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 type Errors = Partial<Record<'name' | 'email' | 'subject' | 'message', string>>;
@@ -11,7 +12,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * Contact form. Posts the original Contact Form 7 field names to the existing
- * CF7 endpoint (which forwards to Google Sheets). If the endpoint is unreachable,
+ * CF7 endpoint only when the site runs without Supabase. If sending fails,
  * the visitor is offered a pre-filled email so no message is ever lost.
  */
 export default function ContactForm() {
@@ -41,7 +42,7 @@ export default function ContactForm() {
 
   const mailto = (fd: FormData) =>
     `mailto:${site.email}?subject=${encodeURIComponent(String(fd.get('your-subject') ?? ''))}&body=${encodeURIComponent(
-      `${fd.get('your-message') ?? ''}\n\n— ${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
+      `${fd.get('your-message') ?? ''}\n\n${fd.get('your-name') ?? ''} <${fd.get('your-email') ?? ''}>`,
     )}`;
 
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
@@ -57,6 +58,24 @@ export default function ContactForm() {
       return;
     }
     fd.delete('website');
+    setStatus('sending');
+    try {
+      const f = formToObject(fd);
+      const saved = await sendForm('contact', { name: f['your-name'], email: f['your-email'], subject: f['your-subject'], message: f['your-message'] });
+      if (saved) {
+        setStatus('sent');
+        setServerMsg('');
+        form.reset();
+        setSubject('');
+        requestAnimationFrame(() => statusRef.current?.focus());
+        return;
+      }
+    } catch {
+      setStatus('error');
+      setServerMsg(mailto(fd));
+      requestAnimationFrame(() => statusRef.current?.focus());
+      return;
+    }
     fd.append('_wpcf7', site.contactFormId);
     fd.append('_wpcf7_unit_tag', site.contactUnitTag);
     fd.append('_wpcf7_container_post', '1287');
@@ -81,7 +100,7 @@ export default function ContactForm() {
   };
 
   const field = 'peer block w-full rounded-2xl border border-ink/10 bg-white/80 px-4 pb-3 pt-6 text-base text-ink shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)] outline-none transition placeholder:text-transparent focus:border-cedar-500 focus:bg-white focus:ring-4 focus:ring-cedar-500/15 aria-[invalid=true]:border-red-600';
-  const label = 'pointer-events-none absolute left-4 top-2 text-xs font-semibold text-ink-muted transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-xs peer-focus:font-semibold peer-focus:text-cedar-700';
+  const label = 'pointer-events-none absolute left-4 top-2 text-xs font-semibold text-ink-muted transition-[top,font-size,color] duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-xs peer-focus:font-semibold peer-focus:text-cedar-700';
 
   const Err = ({ k }: { k: keyof Errors }) =>
     errors[k] ? (
@@ -127,7 +146,7 @@ export default function ContactForm() {
       </div>
 
       <p id={`${id}-note`} className="text-sm leading-relaxed text-ink-muted">
-        Your information will be securely sent to and stored in Google Sheets for record-keeping and follow-up. We aim to respond within 1–2 days.
+        Your message goes to the Cedar team’s inbox and is only seen by the team. We usually reply within one or two days.
       </p>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -153,7 +172,7 @@ export default function ContactForm() {
         )}
         {status === 'error' && (
           <p className="rounded-2xl border border-amber-500/40 bg-amber-50 p-4 text-amber-950">
-            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a> — it’s pre-filled for you.
+            We couldn’t reach our form service just now. <a href={serverMsg} className="font-semibold underline underline-offset-4">Send your message by email instead</a>. It’s pre-filled for you.
           </p>
         )}
       </div>

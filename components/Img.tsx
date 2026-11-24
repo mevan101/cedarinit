@@ -2,6 +2,7 @@ import { img } from '@/lib/images';
 
 type Props = {
   name: string;
+  style?: React.CSSProperties;
   alt: string;
   className?: string;
   sizes?: string;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 /** Responsive <img> for the pre-optimised WebP library in /public/images. */
-export default function Img({ name, alt, className = '', sizes = '(min-width: 1024px) 50vw, 100vw', priority }: Props) {
+export default function Img({ name, alt, className = '', sizes = '(min-width: 1024px) 50vw, 100vw', priority, style }: Props) {
   const i = img(name);
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -24,6 +25,7 @@ export default function Img({ name, alt, className = '', sizes = '(min-width: 10
       decoding={priority ? 'sync' : 'async'}
       fetchPriority={priority ? 'high' : undefined}
       className={className}
+      style={style}
     />
   );
 }

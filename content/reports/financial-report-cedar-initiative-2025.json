@@ -1,0 +1,100 @@
+{
+  "title": "Cedar Initiative annual statement 2025",
+  "kind": "annual",
+  "program": "",
+  "year": "2025",
+  "period_start": "2025-09-01",
+  "period_end": "2025-12-31",
+  "currency": "BDT",
+  "status": "final",
+  "summary": "Everything Cedar raised and spent in its first year: running costs, the launch event and two programs. Total in and total out are equal; we hold no reserves yet.",
+  "prepared_by": "Cedar Initiative finance team",
+  "approved_by": "",
+  "published": "2026-01-25",
+  "includes": [
+    "financial-report-ushnota-abhijan-2025",
+    "financial-report-csedweek-2025"
+  ],
+  "budget": [],
+  "income": [
+    {
+      "source": "Shahriar Azad Evan (co-founder)",
+      "type": "donation",
+      "amount": 2942,
+      "note": "Running costs"
+    },
+    {
+      "source": "Saif Imtiajul",
+      "type": "donation",
+      "amount": 600,
+      "note": "Running costs"
+    },
+    {
+      "source": "Sharafat Karim (co-founder)",
+      "type": "donation",
+      "amount": 1150,
+      "note": "Launch event"
+    },
+    {
+      "source": "Shahriar Azad Evan (co-founder)",
+      "type": "donation",
+      "amount": 260,
+      "note": "Launch event"
+    }
+  ],
+  "expenses": [
+    {
+      "bill_no": "Bill-250903",
+      "category": "Running costs",
+      "item": "Domain renewal ($6.50)",
+      "amount": 780
+    },
+    {
+      "bill_no": "Bill-251001",
+      "category": "Running costs",
+      "item": "Domain transfer ($10.74)",
+      "amount": 1290
+    },
+    {
+      "bill_no": "Bill-251002",
+      "category": "Running costs",
+      "item": "Boosted post for the fiscal sponsor search",
+      "amount": 872
+    },
+    {
+      "bill_no": "",
+      "category": "Running costs",
+      "item": "Web hosting",
+      "amount": 600
+    },
+    {
+      "bill_no": "Bill-250901",
+      "date": "2025-09-25",
+      "category": "Launch event",
+      "item": "Cedar flag",
+      "amount": 1000
+    },
+    {
+      "bill_no": "Bill-250902",
+      "date": "2025-09-25",
+      "category": "Launch event",
+      "item": "Neem tree",
+      "amount": 150
+    },
+    {
+      "bill_no": "",
+      "date": "2025-09-25",
+      "category": "Launch event",
+      "item": "Food",
+      "amount": 260
+    }
+  ],
+  "outputs": [],
+  "internal_notes": "",
+  "attachments": [
+    {
+      "label": "Original statement (PDF)",
+      "file": "/reports/Financial-Report-Cedar-Initiative-2025.pdf"
+    }
+  ]
+}

@@ -1,34 +1,42 @@
-export type Person = {
-  name: string;
-  role: string;
-  founderRole?: string;
-  image: string;
-  facebook?: string;
-  linkedin?: string;
-};
+import data from '@/content/team.json';
+import portraits from '@/content/team-portraits.json';
+import liveTeam from '@/content/live/team.json';
+import { liveSettings } from './live';
 
-export const advisers: Person[] = [
-  { name: 'Luke Palandech', role: 'Teacher, Prairie Hill Elementary School, Cedar Rapids, IA, USA', image: 'team/luke-palandech' },
-];
+export type Person = { name: string; role: string; badge?: string; photo: string; keep_original_background?: boolean; facebook?: string; linkedin?: string; email?: string; bio?: string };
 
-export const coreTeam: Person[] = [
-  { name: 'Shahriar Azad Evan', role: 'Lead of Program & Partnership', founderRole: 'Founder', image: 'team/shahriar-azad-evan', facebook: 'https://www.facebook.com/shahriarazadevan', linkedin: 'https://www.linkedin.com/in/msaevan101' },
-  { name: 'Sharafat Karim', role: 'Lead of IT & Communication', founderRole: 'Co-Founder', image: 'team/sharafat-karim', facebook: 'https://www.facebook.com/sharafatkarim.bd', linkedin: 'https://www.linkedin.com/in/sharafat-karim/' },
-  { name: 'Sabbir Ahmed', role: 'Lead of Innovation & Development', founderRole: 'Co-Founder', image: 'team/sabbir-ahmed', facebook: 'https://www.facebook.com/sabbir1192', linkedin: 'https://www.linkedin.com/in/me-sabbir-ahmed' },
-  { name: 'Naimur Rahman Durjoy', role: 'Lead of Policy & Documentation', founderRole: 'Co-Founder', image: 'team/naimur-rahman-durjoy', facebook: 'https://www.facebook.com/activistdurjoy', linkedin: 'https://www.linkedin.com/in/nrdurjoy421' },
-  { name: 'Saif Imtiajul', role: 'Data Analyst, Research Team', image: 'team/saif-imtiajul', facebook: 'https://www.facebook.com/Saif.imtiajul/', linkedin: 'https://www.linkedin.com/in/saif-imtiajul/' },
-  { name: 'Adiba Jaman', role: 'Member, Communication Team', image: 'team/adiba-jaman' },
-  { name: 'Md Abdulla Redwan', role: 'Member, Research Team', image: 'team/md-abdulla-redwan', facebook: 'https://www.facebook.com/abdulla.redwan.2025', linkedin: 'https://www.linkedin.com/in/md-abdulla-r-ab4aa8327' },
-  { name: 'Sanzida Ali Tanfi', role: 'Member, Program & Partnership Team', image: 'team/sanzida-ali-tanfi', facebook: 'https://www.facebook.com/sanzidaarmin.tanfi.1' },
-  { name: 'Halimaa Khatun', role: 'Member, Community Mobilizer Team', image: 'team/halimaa-khatun', facebook: 'https://www.facebook.com/maliha.akter.538634' },
-];
+/** The branded portrait made by scripts/team-portraits.mjs, or the original photo if none exists yet. */
+export const portraitOf = (p: Person) => (p.keep_original_background ? p.photo : (portraits as Record<string, string>)[p.photo] ?? p.photo);
+export type Team = { name: string; slug: string; description?: string; layout?: 'large' | 'grid'; members: Person[] };
 
-export const founders = coreTeam.filter((p) => p.founderRole);
+type LiveMember = { name: string; title: string; team: string; badge?: string | null; bio?: string | null; photo_url?: string | null; linkedin?: string | null; facebook?: string | null; email?: string | null; keep_background?: boolean };
+const fileTeams = (data as { teams: Team[] }).teams;
+const live = liveTeam as LiveMember[];
+
+/** Teams and members are edited in the staff dashboard (Website → Team). content/team.json is the fallback. */
+export const teams: Team[] = live.length
+  ? (() => {
+      const groups = liveSettings.teams?.length ? liveSettings.teams : fileTeams.map(({ name, slug, description, layout }) => ({ name, slug, description, layout }));
+      const known = new Set(groups.map((g) => g.slug));
+      const extra = Array.from(new Set(live.map((m) => m.team).filter((t) => !known.has(t)))).map((slug) => ({ name: slug, slug, description: '', layout: 'grid' as const }));
+      return [...groups, ...extra].map((g) => ({
+        ...g,
+        description: g.description || undefined,
+        members: live.filter((m) => m.team === g.slug).map((m) => ({
+          name: m.name, role: m.title, badge: m.badge || undefined, photo: m.photo_url || '/images/brand/icon-512.png',
+          keep_original_background: m.keep_background, facebook: m.facebook || undefined, linkedin: m.linkedin || undefined,
+          email: m.email || undefined, bio: m.bio || undefined,
+        })),
+      }));
+    })()
+  : fileTeams;
+export const founders = teams.find((t) => t.slug === 'founders')?.members ?? [];
+export const getTeam = (slug: string) => teams.find((t) => t.slug === slug);
 
 export const foundingStory = [
-  'Cedar Initiative was born from real experiences — from moments when each of us felt something was missing and wanted to make it right.',
+  'Cedar Initiative started with moments when each of us felt something was missing and wanted to put it right.',
   'Evan was a backbencher in class. Opportunities were rarely shared with him, and he often felt left out. That experience stayed with him. It made him believe that chances to grow should not depend on where you sit, who you know, or where you come from. He wants Cedar to be a place where everyone gets access to mentorship, learning, and guidance, even if they can’t afford it. He believes that technology can open doors for people who are usually left behind.',
-  'Sharafat worked in different organizations and saw how easily trust can break when there’s no openness. He felt deeply that transparency and accountability are not optional — they are necessary. That’s why he joined Cedar: to help build an organization that people can believe in, one that is honest in action and purpose.',
+  'Sharafat worked in different organizations and saw how easily trust can break when there’s no openness. He believes transparency and accountability are not optional. That’s why he joined Cedar: to help build an organization that people can believe in, one that is honest in action and purpose.',
   'Durjoy came with experience in climate action and a background in law. He knows that good intentions need strong foundations. He wants to help shape Cedar so it runs fairly, ethically, and sustainably, creating systems that last and truly serve people and the planet.',
   'Sabbir brings light to the team. He believes work should inspire and also bring joy. With his curiosity and focus on the Sustainable Development Goals, he makes sure Cedar keeps learning, stays creative, and always connects its work to real impact.',
 ];

@@ -1,0 +1,12 @@
+# Old WordPress addresses -> new pages (read by Netlify and Cloudflare Pages; vercel.json has the same list).
+/feed            /feed.xml        301
+/feed/           /feed.xml        301
+/category/*      /outreach/       301
+/tag/*           /outreach/       301
+/author/*        /our-team/       301
+/2025/*          /outreach/       301
+/2026/*          /outreach/       301
+/wp-admin        /admin/          302
+/wp-admin/*      /admin/          302
+/wp-login.php    /admin/          302
+/home            /                301

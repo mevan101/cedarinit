@@ -22,11 +22,11 @@ export default function ChatWidget() {
   }, [open]);
 
   return (
-    <div ref={ref} className="no-print fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+    <div ref={ref} className="chat-launcher hide-tiny no-print fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div
         id="chat-options"
         hidden={!open}
-        className="glass w-[min(18rem,calc(100vw-2rem))] rounded-3xl p-2"
+        className="chrome w-[min(18rem,calc(100vw-2rem))] rounded-3xl p-2"
       >
         <p className="px-3 pb-2 pt-2 text-sm font-semibold text-ink">Chat with us</p>
         <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-2xl px-3 py-3 text-ink transition hover:bg-white">
@@ -43,7 +43,7 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls="chat-options"
-        className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-cedar-700 text-white shadow-[0_16px_40px_-12px_rgb(var(--cedar-800)/0.8)] transition hover:scale-105 hover:bg-cedar-800"
+        className="inline-flex h-14 w-14 short:h-12 short:w-12 items-center justify-center rounded-full bg-cedar-700 text-white shadow-[0_12px_30px_-12px_rgb(var(--cedar-800)/0.8)] transition hover:bg-cedar-800"
       >
         <Icon name={open ? 'close' : 'chat'} className="h-6 w-6" />
         <span className="sr-only">{open ? 'Close chat options' : 'Open chat options'}</span>
