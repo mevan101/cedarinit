@@ -78,10 +78,11 @@
   addEventListener('resize', onScroll);
   update();
 
-  if ('IntersectionObserver' in window) {
+  if (typeof IntersectionObserver === 'function') {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+    d.classList.add('has-observer');
     var sel = '.stack-card, .orbit-tile' + (sda ? '' : ', .place-name, .bar-fill, .draw-line, .track > *');
     document.querySelectorAll(sel).forEach(function (el) { io.observe(el); });
   }
