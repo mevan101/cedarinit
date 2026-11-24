@@ -5,7 +5,7 @@ import Icon from '@/components/Icon';
 import Reveal, { RiseText } from '@/components/Reveal';
 import Stat from '@/components/Stat';
 import PostCard from '@/components/PostCard';
-import { ArrowLink, SectionHeading } from '@/components/ui';
+import { ArrowLink, CTA, SectionHeading } from '@/components/ui';
 import { impact, press, site } from '@/lib/site';
 import { reports, money } from '@/lib/finance';
 import { founders, portraitOf } from '@/lib/team';
@@ -69,12 +69,6 @@ const places = [
 ];
 
 
-const paths = [
-  { href: '/give/', title: 'Give', body: 'Pay for warm clothes, transport and teaching materials. Every campaign gets a public financial report.', cta: 'How giving works' },
-  { href: '/opportunities/', title: 'Volunteer', body: 'Help at a collection drive, teach a session, or run a hackathon. Apply here, log your hours, get a verifiable certificate.', cta: 'See open roles' },
-  { href: '/partner/', title: 'Partner', body: 'Schools, universities, NGOs and companies: host a program, co-run a campaign, or sponsor one.', cta: 'How partnerships work' },
-];
-
 export default function Home() {
   return (
     <>
@@ -84,14 +78,14 @@ export default function Home() {
       <section className="orbit" aria-labelledby="hero-title">
         <div className="orbit-stage">
           <div className="orbit-copy">
-            <RiseText as="h1" text="Youth-led relief and STEM education across Bangladesh" className="orbit-title t-display text-ink" />
-            <Reveal as="p" delay={300} className="hero-lead t-lead mx-auto mt-6 max-w-[40rem]">
-              We&rsquo;re student volunteers. Last winter we brought warm clothes to families in Dhaka&rsquo;s Karail slum and ran a computer
-              science week in Rangpur. Through ML Bangladesh, we now run free AI hackathons on campuses across the country.
+            <RiseText id="hero-title" as="h1" text="Young people. Real work." className="orbit-title t-display text-ink" />
+            <Reveal as="p" delay={180} className="hero-lead t-lead mx-auto mt-6 max-w-[34rem]">
+              Winter relief in Dhaka. Coding classes in Rangpur. Free AI hackathons across Bangladesh.
+              We&rsquo;re the student volunteers who make it happen.
             </Reveal>
-            <Reveal delay={400} className="hero-cta mt-8 flex flex-col justify-center gap-3 xs:flex-row">
-              <Link href="#work" className="btn-primary">See our work <Icon name="arrow" className="h-4 w-4" /></Link>
-              <Link href="#help" className="btn-glass">Ways to help</Link>
+            <Reveal delay={250} className="hero-cta mt-8 flex flex-col justify-center gap-3 xs:flex-row">
+              <Link href="/opportunities/" className="btn-primary">Find your role <Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="#work" className="btn-glass">See the work</Link>
             </Reveal>
           </div>
           <ul className="orbit-tiles" aria-label="Photos from our programs">
@@ -116,19 +110,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. One act to a movement: places fill in as you scroll */}
-      <section aria-labelledby="places-title" className="on-dark relative overflow-hidden bg-cedar-950 py-[var(--section-y)] text-white">
+      {/* Evidence before claims: the period and source stay beside every figure. */}
+      <section id="evidence" aria-label="Our work in numbers, with sources" className="home-evidence border-y border-ink/15 bg-paper-deep py-10 sm:py-12">
         <div className="shell">
-          <p className="t-eyebrow !text-cedar-300">Where we&rsquo;ve worked</p>
-          <h2 id="places-title" className="t-h2 mt-5 max-w-3xl">From one winter drive to six cities</h2>
-          <ol className="mt-12 divide-y divide-white/10 border-y border-white/10">
-            {places.map((pl) => (
-              <li key={pl.name} className="place-row grid gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] sm:items-baseline sm:gap-8">
-                <span className="place-name font-display text-[clamp(2.75rem,8vw,6.5rem)] uppercase leading-[0.9]">{pl.name}</span>
-                <span className="text-white/70"><span className="block text-sm font-semibold uppercase tracking-[0.14em] text-cedar-300">{pl.when}</span>{pl.what}</span>
-              </li>
+          <ul className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {impact.map((stat) => (
+              <li key={stat.label}><Stat stat={stat} /></li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
@@ -136,7 +125,7 @@ export default function Home() {
       <section id="work" className="section bg-white">
         <div className="shell">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading eyebrow="What we do" title="Three programs, real places" />
+            <SectionHeading title="Good starts with showing up." lead="A collection drive. A classroom. A day spent building something together. Here’s what that looks like on the ground." />
             <Reveal><ArrowLink href="/our-work/">All programs and reports</ArrowLink></Reveal>
           </div>
           <ul className="stack mt-12">
@@ -169,14 +158,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Proof, every number with its period and source */}
-      <section className="on-dark section bg-cedar-950 text-white">
+      <section aria-labelledby="places-title" className="on-dark section bg-cedar-950 text-white">
         <div className="shell">
-          <SectionHeading tone="dark" eyebrow="The evidence" title="What the work adds up to" lead="Each figure shows when it was counted and where it comes from. Follow the source to check it." />
-          <ul className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {impact.map((s, i) => (
-              <Reveal as="li" key={s.label} delay={i * 80}>
-                <Stat stat={s} tone="dark" />
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+            <h2 id="places-title" className="t-h2 max-w-xl">Rooted in Dhaka.<br />Reaching further.</h2>
+            <p className="t-lead max-w-xl !text-white/75">Cedar began with local volunteers. Through ML Bangladesh, the work now connects schools and campuses in these six cities.</p>
+          </div>
+          <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {places.map((place, i) => (
+              <Reveal as="li" key={place.name} delay={i * 35} className="border-t border-white/25 pt-5">
+                <h3 className="font-display text-3xl uppercase text-seedling">{place.name}</h3>
+                <p className="mt-2 text-sm font-medium text-white/75">{place.when}</p>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-white/80">{place.what}</p>
               </Reveal>
             ))}
           </ul>
@@ -189,30 +182,13 @@ export default function Home() {
         <div className="mt-7"><LogoMarquee /></div>
       </section>
 
-      {/* 4. How to help: three separate paths */}
-      <section id="help" className="section">
-        <div className="shell">
-          <SectionHeading eyebrow="How to help" title="Give, volunteer or partner" lead="Three separate paths. Pick the one that fits and you’ll only see what you need." />
-          <ul className="mt-12 grid gap-4 md:grid-cols-3">
-            {paths.map((p, i) => (
-              <Reveal as="li" key={p.href} delay={i * 90}>
-                <Link href={p.href} className="group flex h-full flex-col rounded-[var(--radius-card)] border border-ink/10 bg-white p-7 transition hover:border-cedar-700/40 sm:p-8">
-                  <span className="font-display text-4xl uppercase text-ink">{p.title}</span>
-                  <span className="mt-4 flex-1 text-ink-soft">{p.body}</span>
-                  <span className="mt-6 inline-flex items-center gap-2 font-semibold text-cedar-700">
-                    {p.cta} <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       {/* 5. Why Cedar can be trusted */}
       <section className="section bg-white">
         <div className="shell">
-          <SectionHeading eyebrow="Accountability" title="Who we are, in plain terms" />
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading title="Our work. An open book." lead="The people behind it, the money that goes into it, and the limits we’re honest about." />
+            <ArrowLink href="/transparency/" className="shrink-0">Read all reports</ArrowLink>
+          </div>
           <div className="mt-12 grid gap-10 lg:grid-cols-3">
             <Reveal>
               <h3 className="t-h3 text-ink">Legal status</h3>
@@ -278,7 +254,7 @@ export default function Home() {
       <section className="section">
         <div className="shell">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading eyebrow="From the field" title="Latest stories" />
+            <SectionHeading title="Notes from the field." />
             <Reveal><ArrowLink href="/outreach/">All stories</ArrowLink></Reveal>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -290,6 +266,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <CTA id="help" />
     </>
   );
 }
