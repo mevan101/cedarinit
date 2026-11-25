@@ -13,6 +13,7 @@ import { mlbd } from '@/lib/mlbd';
 import { posts } from '@/lib/posts';
 import Intro from '@/components/Intro';
 import { LogoMarquee } from '@/components/LogoWall';
+import FieldStory from '@/components/FieldStory';
 
 export const metadata: Metadata = {
   title: { absolute: 'Cedar Initiative: youth-led nonprofit in Bangladesh' },
@@ -169,7 +170,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Proof, every number with its period and source */}
+      {/* 4. One campaign, told in sequence: the photo pins while the four moments pass */}
+      <FieldStory />
+
+      {/* 5. Proof, every number with its period and source */}
       <section className="on-dark section bg-cedar-950 text-white">
         <div className="shell">
           <SectionHeading tone="dark" eyebrow="The evidence" title="What the work adds up to" lead="Each figure shows when it was counted and where it comes from. Follow the source to check it." />
