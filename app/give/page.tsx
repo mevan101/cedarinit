@@ -6,6 +6,7 @@ import { PageHero } from '@/components/ui';
 import { giving, site } from '@/lib/site';
 import { reports, money } from '@/lib/finance';
 import MoneySplit from '@/components/MoneySplit';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Give',
@@ -24,6 +25,7 @@ export default function GivePage() {
 
   return (
     <>
+      <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: 'Give', path: '/give/' }], site.url)} />
       <PageHero
         eyebrow="Give"
         title="Fund the next winter drive and classroom"

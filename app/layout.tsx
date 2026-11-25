@@ -21,6 +21,9 @@ const bengali = localFont({
   ],
   variable: '--font-bengali',
   display: 'swap',
+  // Bangla only appears in press quotes and the brand guide, both below the fold,
+  // so preloading 90 kB of it on every page costs more than it saves.
+  preload: false,
 });
 
 export const metadata: Metadata = {
