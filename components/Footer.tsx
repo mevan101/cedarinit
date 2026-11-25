@@ -59,6 +59,7 @@ export default function Footer() {
               <h2 className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">Transparency</h2>
               <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
                 <li><Link className="link-underline font-semibold text-white" href="/transparency/">All reports</Link></li>
+                <li><Link className="link-underline text-white" href="/data/">Open data (JSON)</Link></li>
                 {reports.map((r) => (
                   <li key={r.slug}><Link className="link-underline text-white" href={`/${r.slug}/`}>{r.title}</Link></li>
                 ))}
