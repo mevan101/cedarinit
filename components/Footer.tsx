@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Logo from './Logo';
+import Logo, { Mark } from './Logo';
 import Icon from './Icon';
 import SocialLinks from './SocialLinks';
 import { footerLinks, site } from '@/lib/site';
@@ -67,9 +67,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <p aria-hidden="true" className="mt-20 select-none whitespace-nowrap font-display text-[clamp(2.5rem,11.5vw,11.5rem)] uppercase leading-[0.8] text-white/[0.06]">
-          Force for good
-        </p>
+        {/* The mark, not a word: text at this size and this faint can never pass a contrast check. */}
+        <Mark tone="white" className="pointer-events-none absolute -bottom-10 right-0 hidden h-[19rem] w-auto opacity-[0.07] lg:block" />
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. A youth-led volunteer group in Bangladesh, not yet a registered organisation.</p>

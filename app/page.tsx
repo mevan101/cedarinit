@@ -125,7 +125,7 @@ export default function Home() {
             {places.map((pl) => (
               <li key={pl.name} className="place-row grid gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] sm:items-baseline sm:gap-8">
                 <span className="place-name font-display text-[clamp(2.75rem,8vw,6.5rem)] uppercase leading-[0.9]">{pl.name}</span>
-                <span className="text-white/70"><span className="block text-sm font-semibold uppercase tracking-[0.14em] text-cedar-300">{pl.when}</span>{pl.what}</span>
+                <span className="place-copy text-white/85"><span className="block text-sm font-semibold uppercase tracking-[0.14em] text-cedar-300">{pl.when}</span>{pl.what}</span>
               </li>
             ))}
           </ol>
@@ -152,8 +152,10 @@ export default function Home() {
                     <figcaption className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-3 py-1 text-xs text-white backdrop-blur-sm">{w.caption}</figcaption>
                   </figure>
                   <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14">
-                    <p aria-hidden="true" className="font-display text-6xl leading-none text-cedar-700/25">0{i + 1}</p>
-                    <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">{w.kicker}</p>
+                    <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">
+                      <span className="tabular-nums text-ink-muted">{String(i + 1).padStart(2, '0')} / {String(work.length).padStart(2, '0')}</span>
+                      {w.kicker}
+                    </p>
                     <h3 className="mt-2 font-display text-[clamp(2rem,3.6vw,3.25rem)] uppercase leading-[0.95] text-ink">
                       <Link href={w.href} className="after:absolute after:inset-0">{w.title}</Link>
                     </h3>

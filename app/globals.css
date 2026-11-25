@@ -398,12 +398,13 @@ html.save-data .kenburns { animation: none; }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     html.motion .place-name { color: transparent; -webkit-text-stroke: 1.5px rgb(var(--cedar-300) / 0.6); animation: place-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
-    .place-row > span:last-child { animation: place-text linear both; animation-timeline: view(); animation-range: entry 50% cover 45%; }
+    .place-copy { animation: place-text linear both; animation-timeline: view(); animation-range: entry 50% cover 45%; }
   }
 }
 @media (prefers-reduced-motion: reduce) { .place-name { color: #fff; -webkit-text-stroke: 0; } }
 @keyframes place-fill { from { color: transparent; transform: translateX(-2%); } to { color: #fff; -webkit-text-stroke-color: transparent; transform: none; } }
-@keyframes place-text { from { opacity: 0.2; } to { opacity: 1; } }
+/* Never dims below 0.75: the copy stays above 4.5:1 even before it has scrolled in. */
+@keyframes place-text { from { opacity: 0.75; } to { opacity: 1; } }
 
 /* ---------- Home: program panels stack on large, tall screens ---------- */
 .stack { display: grid; gap: 1.5rem; }
