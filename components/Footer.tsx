@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
 
         {/* The mark, not a word: text at this size and this faint can never pass a contrast check. */}
-        <Mark tone="white" className="pointer-events-none absolute -bottom-10 right-0 hidden h-[19rem] w-auto opacity-[0.07] lg:block" />
+        <Mark tone="white" className="pointer-events-none absolute -bottom-10 right-0 hidden h-[19rem] w-auto opacity-[0.10] lg:block" />
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. A youth-led volunteer group in Bangladesh, not yet a registered organisation.</p>
