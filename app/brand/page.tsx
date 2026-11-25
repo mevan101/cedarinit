@@ -99,7 +99,9 @@ export default function BrandPage() {
             <p lang="bn" className="mt-4 text-lg text-ink-soft">সিডার ইনিশিয়েটিভ: টেকসই ভবিষ্যতের অঙ্গীকার</p>
           </GlassCard>
         </div>
-        <Reveal className="mt-6 overflow-x-auto rounded-3xl border border-ink/10 bg-white">
+        <Reveal className="mt-6 rounded-3xl border border-ink/10 bg-white">
+          {/* Wide table: it scrolls sideways below 34rem, so the scroller has to be reachable by keyboard. */}
+          <div role="region" aria-label="Type scale, scroll sideways for more" tabIndex={0} className="overflow-x-auto rounded-3xl">
           <table className="w-full min-w-[34rem] text-left text-sm">
             <caption className="sr-only">Type scale</caption>
             <thead className="text-ink-muted"><tr><th scope="col" className="p-4">Token</th><th scope="col" className="p-4">Font</th><th scope="col" className="p-4">Size (320px → 1440px+)</th><th scope="col" className="p-4">Use</th></tr></thead>
@@ -109,6 +111,7 @@ export default function BrandPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </Reveal>
       </Block>
 
@@ -152,7 +155,7 @@ function Block({ id, n, title, lead, tint, children }: { id: string; n: string; 
     <section id={id} className={`section ${tint ? 'bg-white' : ''}`} aria-labelledby={`${id}-t`}>
       <div className="shell">
         <div className="mb-12 grid gap-6 lg:grid-cols-12">
-          <Reveal as="p" className="font-display text-6xl text-cedar-200 lg:col-span-2"><span aria-hidden="true">{n}</span></Reveal>
+          <Reveal as="p" className="font-display text-6xl text-cedar-500 lg:col-span-2"><span aria-hidden="true">{n}</span></Reveal>
           <div className="lg:col-span-8">
             <Reveal as="h2" id={`${id}-t`} className="t-h2 text-ink">{title}</Reveal>
             <Reveal as="p" delay={100} className="t-lead mt-4">{lead}</Reveal>
