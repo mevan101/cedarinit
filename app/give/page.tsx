@@ -5,6 +5,7 @@ import Icon from '@/components/Icon';
 import { PageHero } from '@/components/ui';
 import { giving, site } from '@/lib/site';
 import { reports, money } from '@/lib/finance';
+import MoneySplit from '@/components/MoneySplit';
 
 export const metadata: Metadata = {
   title: 'Give',
@@ -16,6 +17,10 @@ export const metadata: Metadata = {
 export default function GivePage() {
   const { sponsor, methods } = giving;
   const ready = sponsor !== null && methods.length > 0;
+  // Donors ask one question above all others: where does the money actually go?
+  // Both answers below are calculated from the published reports, not typed in.
+  const annual = reports.find((r) => r.kind === 'annual');
+  const programReports = reports.filter((r) => r.kind === 'program');
 
   return (
     <>
@@ -89,7 +94,7 @@ export default function GivePage() {
 
           <aside className="lg:col-span-4 lg:col-start-9" aria-labelledby="reports-title">
             <Reveal className="rounded-4xl border border-ink/10 bg-paper/60 p-7">
-              <h2 id="reports-title" className="text-sm font-semibold uppercase tracking-[0.12em] text-cedar-700">Where the money went</h2>
+              <h2 id="reports-title" className="text-sm font-semibold uppercase tracking-[0.12em] text-cedar-700">Every report</h2>
               <ul className="mt-5 space-y-4">
                 {reports.map((r) => (
                   <li key={r.slug}>
@@ -109,6 +114,59 @@ export default function GivePage() {
               </p>
             </Reveal>
           </aside>
+        </div>
+      </section>
+
+      <section className="section bg-white" aria-labelledby="money-title">
+        <div className="shell">
+          <h2 id="money-title" className="t-h2 text-ink">What a gift pays for</h2>
+          <p className="t-lead mt-4 max-w-[62ch]">
+            Before people give, they want to know where the money goes. These are the figures from our own reports, added up from the bills behind
+            them. Nothing here is a projection.
+          </p>
+
+          {annual && (
+            <Reveal className="mt-12 rounded-4xl border border-ink/10 p-7 sm:p-10">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h3 className="t-h3 text-ink">{annual.title}</h3>
+                <span className="text-sm text-ink-muted">Published {annual.published ? new Date(`${annual.published}T00:00:00Z`).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }) : annual.year}</span>
+              </div>
+              <p className="mt-2 max-w-[64ch] text-ink-soft">{annual.summary}</p>
+              <div className="mt-8">
+                <MoneySplit report={annual} />
+              </div>
+            </Reveal>
+          )}
+
+          {programReports.length > 0 && (
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              {programReports.map((r, i) => (
+                <Reveal key={r.slug} delay={i * 80} className="flex h-full flex-col rounded-4xl border border-ink/10 p-7">
+                  <h3 className="t-h3 text-ink">{r.title}</h3>
+                  <p className="mt-2 text-sm text-ink-muted">
+                    {r.kind === 'annual' ? 'Annual statement' : 'Program report'} · {money(r.spent, r.currency)} spent
+                  </p>
+                  <ul className="mt-5 flex-1 divide-y divide-ink/10 border-y border-ink/10">
+                    {r.byCategory.map((c) => (
+                      <li key={c.label} className="flex items-baseline justify-between gap-4 py-2.5 text-[0.97rem]">
+                        <span className="text-ink-soft">{c.label}</span>
+                        <span className="shrink-0 font-semibold tabular-nums text-ink">{money(c.amount, r.currency)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={`/${r.slug}/`} className="mt-5 inline-flex min-h-[44px] items-center gap-2 font-semibold text-cedar-700">
+                    Read the report <Icon name="arrow" className="h-4 w-4" />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          )}
+
+          <p className="mt-8 max-w-[70ch] text-sm text-ink-muted">
+            Every expense carries a bill number where we have one, and the totals are added up by the website rather than typed in. See{' '}
+            <Link href="/transparency/" className="link-underline font-medium text-cedar-700">all reports</Link>, or take the figures as{' '}
+            <Link href="/data/" className="link-underline font-medium text-cedar-700">JSON</Link>.
+          </p>
         </div>
       </section>
     </>
