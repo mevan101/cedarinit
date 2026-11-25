@@ -1,5 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from '../supabase-client';
+import { authCallbackUrl } from '../auth-redirect';
 import type { Application, Doc, HourEntry, Message, Platform, Profile, PublicProfile, VerifiedDoc } from './types';
 
 /** Live backend: Supabase Auth + Postgres (row-level security in supabase/migrations) + Storage + the send-email function. */
@@ -22,15 +23,15 @@ export function supabasePlatform(): Platform & { resetPassword(email: string): P
       const { data } = sb.auth.onAuthStateChange(() => cb());
       return () => data.subscription.unsubscribe();
     },
-    async signUp(email, password, full_name) {
-      const r = ok(await sb.auth.signUp({ email, password, options: { data: { full_name }, emailRedirectTo: `${location.origin}/account/` } }));
+    async signUp(email, password, full_name, next) {
+      const r = ok(await sb.auth.signUp({ email, password, options: { data: { full_name }, emailRedirectTo: authCallbackUrl(location.origin, next) } }));
       return { needsConfirm: !r.session };
     },
     async signIn(email, password) {
       const { error } = await sb.auth.signInWithPassword({ email, password });
       if (error) throw new Error(error.message);
     },
-    async sendLink(email) { ok(await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}/account/` } })); },
+    async sendLink(email, next) { ok(await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: authCallbackUrl(location.origin, next) } })); },
     async signOut() { await sb.auth.signOut(); },
     async resetPassword(email) {
       const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/account/?reset=1` });

@@ -29,9 +29,9 @@ export interface Platform {
   mode: 'demo' | 'live';
   me(): Promise<Profile | null>;
   onChange(cb: () => void): () => void;
-  signUp(email: string, password: string, fullName: string): Promise<{ needsConfirm: boolean }>;
+  signUp(email: string, password: string, fullName: string, next?: string): Promise<{ needsConfirm: boolean }>;
   signIn(email: string, password: string): Promise<void>;
-  sendLink(email: string): Promise<void>;
+  sendLink(email: string, next?: string): Promise<void>;
   signOut(): Promise<void>;
   saveProfile(patch: Partial<Profile>): Promise<Profile>;
   uploadPhoto(file: File): Promise<string>;
