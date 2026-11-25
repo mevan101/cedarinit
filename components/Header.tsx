@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Logo from './Logo';
 import Icon from './Icon';
@@ -9,6 +9,7 @@ import { nav, site, socials } from '@/lib/site';
 
 export default function Header({ notice }: { notice?: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -30,6 +31,18 @@ export default function Header({ notice }: { notice?: ReactNode }) {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // Command/Ctrl+K opens the search page, the convention people already know.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        router.push('/search/');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [router]);
 
   useEffect(() => {
     if (!open) return;
@@ -97,6 +110,14 @@ export default function Header({ notice }: { notice?: ReactNode }) {
             </nav>
 
             <div className="flex items-center gap-2">
+              <Link
+                href="/search/"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-white/70"
+                aria-label="Search the site"
+                aria-keyshortcuts="Meta+K Control+K"
+              >
+                <Icon name="search" className="h-5 w-5" />
+              </Link>
               <Link href="/account/" className="hidden h-11 w-11 items-center justify-center rounded-full text-ink transition hover:bg-white/70 sm:inline-flex" aria-label="My volunteer account">
                 <Icon name="people" className="h-5 w-5" />
               </Link>
@@ -133,7 +154,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">
-            {[{ href: '/', label: 'Home' }, ...nav, { href: '/opportunities/', label: 'Open roles' }, { href: '/account/', label: 'My account' }, { href: '/give/', label: 'Give' }].map((item, i) => (
+            {[{ href: '/', label: 'Home' }, { href: '/search/', label: 'Search' }, ...nav, { href: '/opportunities/', label: 'Open roles' }, { href: '/account/', label: 'My account' }, { href: '/give/', label: 'Give' }].map((item, i) => (
               <li key={item.href} className="reveal is-visible" style={{ ['--delay' as string]: `${i * 40}ms` }}>
                 <Link
                   href={item.href}

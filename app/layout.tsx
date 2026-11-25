@@ -63,12 +63,27 @@ const jsonLd = {
   subOrganization: { '@type': 'Organization', name: mlbd.name, alternateName: 'MLBD', url: mlbd.url, foundingDate: '2023-09', sameAs: [mlbd.group] },
 };
 
+/** Tells search engines the site has its own search, at /search/. */
+const siteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  inLanguage: 'en',
+  publisher: { '@type': 'NGO', name: site.name, url: site.url },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${site.url}/search/?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${bengali.variable} no-js`} id="top" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "var d=document.documentElement;d.classList.remove('no-js');try{if(navigator.connection&&navigator.connection.saveData)d.classList.add('save-data')}catch(e){}" }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, siteLd]) }} />
       </head>
       <body className={announcement.enabled ? 'has-notice' : undefined}>
         <Header notice={<AnnouncementBar />} />
