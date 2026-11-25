@@ -5,6 +5,7 @@ import Reveal from '@/components/Reveal';
 import { PageHero, SectionHeading } from '@/components/ui';
 import { money, reports } from '@/lib/finance';
 import { site } from '@/lib/site';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Transparency: financial reports',
@@ -19,6 +20,21 @@ export default function TransparencyPage() {
   const spent = totals.reduce((a, r) => a + r.spent, 0);
   return (
     <>
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Transparency: financial reports',
+            url: `${site.url}/transparency/`,
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: reports.map((r, i) => ({ '@type': 'ListItem', position: i + 1, url: `${site.url}/${r.slug}/`, name: r.title })),
+            },
+          },
+          breadcrumb([{ name: 'Home', path: '/' }, { name: 'Transparency', path: '/transparency/' }], site.url),
+        ]}
+      />
       <PageHero
         eyebrow="Transparency"
         title="Where every taka goes"

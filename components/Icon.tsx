@@ -19,6 +19,7 @@ const paths: Record<string, JSX.Element> = {
   people: <><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14.2A5 5 0 0 1 21.5 19" /></>,
   check: <path d="M5 12.5l4.5 4.5L19 7" />,
   play: <path d="M8 5v14l11-7z" />,
+  search: <><circle cx="11" cy="11" r="7" /><path d="M20 20l-4.2-4.2" /></>,
 };
 
 const brands: Record<string, string> = {

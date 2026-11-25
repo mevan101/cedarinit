@@ -10,6 +10,8 @@ import { programs } from '@/lib/programs';
 import { posts } from '@/lib/posts';
 import {} from '@/lib/site';
 import { reports, money } from '@/lib/finance';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
+import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Our work',
@@ -25,6 +27,7 @@ const items = [
 export default function WorkPage() {
   return (
     <>
+      <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: 'Our work', path: '/our-work/' }], site.url)} />
       <PageHero eyebrow="Our work" title="Relief, education and STEM" lead="Three programs, run by volunteers, each with dates, places and a report you can check." />
 
       <section className="pb-[var(--section-y)]">

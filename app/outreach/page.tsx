@@ -5,7 +5,8 @@ import GlassCard from '@/components/GlassCard';
 import Icon from '@/components/Icon';
 import { CTA, PageHero, SectionHeading } from '@/components/ui';
 import { categories, posts } from '@/lib/posts';
-import { press } from '@/lib/site';
+import { press, site } from '@/lib/site';
+import JsonLd, { breadcrumb } from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Outreach & news',
@@ -16,6 +17,28 @@ export const metadata: Metadata = {
 export default function OutreachPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Outreach & news',
+            url: `${site.url}/outreach/`,
+            description: 'Stories, campaign diaries, achievements and press coverage from Cedar Initiative.',
+            isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: posts.slice(0, 20).map((p, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                url: `${site.url}/${p.slug}/`,
+                name: p.title,
+              })),
+            },
+          },
+          breadcrumb([{ name: 'Home', path: '/' }, { name: 'News', path: '/outreach/' }], site.url),
+        ]}
+      />
       <PageHero eyebrow="Outreach" title="Stories from the field" lead="Campaign diaries, milestones and press coverage, written by the volunteers who were there." />
       <section className="pb-[var(--section-y)]">
         <div className="shell"><NewsList posts={posts.map((p) => ({ ...p, html: "", sourceTitle: "" }))} categories={categories} /></div>

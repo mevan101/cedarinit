@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Logo from './Logo';
+import Logo, { Mark } from './Logo';
 import Icon from './Icon';
 import SocialLinks from './SocialLinks';
 import { footerLinks, site } from '@/lib/site';
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
 
           <div className="grid gap-10 xs:grid-cols-2 md:grid-cols-4 lg:col-span-7">
-            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/brand/', label: 'Brand guide' }, { href: '/feed.xml', label: 'News feed (RSS)' }]} />
+            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/search/', label: 'Search' }, { href: '/brand/', label: 'Brand guide' }, { href: '/feed.xml', label: 'News feed (RSS)' }]} />
             <FooterCol title="Programs" links={programs} />
             <FooterCol title="Get involved" links={help} />
             <div>
@@ -59,6 +59,7 @@ export default function Footer() {
               <h2 className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">Transparency</h2>
               <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
                 <li><Link className="link-underline font-semibold text-white" href="/transparency/">All reports</Link></li>
+                <li><Link className="link-underline text-white" href="/data/">Open data (JSON)</Link></li>
                 {reports.map((r) => (
                   <li key={r.slug}><Link className="link-underline text-white" href={`/${r.slug}/`}>{r.title}</Link></li>
                 ))}
@@ -67,9 +68,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <p aria-hidden="true" className="mt-20 select-none whitespace-nowrap font-display text-[clamp(2.5rem,11.5vw,11.5rem)] uppercase leading-[0.8] text-white/[0.06]">
-          Force for good
-        </p>
+        {/* The mark, not a word: text at this size and this faint can never pass a contrast check. */}
+        <Mark tone="white" className="pointer-events-none absolute -bottom-10 right-0 hidden h-[19rem] w-auto opacity-[0.10] lg:block" />
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. A youth-led volunteer group in Bangladesh, not yet a registered organisation.</p>
