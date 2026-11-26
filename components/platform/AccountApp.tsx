@@ -13,12 +13,12 @@ import { Badge, Card, DemoBanner, Field, Notice, fmtDate, input } from './ui';
 const AREAS = ['Collection', 'Sorting', 'Distribution', 'Teaching', 'Facilitation', 'Events', 'Mentoring', 'Communications', 'Design', 'Research', 'Data', 'Outreach', 'Leadership', 'Fundraising'];
 const PROGRAMS = ['Ushnota Abhijan', 'CSEdWeek', 'ML Bangladesh', 'Climate', 'Communications', 'Other'];
 
+type AccountData = { owner: string; apps: Application[]; hours: HourEntry[]; docs: Doc[]; msgs: Message[] };
+
 export default function AccountApp() {
   const { p, me, refresh, tick } = usePlatform();
-  const [apps, setApps] = useState<Application[]>([]);
-  const [hours, setHours] = useState<HourEntry[]>([]);
-  const [docs, setDocs] = useState<Doc[]>([]);
-  const [msgs, setMsgs] = useState<Message[]>([]);
+  const [data, setData] = useState<AccountData | null>(null);
+  const [loadFailedFor, setLoadFailedFor] = useState<string | null>(null);
   const [tab, setTab] = useState<'overview' | 'profile' | 'hours' | 'documents' | 'messages'>('overview');
   // Arriving from a password-reset email: ask for the new password first.
   const [recovering, setRecovering] = useState(false);
@@ -35,10 +35,21 @@ export default function AccountApp() {
 
   useEffect(() => {
     if (!me) return;
-    Promise.all([p.myApplications(), p.myHours(), p.myDocuments(), p.myMessages()]).then(([a, h, d, m]) => { setApps(a); setHours(h); setDocs(d); setMsgs(m); });
+    let active = true;
+    setData(null);
+    setLoadFailedFor(null);
+    Promise.all([p.myApplications(), p.myHours(), p.myDocuments(), p.myMessages()])
+      .then(([apps, hours, docs, msgs]) => {
+        if (active) setData({ owner: me.id, apps, hours, docs, msgs });
+      })
+      .catch(() => {
+        if (active) setLoadFailedFor(me.id);
+      });
+    // A late response from a previous account must not replace the current account's records.
+    return () => { active = false; };
   }, [me, p, tick]);
 
-  if (me === undefined) return <div className="h-64 animate-pulse rounded-[var(--radius-card)] bg-ink/5" />;
+  if (me === undefined) return <p role="status" className="rounded-[var(--radius-card)] bg-ink/5 p-6 text-ink-soft">Checking your sign-in…</p>;
   if (!me)
     return (
       <div className="space-y-5">
@@ -52,6 +63,27 @@ export default function AccountApp() {
 
   if (recovering && p.updatePassword) return <NewPassword onDone={() => { setRecovering(false); history.replaceState(null, '', '/account/'); }} />;
 
+  if (!data || data.owner !== me.id) {
+    const failed = loadFailedFor === me.id;
+    return (
+      <div className="space-y-5">
+        <DemoBanner />
+        <Card title={failed ? 'Your account couldn’t be loaded' : 'Loading your account'}>
+          {failed ? (
+            <>
+              <Notice kind="error">We couldn’t load your applications, hours, certificates or messages. Try again to see your records.</Notice>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button type="button" className="btn-primary" onClick={refresh}>Try again</button>
+                <Link href="/contact/" className="btn-glass">Contact Cedar</Link>
+              </div>
+            </>
+          ) : <p role="status" className="text-ink-soft">Loading your applications, hours, certificates and messages…</p>}
+        </Card>
+      </div>
+    );
+  }
+
+  const { apps, hours, docs, msgs } = data;
   const approved = hours.filter((h) => h.status === 'approved').reduce((a, h) => a + Number(h.hours), 0);
   const pending = hours.filter((h) => h.status === 'pending').reduce((a, h) => a + Number(h.hours), 0);
   const tabs = [['overview', 'Overview'], ['profile', 'Profile'], ['hours', 'Hours'], ['documents', `Certificates & letters (${docs.length})`], ['messages', `Messages (${msgs.length})`]] as const;
