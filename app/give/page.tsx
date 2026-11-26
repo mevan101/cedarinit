@@ -9,7 +9,7 @@ import { reports, money } from '@/lib/finance';
 export const metadata: Metadata = {
   title: 'Give',
   description:
-    'How to give to Cedar Initiative. We are not yet a registered organisation, so donations go through a registered fiscal sponsor, and every taka is reported.',
+    'How to support Cedar Initiative. We are not yet a registered organisation. Contact us before giving and read our published financial reports.',
   alternates: { canonical: '/give/' },
 };
 

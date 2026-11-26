@@ -8,6 +8,7 @@
     "start": "npx serve@14 out",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:auth": "node --test tests/auth-redirect.test.cjs",
     "format": "prettier --write .",
     "predev": "node scripts/copy-cms.mjs && node scripts/pull-site-data.mjs",
     "prebuild": "node scripts/copy-cms.mjs && node scripts/pull-site-data.mjs && node scripts/team-portraits.mjs --tolerant",

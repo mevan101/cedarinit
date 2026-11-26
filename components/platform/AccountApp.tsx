@@ -6,6 +6,7 @@ import Icon from '../Icon';
 import type { Application, Doc, HourEntry, Message, Profile } from '@/lib/platform';
 import { isStaff } from '@/lib/platform';
 import { kindLabel, linkedInAddUrl } from '@/lib/platform/templates';
+import { accountDestination } from '@/lib/auth-redirect';
 import { usePlatform } from './usePlatform';
 import { Badge, Card, DemoBanner, Field, Notice, fmtDate, input } from './ui';
 
@@ -25,6 +26,12 @@ export default function AccountApp() {
     if (new URLSearchParams(location.search).get('reset') === '1') setRecovering(true);
     return p.onRecovery?.(() => setRecovering(true));
   }, [p]);
+
+  useEffect(() => {
+    if (!me || recovering) return;
+    const destination = accountDestination(location.search);
+    if (destination) location.replace(destination);
+  }, [me, recovering]);
 
   useEffect(() => {
     if (!me) return;

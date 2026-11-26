@@ -8,13 +8,13 @@ export default function Counter({ value, suffix = '', duration = 1800 }: { value
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    setN(0);
+    if (!el || typeof IntersectionObserver !== 'function' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let raf = 0;
     const io = new IntersectionObserver(
       ([e]) => {
         if (!e.isIntersecting) return;
         io.disconnect();
+        setN(0);
         const start = performance.now();
         const tick = (t: number) => {
           const p = Math.min(1, (t - start) / duration);

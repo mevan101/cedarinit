@@ -57,7 +57,7 @@ export function ArrowLink({ href, children, external, className = '' }: { href: 
   );
 }
 
-/** Interior page hero: big type over a soft cedar aurora, optional image. */
+/** Interior page hero: editorial type and an optional documentary photograph. */
 export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, children }: { eyebrow?: string; title: string; lead?: ReactNode; image?: string; imageAlt?: string; caption?: string; children?: ReactNode }) {
   return (
     <section className="hero-pad relative pb-14 pt-32 sm:pb-20 sm:pt-40">
@@ -92,39 +92,40 @@ export function Aurora(_: { tone?: 'light' | 'dark' }) {
 }
 
 export function CTA({
-  title = 'Three ways to help',
-  lead = 'Give, volunteer or partner with us. Each path is a separate page, so you only see what you need.',
+  id,
+  title = 'There’s a place for you.',
+  lead = 'Help at a clothes drive, teach a class, or bring Cedar to your school. Start where you can.',
 }: {
+  id?: string;
   title?: string;
   lead?: string;
 }) {
   return (
-    <section className="section pt-0">
+    <section id={id} className="section pt-0" aria-label="Get involved">
       <div className="shell">
-        <Reveal className="on-dark relative overflow-hidden rounded-5xl bg-cedar-900 px-6 py-14 sm:px-12 sm:py-20">
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-6">
-              <p className="t-eyebrow !text-cedar-300">Get involved</p>
-              <h2 className="t-h2 mt-4 text-white">{title}</h2>
-              <p className="t-lead mt-4 !text-white/75">{lead}</p>
+        <Reveal className="rounded-5xl border border-ink/10 bg-seedling px-6 py-12 sm:px-12 sm:py-16">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+            <div>
+              <h2 className="t-h2 max-w-lg text-ink">{title}</h2>
             </div>
-            <ul className="grid gap-3 sm:grid-cols-3 lg:col-span-6">
+            <p className="t-lead max-w-xl">{lead}</p>
+          </div>
+            <ul className="mt-10 grid gap-8 md:grid-cols-3">
               {[
-                { href: '/give/', label: 'Give', note: 'Fund a campaign' },
-                { href: '/opportunities/', label: 'Volunteer', note: 'See open roles' },
-                { href: '/partner/', label: 'Partner', note: 'Schools, NGOs, companies' },
+                { href: '/opportunities/', label: 'Volunteer', note: 'Find a role. Teach, organise, build, or lend a hand.' },
+                { href: '/give/', label: 'Give', note: 'See how giving works and where the money goes.' },
+                { href: '/partner/', label: 'Partner', note: 'Host a program, share your space, or work with us.' },
               ].map((p) => (
                 <li key={p.href}>
-                  <Link href={p.href} className="group flex h-full min-h-[6.5rem] flex-col justify-between rounded-3xl border border-white/15 p-5 text-white transition hover:border-white/40 hover:bg-white/5">
-                    <span className="flex items-center justify-between font-display text-2xl uppercase">
+                  <Link href={p.href} className="group flex h-full min-h-[8rem] flex-col gap-4 border-t border-ink/30 py-5 text-ink transition-colors hover:border-cedar-700 hover:text-cedar-800">
+                    <span className="flex items-center justify-between font-display text-3xl uppercase">
                       {p.label} <Icon name="arrow" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </span>
-                    <span className="text-sm text-white/70">{p.note}</span>
+                    <span className="max-w-xs text-[0.95rem] leading-relaxed text-ink-soft">{p.note}</span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
         </Reveal>
       </div>
     </section>

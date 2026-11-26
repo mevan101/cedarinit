@@ -6,7 +6,7 @@ type Variant = 'up' | 'left' | 'right' | 'zoom' | 'mask';
 
 let observer: IntersectionObserver | null = null;
 function getObserver() {
-  if (observer || typeof window === 'undefined') return observer;
+  if (observer || typeof IntersectionObserver !== 'function') return observer;
   observer = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -59,12 +59,12 @@ export default function Reveal({ children, as = 'div', delay = 0, variant = 'up'
 }
 
 /** Headline whose words rise out of a mask, one after another. */
-export function RiseText({ text, as = 'h2', className = '' }: { text: string; as?: keyof JSX.IntrinsicElements; className?: string }) {
+export function RiseText({ text, as = 'h2', className = '', id }: { text: string; as?: keyof JSX.IntrinsicElements; className?: string; id?: string }) {
   const ref = useReveal<HTMLElement>();
   const words = text.split(' ');
   return createElement(
     as,
-    { ref, className: `rise ${className}`, 'aria-label': text },
+    { ref, id, className: `rise ${className}`, 'aria-label': text },
     words.map((w, i) => (
       <span key={i} aria-hidden="true">
         <span style={{ '--i': i } as CSSProperties}>{w}</span>

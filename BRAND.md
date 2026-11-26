@@ -1,103 +1,104 @@
-# Cedar Initiative — Brand Guide (Cedar Editorial v2)
+# Cedar Initiative brand guide: Cedar Fieldnotes
 
-> **v2 (Nov 2026): documentary editorial.** Real photos with a caption giving place and date, solid flat cards, one accent colour.
-> Glass blur is used only for floating chrome (`.chrome`: sticky header, menus, chat). The aurora and grain effects are retired (`<Aurora>` renders nothing).
-> `.glass` / `<GlassCard>` remain as names but now render solid surfaces. Every impact number uses `<Stat>` and shows its period and source.
-> Screen-class rules (short screens, dual-screen `viewport-segments`, coarse pointers, Save-Data) live at the end of `app/globals.css`.
-> Hover styles apply only on devices that can hover (`future.hoverOnlyWhenSupported`).
-> Motion (Nov 2026): hero mosaic reveal with slow Ken Burns drift; place names fill as they scroll in; program panels stack on large screens;
-> report bars grow on view; verify seal draws itself. All transform/opacity/clip-path, all switched off under reduced motion.
-> Team portraits: white, faint contour lines, two Cedar-green (#5DB88C) blades, person bottom-aligned. Generated, never hand-made.
+Documentary photos and plain-spoken stories, with an editorial Paper/Cedar/Seedling identity. This combines the earlier Fieldnotes direction with the photo-led homepage and existing volunteer platform. The interactive guide is at `/brand/`.
 
-The live, interactive version of this guide is at [`/brand`](https://cedar-initiative.org/brand/) (`app/brand/page.tsx`).
-All values below are implemented as tokens in `app/globals.css` and `tailwind.config.ts`. **Never hard-code
-colours, radii or easing in components — use the tokens.**
+## Organisation and voice
 
-## 1. Who we are
+- Cedar Initiative is a youth-led volunteer group founded in Dhaka in 2025. ML Bangladesh is its STEM program.
+- Cedar is not yet a registered organisation. Fiscal sponsorship is being arranged; do not imply an agreement or tax-deductible giving is already available. `/give/` is the current public source of giving information.
+- Use the current factual copy from `lib/site.ts`, the original articles in `content/posts/`, and published program/report records. Do not invent figures, quotes, partners or dates.
+- Credit all co-founders equally. Do not show team headcounts.
+- Be warm, direct and specific: what happened, where, when, and what it cost. No hype, em dashes, pity-driven language or unexplained acronyms.
+- Every impact figure must retain its counting period and source link. Program figures come from `lib/site.ts`; use `<Stat>` so the evidence stays with the number.
+- Keep internal notes and unconfirmed agreements out of public pages. Preserve the wording of original news articles.
 
-- **Name:** Cedar Initiative — *Community Empowerment for Development & Advocacy Resilience*
-- **What:** a youth-led, volunteer-based nonprofit working in Bangladesh (currently unregistered; path to 501(c)(3) via fiscal sponsorship).
-- **Co-founders:** Shahriar Azad Evan, Sharafat Karim, Sabbir Ahmed, Naimur Rahman Durjoy (credit the team, not one person)
-- **Tagline:** Be the Force for Good · *Built by U. Powered by purpose.*
-- **Mission:** Empowering communities through climate action, education, wellness, and innovation to drive sustainable progress globally.
-- **Vision:** A world where empowered youth and communities lead sustainable progress, fostering resilience, equity, and well-being for all.
-- **Values:** Sustainability · Equity · Youth-Driven Leadership · Innovation · Integrity · Transparency
+## Original logo assets
 
-## 2. Logo
-
-Two opposing cedar-green wedges rising past each other — a split "C" and "I" that reads as growth and balance — beside an Anton wordmark.
+Use the supplied files exported from the original `docs/brand/CI_LOGO.pdf`. Never redraw the mark or retype the wordmark.
 
 | File | Use |
 | --- | --- |
 | `public/brand/logo.svg` | Primary lockup on light backgrounds |
-| `public/brand/logo-white.svg` | All-white, on photos / dark green |
-| `public/brand/logo-reverse.svg` | Green mark + white wordmark on Cedar 950 |
-| `public/brand/mark.svg` | Mark only (avatars, small sizes) |
-| `public/brand/icon.svg` | App icon / favicon (white mark on Cedar 700) |
+| `public/brand/logo-white.svg` | White lockup on dark backgrounds |
+| `public/brand/logo-reverse.svg` | Original green mark with white wordmark |
+| `public/brand/wordmark.svg` | Standalone wordmark |
+| `public/brand/mark.svg` | Mark for small spaces and avatars |
+| `public/brand/icon.svg` | App icon and favicon |
+| `public/brand/icon-512.png` | Raster app icon |
+| `public/brand/logo.png` | Raster lockup |
 
-- Clear space = height of the "C" on every side. Minimum width 96px digital / 25mm print; use the mark alone below that.
-- Don't recolour (outside Cedar ramp, white, black), stretch, rotate, outline, add shadows, or place on busy imagery without a scrim.
+The logo uses its own green, `#1A502A`. This is **not** the interface green. Keep the original colours; choose a supplied light/reverse variant rather than recolouring an asset.
 
-## 3. Colour
+Clear space is the height of the “C” on every side. Minimum lockup width is 96px digitally or 25mm in print; use the mark below that. Do not stretch, rotate, outline, add shadows, or place the logo across faces or busy photography.
+
+The earlier tree wordmark remains in `public/brand/legacy/` for original 2025 documents only. Do not replace logos inside published reports.
+
+## Colour
+
+Tokens live in `app/globals.css` and `tailwind.config.ts`. Components use tokens, not one-off hex values. The interactive palette provides copyable hex values and computed contrast for each displayed text/background pair.
 
 | Token | Hex | Role |
 | --- | --- | --- |
-| `cedar-700` | `#025730` | Primary — logo, primary buttons, links |
+| `paper` | `#F6F4EB` | Reading surface |
+| `paper-deep` | `#EBE8DB` | Evidence strips and quiet separation |
+| `cedar-700` | `#025730` | Primary buttons and links |
+| `seedling` | `#DCEE8F` | Invitations and restrained highlights |
 | `ink` | `#0B1A12` | Headlines and body text |
-| `ink-soft` / `ink-muted` | `#2D3D34` / `#54635A` | Secondary text / meta (both AA on Paper) |
-| `paper` | `#F8F7F2` | Page background |
-| `cedar-950` | `#011E11` | Dark sections, footer |
-| `ember` | `#F2B544` | Accent — highlights on dark surfaces only, ≤5% of a layout |
+| `ink-soft` | `#2D3D34` | Secondary copy |
+| `ink-muted` | `#54635A` | Captions and metadata |
+| `cedar-950` | `#011E11` | Dark chapters and footer |
+| `ember` | `#F2B544` | Rare accent, not body text |
 
-Full ramp: 50 `#F0FAF4` · 100 `#DCF3E6` · 200 `#B8E6CC` · 300 `#7FD6A4` · 400 `#3FA872` · 500 `#16884F` · 600 `#0A6E40` · 700 `#025730` · 800 `#024326` · 900 `#01331C` · 950 `#011E11`.
+The complete Cedar ramp is unchanged: 50 `#F0FAF4`, 100 `#DCF3E6`, 200 `#B8E6CC`, 300 `#7FD6A4`, 400 `#3FA872`, 500 `#16884F`, 600 `#0A6E40`, 700 `#025730`, 800 `#024326`, 900 `#01331C`, 950 `#011E11`.
 
-Contrast: body text ≥ 4.5:1, large text / UI ≥ 3:1 (WCAG 2.2 AA). On light, text uses Cedar 600+; on dark, Cedar 300 or lighter.
+Body text needs at least 4.5:1 contrast; large text and interface boundaries need 3:1. On Paper use Ink or Cedar 600 and darker. On dark green use white, Paper, Seedling or a verified light Cedar shade. Check actual opacity and background, not just the nominal token.
 
-## 4. Typography
+## Typography
 
-- **Display — Anton 400, uppercase.** The logo face. Headlines only, ≤ ~6 words, line-height 0.92–0.98.
-- **Text — Inter 400/500/600.** Everything people read.
-- **Bangla — Noto Sans Bengali 400/600** (automatic fallback in the `sans` stack; mark Bangla text with `lang="bn"`).
+- **Anton 400:** short display lines, displayed in uppercase. Write sentence-case source text. Keep headlines brief and remove small eyebrow labels above page headlines.
+- **Inter 400/500/600:** readable text, forms, buttons and captions.
+- **Noto Sans Bengali 400/600:** Bangla, with `lang="bn"` on the relevant text.
+- Body copy is 16–17px with generous line height and a comfortable reading measure. Captions are generally 14px. Let text wrap; never shrink important copy to force a fit.
+- Use `text-wrap: balance` for headings and `pretty` for paragraphs. Figures and money use tabular numbers.
 
-| Class | Font | Size (320px → 1440px+) | Use |
-| --- | --- | --- | --- |
-| `.t-display` | Anton | 44 → 120px | Home hero |
-| `.t-h1` | Anton | 40 → 84px | Page titles |
-| `.t-h2` | Anton | 32 → 60px | Section titles |
-| `.t-h3` | Inter 600 | 20 → 24px | Card titles |
-| `.t-lead` | Inter 400 | 17 → 21px | Intros |
-| body | Inter 400 | 16–17px, 1.6–1.8 lh, 68ch measure | Paragraphs |
-| `.t-eyebrow` | Inter 600 | 12px, 0.18em tracking, uppercase | Section labels |
+| Class | Font | Fluid size |
+| --- | --- | --- |
+| `.t-display` | Anton | 36–112px; homepage orbit has its own 48–128px scale |
+| `.t-h1` | Anton | 36–80px |
+| `.t-h2` | Anton | 32–60px |
+| `.t-h3` | Inter 600 | 20–24px |
+| `.t-lead` | Inter | 17–21px |
 
-## 5. Layout, spacing & surfaces
+## Layout and surfaces
 
-- 4px base grid. Container `.shell` = max 80rem with fluid gutter `clamp(20px, 4vw, 40px)`. Sections use `.section` = `clamp(72px, 10vw, 144px)` vertical padding.
-- Breakpoints: `xs 400` · `sm 640` · `md 768` · `lg 1024` · `xl 1280` · `2xl 1536` · `3xl 1920`. Type and spacing are fluid (`clamp()`), so breakpoints only change layout.
-- Radius: pills (999px) for buttons/nav/chips · 28px cards (`--radius-card`) · 32–40px feature panels.
-- **Liquid glass** (`.glass`, `.glass-dark`, `<GlassCard>`) is for elements that float: header, stat cards, filters, chat, highlights. Translucent white gradient, 20–22px blur, 150–170% saturation, inner top highlight, soft cedar shadow, and a pointer-tracking specular sheen. Never use glass behind long text. Without `backdrop-filter` support it falls back to near-opaque.
-- **Solid cards** (white, 28px radius, layered shadow) for reading: posts, people, forms.
-- **Aurora** (`<Aurora>`) — blurred, slowly drifting cedar/ember blobs behind heroes and CTAs give the glass something to refract.
+- Use a 4px base grid. `.shell` is 88rem maximum, increasing to 90rem on very wide displays. Gutter is `clamp(1.25rem, 4.5vw, 4.5rem)`.
+- `.section` uses `clamp(4rem, 8vw, 7.5rem)` vertical padding, with tighter short-screen rules.
+- `--radius-card` is 12px. Shared feature radii derive from it. Buttons use 8px corners; small badges can remain pills.
+- Use Paper for the page, white for reading cards, a fine border for separation, Cedar 950 for a strong chapter and Seedling for the closing invitation. No ornamental gradients, grain or glass behind text.
+- Navigation is a persistent solid bar. The mobile menu uses native `<dialog>` for focus containment, Escape and focus return. JavaScript-disabled mobile visitors get ordinary navigation links.
+- `.glass`, `.glass-dark` and `<GlassCard>` are compatibility names for solid surfaces. `.chrome` remains available to existing platform controls; it is not the default design language. `<Aurora>` remains a no-op.
+- Contact is explicit in the navigation, footer and contact page. Do not add a floating launcher over content.
 
-## 6. Components
+## Documentary photography
 
-`Header` (floating glass pill, hides on scroll-down, accessible mobile dialog) · `Footer` · `SectionHeading` · `PageHero` · `CTA` · `GlassCard` · `PostCard` · `PersonCard` · `Gallery` (filters + `<dialog>` lightbox with keyboard & swipe) · `Counter` · `ContactForm` · `ChatWidget` (WhatsApp / Messenger) · `Reveal` / `RiseText` · `Img` (responsive WebP) · `Icon` · `Logo` / `Mark`.
+- Use the existing real program imagery with useful alt text and captions that give the actual place/date.
+- Preserve people in the frame and gallery order, left to right and top to bottom. Prefer uncropped images when a crop would remove someone.
+- Respect dignity and consent; never use pity imagery or generic stock heroes.
+- Keep the existing processed team portraits: white background, faint contour lines and green shapes. Use the portrait pipeline, not hand-edited replacements.
+- Keep responsive images dimensioned to prevent layout shift.
 
-Buttons: `.btn-primary` (Cedar 700), `.btn-glass`, `.btn-light` and `.btn-ghost-dark` (on dark). Minimum height 48px. One primary button per view.
+## Motion and resilience
 
-## 7. Motion
+- Preserve the homepage opening: original logo and program photos, a full homepage load only, skipped by any key, tap or scroll. In-site navigation must not replay it.
+- Hero photo mosaic, group-photo expansion, program stack panels, report bars and verify seal remain progressive enhancements. `public/motion.js` supplies the scroll values and observer fallback.
+- Content is **visible by default**. `Reveal`/`RiseText` animate only after observation; an unavailable observer must not leave words or cards hidden. Counters keep their real value until animation begins and always expose the final value to screen readers.
+- Entrance motion is brief. Shared easing is `cubic-bezier(0.22, 1, 0.36, 1)`. Interface feedback generally stays under 300ms; rare storytelling sequences can run longer.
+- Animate transform, opacity, clip-path and small filters, never layout properties. No `transition: all`. Gate hover effects to fine pointers that can hover.
+- Decorative photo drift settles within four seconds. Anything moving automatically beyond five seconds needs a pause control, as the sponsor strip has.
+- Reduced motion gives a complete still page: no opening, parallax, decorative loops or count-up.
 
-- Easing `cubic-bezier(0.22, 1, 0.36, 1)` (`--ease-out`); durations 0.3s (UI) to 1.1s (reveals).
-- **Reveal** — fade + 28px rise + blur clears on viewport entry (variants: `left`, `right`, `zoom`, `mask`), staggered 80–120ms.
-- **Rise** — headline words lift from a mask.
-- **Parallax / scroll progress** — CSS scroll-driven animations (`animation-timeline`), progressive enhancement.
-- **Count-up** — impact numbers; screen readers receive the final value immediately.
-- `prefers-reduced-motion: reduce` disables every animation and shows content instantly. Content is never hidden if JavaScript fails (`.no-js`).
+## Verification
 
-## 8. Accessibility checklist (WCAG 2.2 AA)
+Follow `.agents/skills/cedar-verify/SKILL.md`: typecheck, production export, axe scans, narrow screens, zoom, reduced motion, console and before/after screenshots. Check 320px and 360px without sideways scroll, 200% zoom, keyboard focus, and JavaScript/observer fallbacks.
 
-Semantic landmarks, one `h1` per page, skip link · visible 3px focus ring · touch targets ≥ 44×44px · descriptive `alt`, decorative images `alt=""` · forms with labels, inline errors, `aria-live` status · external links announce "opens in a new tab" · Bangla marked `lang="bn"` · safe-area insets on notched phones · reduced-motion support.
-
-## 9. Imagery & voice
-
-- Real people, real places, natural light. Always respect dignity and consent — no pity imagery. Optimised WebP in `public/images` (regenerate with `npx -p sharp node scripts/optimize-images.mjs <uploads-dir>`).
-- Voice: hopeful, honest, specific. Use real names, places, numbers and dates. Avoid hype, jargon and unexplained acronyms.
+Use `NEXT_PUBLIC_SUPABASE_URL= npm run build` for demo/offline form checks; do not write to live Supabase or send real contact/volunteer submissions. Keep the volunteer/account/staff platform, original news/report routes and downloads intact. Changes go through a review PR, never an unrequested production deployment.

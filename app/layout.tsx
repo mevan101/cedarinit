@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ChatWidget from '@/components/ChatWidget';
 import ViewTransitions from '@/components/ViewTransitions';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import announcement from '@/content/settings/announcement.json';
@@ -41,7 +40,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: [{ color: '#F8F7F2' }],
+  themeColor: [{ color: '#F6F4EB' }],
   colorScheme: 'light',
 };
 
@@ -76,7 +75,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <ChatWidget />
         <ViewTransitions />
         {/* Scroll motion for every browser, incl. phones without CSS scroll timelines (public/motion.js). */}
         <script src="/motion.js" defer />

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Icon from '../Icon';
+import { authDestination } from '@/lib/auth-redirect';
 import { usePlatform } from './usePlatform';
 import { DemoBanner, Field, Notice, input } from './ui';
 
@@ -17,6 +18,7 @@ function friendly(msg: string) {
 
 export default function AuthForm({ next = '/account/' }: { next?: string }) {
   const { p } = usePlatform();
+  const destination = authDestination(next);
   const [mode, setMode] = useState<'signup' | 'signin' | 'link' | 'reset'>('signup');
   const [state, setState] = useState<{ busy?: boolean; error?: string; info?: string }>({});
 
@@ -27,7 +29,7 @@ export default function AuthForm({ next = '/account/' }: { next?: string }) {
     setState({ busy: true });
     try {
       if (mode === 'signup') {
-        const r = await p.signUp(email, password, name);
+        const r = await p.signUp(email, password, name, destination);
         if (r.needsConfirm) return setState({ info: `We sent a confirmation link to ${email}. Open it to finish creating your account.` });
       } else if (mode === 'signin') await p.signIn(email, password);
       else if (mode === 'reset') {
@@ -35,10 +37,10 @@ export default function AuthForm({ next = '/account/' }: { next?: string }) {
         return setState({ info: p.mode === 'demo' ? 'Demo mode: no email is sent. On the live site, a reset link goes to this address.' : `If ${email} has an account, a link to reset your password is on its way.` });
       }
       else {
-        await p.sendLink(email);
+        await p.sendLink(email, destination);
         if (p.mode === 'live') return setState({ info: `Check ${email} for a sign-in link.` });
       }
-      location.href = next;
+      location.href = destination;
     } catch (err) {
       setState({ error: (err as Error).message });
     }
