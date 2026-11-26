@@ -10,11 +10,6 @@ start_date: '2025-11-04'
 end_date: '2026-01-31'
 places:
 - Dhaka
-- Rangpur
-- Dinajpur
-- Kurigram
-- Panchagarh
-- Bhola
 cover: /images/ushnota/cover.webp
 cover_alt: Volunteers with collected winter clothes for Ushnota Abhijan 2025
 cover_caption: Volunteers with donated clothes, Dhaka · November 2025
@@ -22,11 +17,11 @@ lead: We collected new and gently used winter clothes in Dhaka schools in Novemb
   in Karail slum after the fire, and to street children and homeless people.
 order: 2
 facts:
-- label: Beneficiaries targeted
+- label: Planned reach
   value: 2,000+
-- label: Districts
+- label: Planned districts
   value: '6'
-- label: Timeline
+- label: Planned timeline
   value: Dec 2025 – Jan 2026
 objectives:
 - heading: Short-term

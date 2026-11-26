@@ -24,6 +24,8 @@ export default function FiscalPage() {
         </div>
       </PageHero>
 
+      <div className="shell pb-12"><p className="max-w-3xl rounded-[var(--radius-card)] border border-ink/15 bg-paper-deep p-6 text-ink-soft">This is a proposal for a future arrangement, not a confirmed sponsorship. Cedar is not yet registered and no fiscal sponsor is currently confirmed. References below to a sponsor’s legal or tax status describe the proposed arrangement, not a current benefit for gifts to Cedar.</p></div>
+
       <section id="proposal" className="section bg-white">
         <div className="shell grid gap-12 lg:grid-cols-12">
           <nav aria-label="Proposal sections" className="hidden lg:col-span-3 lg:block">

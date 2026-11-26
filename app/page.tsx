@@ -162,7 +162,7 @@ export default function Home() {
         <div className="shell">
           <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
             <h2 id="places-title" className="t-h2 max-w-xl">Rooted in Dhaka.<br />Reaching further.</h2>
-            <p className="t-lead max-w-xl !text-white/75">Cedar began with local volunteers. Through ML Bangladesh, the work now connects schools and campuses in these six cities.</p>
+            <p className="t-lead max-w-xl !text-white/75">Cedar began with local volunteers. ML Bangladesh brings a history of school and campus events in these six cities, including work before it joined Cedar in September 2026.</p>
           </div>
           <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {places.map((place, i) => (
@@ -194,7 +194,7 @@ export default function Home() {
               <h3 className="t-h3 text-ink">Legal status</h3>
               <p className="mt-3 text-ink-soft">
                 Cedar is a volunteer group founded in {site.founded}. We are <strong className="font-semibold text-ink">not yet a registered organisation</strong>, so we
-                never take donations into a personal account. We are setting up a fiscal sponsor to receive gifts for us.
+                are arranging a fiscal sponsor to receive gifts for our programs. Contact the team before giving.
               </p>
               <ArrowLink href="/give/" className="mt-4">How giving works</ArrowLink>
             </Reveal>

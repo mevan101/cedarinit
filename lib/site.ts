@@ -35,6 +35,7 @@ export const nav = [
   { href: '/our-work/', label: 'Our work' },
   { href: '/ml-bangladesh/', label: 'ML Bangladesh' },
   { href: '/outreach/', label: 'News' },
+  { href: '/partner/', label: 'Partner' },
   { href: '/contact/', label: 'Contact' },
 ] as const;
 
@@ -75,16 +76,16 @@ export const values = [
   { title: 'Youth-Driven Leadership', body: 'Students plan and run the programs, and they answer for how they go.' },
   { title: 'Innovation', body: 'We use technology where it helps people, from AI hackathons to the certificates on this site.' },
   { title: 'Integrity', body: 'We say what we did and what we didn’t, and we correct our mistakes in public.' },
-  { title: 'Transparency', body: 'Every program gets a financial report that lists where each taka went.' },
+  { title: 'Transparency', body: 'Our published financial reports list where the money came from and what it paid for.' },
 ] as const;
 
 /** Headline numbers. Every one carries its period and a source link (strategy §5). */
 export type Stat = { value: number; suffix?: string; label: string; period: string; source: { label: string; href: string; external?: boolean } };
 export const impact: Stat[] = [
-  { value: 4250, suffix: '+', label: 'People reached by Cedar programs', period: '2025', source: { label: 'Cedar financial report 2025', href: '/financial-report-cedar-initiative-2025/' } },
-  { value: 1000, suffix: '+', label: 'Winter clothes collected and handed out', period: 'Nov 2025 – Jan 2026', source: { label: 'Ushnota Abhijan report', href: '/financial-report-ushnota-abhijan-2025/' } },
-  { value: 7000, suffix: '+', label: 'Members of the ML Bangladesh community', period: 'Facebook group, Nov 2026', source: { label: 'mlbangladesh.org', href: 'https://mlbangladesh.org/about', external: true } },
-  { value: 82, label: 'Teams from 42 universities at Build With Gemma', period: 'July 2026, UIU Dhaka', source: { label: 'ML Bangladesh programs', href: 'https://mlbangladesh.org/programs', external: true } },
+  { value: 4, label: 'Schools that hosted winter clothes collections', period: '2025 program report', source: { label: 'Ushnota Abhijan report', href: '/financial-report-ushnota-abhijan-2025/' } },
+  { value: 1000, suffix: '+', label: 'Winter clothes collected and handed out', period: '2025 program report', source: { label: 'Ushnota Abhijan report', href: '/financial-report-ushnota-abhijan-2025/' } },
+  { value: 7000, suffix: '+', label: 'ML Bangladesh Facebook community members', period: 'Community size · November 2026', source: { label: 'mlbangladesh.org', href: 'https://mlbangladesh.org/about', external: true } },
+  { value: 82, label: 'Teams from 42 universities at Build With Gemma', period: 'July 2026 · before ML Bangladesh joined Cedar', source: { label: 'ML Bangladesh programs', href: 'https://mlbangladesh.org/programs', external: true } },
 ];
 
 // Kept for older imports. TODO(Evan): confirm the 2025 figures against program records.
@@ -104,7 +105,7 @@ export const giving = {
 
 export const joinOptions = [
   { title: 'Volunteer', body: 'Help at a clothes drive, teach a session, run a hackathon or work on research.', image: 'join/volunteer', href: '/volunteer/', cta: 'See volunteer roles' },
-  { title: 'Regular Donor', body: 'Give a set amount each month so we can plan the next program before it starts.', image: 'join/regular-donor', href: '/give/', cta: 'How to give' },
+  { title: 'Supporter', body: 'Read our reports and talk to the team about what support is currently possible.', image: 'join/regular-donor', href: '/give/', cta: 'Before you give' },
   { title: 'Lifetime & Donor Member', body: 'Support Cedar over several years. Talk to us about what that would look like.', image: 'join/lifetime-member', href: '/give/', cta: 'How to give' },
   { title: 'Career', body: 'Want to take on more than one event? Tell us what you do and what you’d like to lead.', image: 'join/career', href: '/contact/?subject=Career', cta: 'Get in touch' },
 ] as const;
