@@ -12,6 +12,13 @@ const programs = [
   { href: '/outreach/', label: 'News' },
 ];
 
+/**
+ * Footer rows are the only route to eight pages, so on a phone each one gets a 44px target.
+ * On a pointer device the same links stay compact: the rule protects thumbs, not mice, and
+ * 24 rows at 44px would add 300px of scroll to every page in the site.
+ */
+const LINK = 'link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full';
+
 const help = [
   { href: '/give/', label: 'Give' },
   { href: '/opportunities/', label: 'Open roles' },
@@ -44,23 +51,24 @@ export default function Footer() {
           </div>
 
           <div className="grid gap-10 xs:grid-cols-2 md:grid-cols-4 lg:col-span-7">
-            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/brand/', label: 'Brand guide' }, { href: '/feed.xml', label: 'News feed (RSS)' }]} />
+            <FooterCol title="Organisation" links={[{ href: '/about-us/', label: 'About' }, { href: '/our-team/', label: 'Team' }, { href: '/our-work/', label: 'Our work' }, { href: '/contact/', label: 'Contact' }, { href: '/search/', label: 'Search' }, { href: '/brand/', label: 'Brand guide' }, { href: '/feed.xml', label: 'News feed (RSS)' }]} />
             <FooterCol title="Programs" links={programs} />
             <FooterCol title="Get involved" links={help} />
             <div>
               <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">Contact</h2>
-              <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
-                <li><a className="link-underline break-all text-white" href={`mailto:${site.email}`}>{site.email}</a></li>
-                <li><a className="link-underline text-white" href={site.phoneHref}>{site.phone}</a></li>
-                <li><a className="link-underline text-white" href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></li>
-                <li><a className="link-underline text-white" href={site.messenger} target="_blank" rel="noopener noreferrer">Messenger<span className="sr-only"> (opens in a new tab)</span></a></li>
+              <ul className="tap-list mt-5 space-y-3 text-[0.95rem] max-sm:space-y-0">
+                <li><a className="link-underline break-all text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href={`mailto:${site.email}`}>{site.email}</a></li>
+                <li><a className="link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href={site.phoneHref}>{site.phone}</a></li>
+                <li><a className="link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp<span className="sr-only"> (opens in a new tab)</span></a></li>
+                <li><a className="link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href={site.messenger} target="_blank" rel="noopener noreferrer">Messenger<span className="sr-only"> (opens in a new tab)</span></a></li>
                 <li>{site.location}</li>
               </ul>
               <h2 className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">Transparency</h2>
-              <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
-                <li><Link className="link-underline font-semibold text-white" href="/transparency/">All reports</Link></li>
+              <ul className="tap-list mt-5 space-y-3 text-[0.95rem] max-sm:space-y-0">
+                <li><Link className="link-underline font-semibold text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href="/transparency/">All reports</Link></li>
+                <li><Link className="link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href="/data/">Open data (JSON)</Link></li>
                 {reports.map((r) => (
-                  <li key={r.slug}><Link className="link-underline text-white" href={`/${r.slug}/`}>{r.title}</Link></li>
+                  <li key={r.slug}><Link className="link-underline text-white inline-flex items-center max-sm:min-h-[44px] max-sm:w-full" href={`/${r.slug}/`}>{r.title}</Link></li>
                 ))}
               </ul>
             </div>
@@ -73,7 +81,7 @@ export default function Footer() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. A youth-led volunteer group in Bangladesh, not yet a registered organisation.</p>
-          <a href="#top" className="inline-flex items-center gap-2 text-white/80 hover:text-white">
+          <a href="#top" className="inline-flex items-center gap-2 text-white/80 hover:text-white max-sm:min-h-[44px]">
             Back to top <Icon name="arrowUp" className="h-4 w-4" />
           </a>
         </div>
@@ -86,15 +94,15 @@ function FooterCol({ title, links }: { title: string; links: readonly { href: st
   return (
     <div>
       <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-cedar-300">{title}</h2>
-      <ul className="tap-list mt-5 space-y-3 text-[0.95rem]">
+      <ul className="tap-list mt-5 space-y-3 text-[0.95rem] max-sm:space-y-0">
         {links.map((l) => (
           <li key={l.href}>
             {/^https?:/.test(l.href) ? (
-              <a href={l.href} target="_blank" rel="noopener noreferrer" className="link-underline text-white">{l.label}<span className="sr-only"> (opens in a new tab)</span></a>
+              <a href={l.href} target="_blank" rel="noopener noreferrer" className={LINK}>{l.label}<span className="sr-only"> (opens in a new tab)</span></a>
             ) : /\.\w+$/.test(l.href) ? (
-              <a href={l.href} className="link-underline text-white">{l.label}</a>
+              <a href={l.href} className={LINK}>{l.label}</a>
             ) : (
-              <Link href={l.href} className="link-underline text-white">{l.label}</Link>
+              <Link href={l.href} className={LINK}>{l.label}</Link>
             )}
           </li>
         ))}

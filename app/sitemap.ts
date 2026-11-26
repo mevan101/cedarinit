@@ -8,7 +8,7 @@ import { programs } from '@/lib/programs';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ['', 'about-us', 'our-work', 'ml-bangladesh', 'our-team', 'outreach', 'contact', 'give', 'volunteer', 'partner', 'fiscal-sponsors', 'transparency', 'opportunities', 'join', 'verify', ...opportunities.map((o) => `opportunities/${o.slug}`), ...programs.map((p) => p.slug), 'brand', ...reports.map((r) => r.slug)];
+  const pages = ['', 'about-us', 'our-work', 'ml-bangladesh', 'our-team', 'outreach', 'contact', 'give', 'volunteer', 'partner', 'fiscal-sponsors', 'transparency', 'data', 'opportunities', 'join', 'verify', ...opportunities.map((o) => `opportunities/${o.slug}`), ...programs.map((p) => p.slug), 'brand', ...reports.map((r) => r.slug)];
   // Pages without their own date use the most recent site update.
   const lastModified = '2026-11-08';
   return [
