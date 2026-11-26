@@ -36,7 +36,8 @@ export default function AccountApp() {
   useEffect(() => {
     if (!me) return;
     let active = true;
-    setData(null);
+    // Keep this account's forms mounted during background refreshes so drafts survive session renewal.
+    // A different account is still gated below by data.owner until its own records arrive.
     setLoadFailedFor(null);
     Promise.all([p.myApplications(), p.myHours(), p.myDocuments(), p.myMessages()])
       .then(([apps, hours, docs, msgs]) => {
@@ -91,6 +92,12 @@ export default function AccountApp() {
   return (
     <div className="space-y-6">
       <DemoBanner />
+      {loadFailedFor === me.id && (
+        <Notice kind="error">
+          We couldn’t refresh your account. The records below may be out of date.
+          <button type="button" onClick={refresh} className="ml-2 min-h-[44px] font-semibold underline underline-offset-4">Try again</button>
+        </Notice>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <Avatar me={me} />
