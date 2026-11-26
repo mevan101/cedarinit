@@ -269,12 +269,12 @@ function HoursPanel({ hours, onLogged }: { hours: HourEntry[]; onLogged: () => v
   }
   return (
     <div className="grid gap-6 lg:grid-cols-5">
-      <form onSubmit={submit} className="lg:col-span-2">
+      <form onSubmit={submit} className="min-w-0 lg:col-span-2">
         <Card title="Log hours">
           <div className="space-y-4">
             <Field id="program" text="Program"><select id="program" name="program" required className={input}>{PROGRAMS.map((x) => <option key={x}>{x}</option>)}</select></Field>
             <Field id="area" text="What you did"><select id="area" name="area" required className={input}>{AREAS.map((x) => <option key={x}>{x}</option>)}</select></Field>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Field id="date" text="Date"><input id="date" name="date" type="date" required max={new Date().toISOString().slice(0, 10)} className={input} /></Field>
               <Field id="hours" text="Hours"><input id="hours" name="hours" type="number" min="0.5" max="24" step="0.5" required className={input} /></Field>
             </div>
@@ -285,9 +285,9 @@ function HoursPanel({ hours, onLogged }: { hours: HourEntry[]; onLogged: () => v
           </div>
         </Card>
       </form>
-      <Card title="Your hours" className="lg:col-span-3">
+      <Card title="Your hours" className="min-w-0 lg:col-span-3">
         {hours.length === 0 ? <p className="text-ink-soft">Nothing logged yet.</p> : (
-          <div className="overflow-x-auto">
+          <div role="region" aria-label="Your logged hours" tabIndex={0} className="overflow-x-auto">
             <table className="w-full min-w-[28rem] text-left text-sm">
               <thead className="text-ink-muted"><tr><th className="py-2 pr-3">Date</th><th className="py-2 pr-3">Program · area</th><th className="py-2 pr-3 text-right">Hours</th><th className="py-2 text-right">Status</th></tr></thead>
               <tbody className="divide-y divide-ink/10">
