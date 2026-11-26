@@ -194,15 +194,21 @@ function Avatar({ me, size = 'h-14 w-14' }: { me: Pick<Profile, 'photo_url' | 'f
 
 function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
   const { p } = usePlatform();
-  const [areas, setAreas] = useState<string[]>(me.areas ?? []);
-  const [photo, setPhoto] = useState(me.photo_url ?? '');
+  // Untouched controls follow refreshed profile data; only explicit local edits are submitted.
+  const [areaDraft, setAreaDraft] = useState<string[] | null>(null);
+  const [photoDraft, setPhotoDraft] = useState<string | undefined>();
+  const areas = areaDraft ?? me.areas ?? [];
+  const photo = photoDraft ?? me.photo_url ?? '';
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const v = (k: string) => String(f.get(k) ?? '').trim() || null;
     try {
-      await p.saveProfile({ full_name: v('full_name') ?? '', handle: v('handle')?.toLowerCase() ?? null, phone: v('phone'), institution: v('institution'), city: v('city'), bio: v('bio'), linkedin: v('linkedin'), areas, photo_url: photo || null, public_profile: f.get('public_profile') === 'on' });
+      await p.saveProfile({ full_name: v('full_name') ?? '', handle: v('handle')?.toLowerCase() ?? null, phone: v('phone'), institution: v('institution'), city: v('city'), bio: v('bio'), linkedin: v('linkedin'), public_profile: f.get('public_profile') === 'on', ...(areaDraft !== null ? { areas } : {}), ...(photoDraft !== undefined ? { photo_url: photo || null } : {}) });
+      // Do not clear any newer edit made while the save was in flight.
+      setAreaDraft((current) => current === areaDraft ? null : current);
+      setPhotoDraft((current) => current === photoDraft ? undefined : current);
       setMsg({ ok: 'Profile saved.' });
       onSaved();
     } catch (x) { setMsg({ error: (x as Error).message }); }
@@ -215,7 +221,7 @@ function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
             <Avatar me={{ ...me, photo_url: photo }} size="h-20 w-20" />
             <label className="btn-glass !min-h-[44px] cursor-pointer">
               Upload photo
-              <input type="file" accept="image/*" className="sr-only" onChange={async (e) => { const file = e.target.files?.[0]; if (file) setPhoto(await p.uploadPhoto(file)); }} />
+              <input type="file" accept="image/*" className="sr-only" onChange={async (e) => { const file = e.target.files?.[0]; if (file) setPhotoDraft(await p.uploadPhoto(file)); }} />
             </label>
           </div>
           <Field id="full_name" text="Full name (as it should appear on certificates)"><input id="full_name" name="full_name" defaultValue={me.full_name} required className={input} /></Field>
@@ -230,7 +236,7 @@ function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
             <div className="mt-3 flex flex-wrap gap-2">
               {AREAS.map((a) => {
                 const on = areas.includes(a);
-                return <button key={a} type="button" aria-pressed={on} onClick={() => setAreas(on ? areas.filter((x) => x !== a) : [...areas, a])} className={`min-h-[40px] rounded-full border px-4 text-sm font-semibold ${on ? 'border-cedar-700 bg-cedar-700 text-white' : 'border-ink/15 text-ink-soft hover:text-ink'}`}>{a}</button>;
+                return <button key={a} type="button" aria-pressed={on} onClick={() => setAreaDraft(on ? areas.filter((x) => x !== a) : [...areas, a])} className={`min-h-[44px] rounded-full border px-4 text-sm font-semibold ${on ? 'border-cedar-700 bg-cedar-700 text-white' : 'border-ink/15 text-ink-soft hover:text-ink'}`}>{a}</button>;
               })}
             </div>
           </fieldset>
