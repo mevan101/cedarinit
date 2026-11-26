@@ -54,7 +54,7 @@ export default function ViewTransitions() {
           new Promise<void>((done) => {
             resolve.current = done;
             router.push(url.pathname + url.search + url.hash);
-            setTimeout(done, 1500); // never hang the page if navigation stalls
+            setTimeout(done, 300); // keep navigation feedback immediate even on a slow connection
           }),
       );
     };

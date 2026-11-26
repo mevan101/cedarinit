@@ -5,7 +5,6 @@ import Reveal, { RiseText } from './Reveal';
 import Img from './Img';
 
 export function SectionHeading({
-  eyebrow,
   title,
   lead,
   align = 'left',
@@ -24,11 +23,6 @@ export function SectionHeading({
   const center = align === 'center' ? 'mx-auto text-center items-center' : '';
   return (
     <div className={`flex max-w-3xl flex-col gap-5 ${center} ${className}`}>
-      {eyebrow && (
-        <Reveal as="p" className={`t-eyebrow ${tone === 'dark' ? '!text-cedar-300' : ''}`}>
-          {eyebrow}
-        </Reveal>
-      )}
       <RiseText as={as} text={title} className={`${as === 'h1' ? 't-h1' : 't-h2'} ${tone === 'dark' ? 'text-white' : 'text-ink'}`} />
       {lead && (
         <Reveal delay={150} className={`t-lead ${tone === 'dark' ? '!text-white/75' : ''}`}>
@@ -74,13 +68,32 @@ export function PageHero({ eyebrow, title, lead, image, imageAlt, caption, child
         {image && (
           <figure className="mt-12 sm:mt-16">
             <div className="overflow-hidden rounded-4xl bg-paper-deep">
-              <div className="aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
-                <Img name={image} alt={imageAlt ?? ''} priority sizes="100vw" className="focus-in h-full w-full object-cover" />
-              </div>
+              <Img name={image} alt={imageAlt ?? ''} priority sizes="100vw" className="h-auto w-full" />
             </div>
             {caption && <figcaption className="figcap">{caption}</figcaption>}
           </figure>
         )}
+      </div>
+    </section>
+  );
+}
+
+/** Photo-led interior opening. The complete photograph stays visible, including on phones. */
+export function FieldHero({ title, lead, image, alt, caption, children }: { title: string; lead: string; image: string; alt: string; caption: string; children?: ReactNode }) {
+  return (
+    <section className="hero-pad pb-14 pt-32 sm:pb-20 sm:pt-40">
+      <div className="shell grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-7">
+          <h1 className="t-h1 max-w-3xl text-ink">{title}</h1>
+          <p className="t-lead mt-6 max-w-2xl">{lead}</p>
+          {children && <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">{children}</div>}
+        </div>
+        <figure className="lg:col-span-5">
+            <div className="rounded-t-[var(--radius-frame)] border border-b-0 border-ink/15 bg-paper-deep p-3">
+              <Img name={image} alt={alt} priority sizes="(min-width: 1024px) 40vw, 100vw" className="h-auto w-full rounded" />
+          </div>
+            <figcaption className="rounded-b-[var(--radius-frame)] border border-t-0 border-ink/15 bg-paper-deep px-4 pb-4 text-sm leading-relaxed text-ink-soft">{caption}</figcaption>
+        </figure>
       </div>
     </section>
   );

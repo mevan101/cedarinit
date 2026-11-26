@@ -214,11 +214,13 @@ export default function BrandPage() {
         <div className="grid gap-4 md:grid-cols-3">
           <Note title="A flat, readable surface">
             Paper for the page, white for a card, a fine border to separate them. Cards use a 12px radius;
-            buttons use 8px. Keep chrome quiet and navigation solid.
+            inset photo frames use 16px, with 12px of paper around a 4px image corner. Buttons use 8px.
+            Keep chrome quiet and navigation solid.
           </Note>
           <Note title="The whole photograph">
             Keep people in the frame. Use uncropped galleries in their original order. Captions give the
-            actual place and date, not a slogan. Respect consent and dignity.
+            actual place and date, not a slogan. On decision pages, pair the headline with one full photograph
+            and put its caption below. Respect consent and dignity.
           </Note>
           <Note title="Consistent team portraits">
             Keep the existing processed portraits: a white background, faint contour lines and Cedar-green
