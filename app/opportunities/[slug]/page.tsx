@@ -47,9 +47,17 @@ export default function OpportunityPage({ params }: { params: { slug: string } }
               <List title="What you'll do" items={o.responsibilities} />
               <List title="Who we're looking for" items={o.requirements} />
               <List title="What you get" items={o.benefits} />
+              {o.questions.length > 0 && <section aria-labelledby="questions-title" className="border-t border-ink/15 pt-8">
+                <h2 id="questions-title" className="t-h3 text-ink">What we’ll ask when you apply</h2>
+                <p className="mt-3 text-ink-soft">You can read the questions before creating an account. Your contact details come from your volunteer profile.</p>
+                <ol className="mt-5 list-decimal space-y-4 pl-5 text-ink">
+                  {o.questions.map((q) => <li key={q.name} className="pl-1"><p className="font-medium">{q.label} <span className="text-sm font-normal text-ink-muted">({q.required ? 'required' : 'optional'})</span></p>{q.help && <p className="mt-1 text-sm text-ink-soft">{q.help}</p>}{q.options?.length ? <p className="mt-1 text-sm text-ink-soft">Options: {q.options.join(', ')}</p> : null}</li>)}
+                </ol>
+              </section>}
             </div>
           </div>
           <div id="apply" className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+            {o.requirements.some((r) => /guardian/i.test(r)) && <p className="mb-4 rounded-[var(--radius-card)] border border-ink/15 bg-paper-deep p-5 text-sm leading-relaxed text-ink">{o.requirements.find((r) => /guardian/i.test(r))}. Ask the team about consent before taking part.</p>}
             <ApplyForm slug={o.slug} title={o.title} questions={o.questions} open={o.status === 'open'} />
           </div>
         </div>

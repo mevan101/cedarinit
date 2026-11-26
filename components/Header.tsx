@@ -74,7 +74,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
           <Link href="/" className="shrink-0 rounded" aria-label={`${site.name} home page`}>
             <Logo />
           </Link>
-          <nav aria-label="Primary" className="hidden lg:block">
+          <nav aria-label="Primary" className="hidden xl:block">
             <ul className="flex items-center gap-1">
               {nav.map((item) => (
                 <li key={item.href}>
@@ -109,7 +109,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
             {dialogAvailable && (
               <button
                 type="button"
-                className="menu-toggle inline-flex h-12 w-12 items-center justify-center rounded border border-ink/15 text-ink transition-colors hover:bg-paper-deep lg:hidden"
+                className="menu-toggle inline-flex h-12 w-12 items-center justify-center rounded border border-ink/15 text-ink transition-colors hover:bg-paper-deep xl:hidden"
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-haspopup="dialog"
@@ -124,7 +124,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
         {!dialogAvailable && (
           <nav
             aria-label="Mobile navigation"
-            className="shell flex flex-wrap gap-x-6 gap-y-1 border-t border-ink/10 py-3 lg:hidden"
+            className="shell flex flex-wrap gap-x-6 gap-y-1 border-t border-ink/10 py-3 xl:hidden"
           >
             {mobileLinks.map((item) => (
               <a
@@ -140,7 +140,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
         <noscript>
           <nav
             aria-label="Mobile navigation without JavaScript"
-            className="shell flex flex-wrap gap-x-6 gap-y-1 border-t border-ink/10 py-3 lg:hidden"
+            className="shell flex flex-wrap gap-x-6 gap-y-1 border-t border-ink/10 py-3 xl:hidden"
           >
             {mobileLinks.map((item) => (
               <a
