@@ -8,6 +8,7 @@
   d.classList.add('motion');
   // Opening sequence: the hero photos start as small dots by the logo, spiral out as they grow,
   // then fly into their places and turn from circles into cards. Any click, key or scroll skips it.
+  // Kept short on purpose: while it runs, the hero is hidden, and the hero is what LCP measures.
   if (d.classList.contains('intro-on')) {
     var anims = [];
     var tiles = [].slice.call(document.querySelectorAll('.orbit-tile .orbit-spin')).filter(function (el) {
@@ -43,7 +44,8 @@
         kf[kf.length - 1].transform = 'none';
         kf[kf.length - 1].filter = 'none';
         kf[kf.length - 1].clipPath = 'inset(0px 0px round ' + rad + 'px)';
-        anims.push(el.animate(kf, { duration: 2250, delay: Math.max(0, 180 + (gaps[i] || i * 45) - (performance.now() - t0)), easing: 'linear', fill: 'both' }));
+        // 1.25 s, not 2.25 s: the flight is the last thing keeping the hero hidden, and the hero is the LCP.
+        anims.push(el.animate(kf, { duration: 1250, delay: Math.max(0, 110 + ((gaps[i] || i * 45) * 0.55) - (performance.now() - t0)), easing: 'linear', fill: 'both' }));
       });
     }
     var skip = function () {
