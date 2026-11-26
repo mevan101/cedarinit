@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Img from '@/components/Img';
 import Icon from '@/components/Icon';
 import Reveal from '@/components/Reveal';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
-import { PageHero, SectionHeading } from '@/components/ui';
+import { FieldHero, SectionHeading } from '@/components/ui';
 import { site } from '@/lib/site';
 import { mlbd } from '@/lib/mlbd';
+import { opportunities } from '@/lib/opportunities';
 
 export const metadata: Metadata = {
   title: 'Volunteer in Bangladesh',
@@ -15,18 +15,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/volunteer/' },
 };
 
-const roles = [
-  { title: 'Relief volunteer', program: 'Ushnota Abhijan', body: 'Run collection tables in schools, sort and pack clothes, and hand them out with the distribution team.', when: 'Winter campaign, mostly weekends' },
-  { title: 'Session facilitator', program: 'CS education', body: 'Lead or assist a one-hour coding or intro-to-AI session in a school computer lab. We share the lesson plan.', when: 'Per event' },
-  { title: 'Hackathon crew', program: 'ML Bangladesh', body: 'Register teams, mentor, judge or keep the day on schedule at a campus hack day.', when: 'One day per event' },
-  { title: 'Communications', program: 'All programs', body: 'Photograph events, write field updates, design posts and keep our pages accurate.', when: 'Remote, a few hours a week' },
-  { title: 'Research and data', program: 'All programs', body: 'Count what each program delivered, check figures before we publish them, and help with reports.', when: 'Remote, flexible' },
-  { title: 'Community mobiliser', program: 'Relief & outreach', body: 'Connect us with schools, local leaders and families so help reaches the people who need it.', when: 'Ongoing' },
-];
+const roles = opportunities.filter((role) => role.status === 'open');
 
 const steps = [
-  { t: 'Apply', b: 'Create a free account, pick a role and answer a few questions. You can follow your application in your account.' },
-  { t: 'Talk to us', b: 'Someone from the team gets in touch to match you to a role that fits.' },
+  { t: 'Choose, then apply', b: 'Read a role’s requirements and questions first. Create a free account when you’re ready to apply.' },
+  { t: 'Talk to us', b: 'The team replies by email. Messages also appear in your volunteer account.' },
   { t: 'Show up', b: 'At your first event you work alongside volunteers who have done it before.' },
 ];
 
@@ -34,10 +27,12 @@ export default function VolunteerPage() {
   return (
     <>
       <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: 'Volunteer', path: '/volunteer/' }], site.url)} />
-      <PageHero
-        eyebrow="Volunteer"
+      <FieldHero
         title="Give a weekend, or a whole winter"
         lead="Most of Cedar is run by students. Pick one event, stay for a campaign, or take on an ongoing role."
+        image="ushnota/day-3b"
+        alt="Cedar volunteers receiving winter clothing donations at a school"
+        caption="Government Science High School, Tejgaon, Dhaka · November 2025"
       >
         <div className="flex flex-col gap-3 xs:flex-row">
           <Link href="/opportunities/" className="btn-primary">
@@ -45,7 +40,7 @@ export default function VolunteerPage() {
           </Link>
           <Link href="/contact/?subject=Volunteering" className="btn-glass">Ask a question first</Link>
         </div>
-      </PageHero>
+      </FieldHero>
 
       <section className="pb-[var(--section-y)]">
         <div className="shell">
@@ -54,9 +49,9 @@ export default function VolunteerPage() {
             {roles.map((r, i) => (
               <Reveal as="li" key={r.title} delay={(i % 3) * 80} className="flex flex-col bg-white p-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cedar-700">{r.program}</p>
-                <h3 className="t-h3 mt-2 text-ink">{r.title}</h3>
-                <p className="mt-3 flex-1 text-ink-soft">{r.body}</p>
-                <p className="mt-5 flex items-center gap-2 text-sm text-ink-muted"><Icon name="calendar" className="h-4 w-4" />{r.when}</p>
+                <h3 className="t-h3 mt-2 text-ink"><Link href={`/opportunities/${r.slug}/`} className="link-underline text-cedar-700">{r.title}</Link></h3>
+                <p className="mt-3 flex-1 text-ink-soft">{r.summary}</p>
+                <p className="mt-5 flex items-start gap-2 text-sm text-ink-muted"><Icon name="calendar" className="mt-0.5 h-4 w-4 shrink-0" />{r.commitment}</p>
               </Reveal>
             ))}
           </ul>
@@ -85,16 +80,16 @@ export default function VolunteerPage() {
             <div className="mt-10 rounded-3xl border border-ink/10 bg-paper p-6">
               <h3 className="font-semibold text-ink">Certificates</h3>
               <p className="mt-2 text-ink-soft">
-                When you finish a program you get a certificate with your verified hours and the areas you worked in. Each one has a QR code and an ID that employers and universities can check on our <Link href="/verify/" className="link-underline font-medium text-cedar-700">verify page</Link>, and you can add it to LinkedIn in one click.
+                Each role lists what you get, including certificates where offered. Cedar certificates have a QR code and an ID that employers and universities can check on our <Link href="/verify/" className="link-underline font-medium text-cedar-700">verify page</Link>.
               </p>
             </div>
           </div>
-          <figure>
-            <div className="overflow-hidden rounded-4xl bg-paper-deep">
-              <Img name="ushnota/day-3b" alt="Cedar volunteers receiving winter clothing donations at a school" className="aspect-[4/5] w-full object-cover" />
-            </div>
-            <figcaption className="figcap">Volunteers at Government Science High School, Tejgaon, Dhaka · November 2025</figcaption>
-          </figure>
+          <div className="rounded-[var(--radius-card)] bg-paper-deep p-7 sm:p-10">
+            <h2 className="t-h2 text-ink">Questions are a good place to start.</h2>
+            <p className="t-lead mt-5">Not sure about the time, the location or whether a role is right for you? Ask before you apply. There’s no need to create an account to have a conversation.</p>
+            <Link href="/contact/?subject=Volunteering#message" className="btn-primary mt-7">Talk to the team <Icon name="arrow" className="h-4 w-4" /></Link>
+            <Link href="/opportunities/#roles" className="mt-4 flex min-h-11 items-center font-semibold text-cedar-700 underline underline-offset-4">Or explore all roles</Link>
+          </div>
         </div>
       </section>
     </>

@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { Children, cloneElement, isValidElement, type ReactNode } from 'react';
 import { demoPlatform, platform } from '@/lib/platform';
 
 export const input = 'mt-2 block w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-ink placeholder:text-ink-muted/70 focus:border-cedar-600 focus:outline-none focus:ring-2 focus:ring-cedar-500/30';
@@ -10,8 +10,11 @@ export function Field({ id, text, hint, children, className = '' }: { id: string
   return (
     <div className={className}>
       <label htmlFor={id} className={label}>{text}</label>
-      {children}
-      {hint && <p className="mt-1 text-xs text-ink-muted">{hint}</p>}
+      {Children.map(children, (child) => {
+        if (!hint || !isValidElement<{ id?: string; 'aria-describedby'?: string }>(child) || child.props.id !== id) return child;
+        return cloneElement(child, { 'aria-describedby': [child.props['aria-describedby'], `${id}-hint`].filter(Boolean).join(' ') });
+      })}
+      {hint && <p id={`${id}-hint`} className="mt-1 text-xs text-ink-muted">{hint}</p>}
     </div>
   );
 }

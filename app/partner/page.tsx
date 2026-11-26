@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Img from '@/components/Img';
 import Icon from '@/components/Icon';
 import Reveal from '@/components/Reveal';
 import JsonLd, { breadcrumb } from '@/components/JsonLd';
-import { CTA, PageHero, SectionHeading } from '@/components/ui';
+import { CTA, FieldHero, SectionHeading } from '@/components/ui';
 import { site } from '@/lib/site';
 import { mlbd } from '@/lib/mlbd';
 import { LogoGrid } from '@/components/LogoWall';
+import { partnerContact } from '@/lib/contact';
 
 export const metadata: Metadata = {
   title: 'Partner with us',
@@ -24,7 +24,7 @@ const kinds = [
 ];
 
 const steps = [
-  { t: 'A first call', b: 'Tell us what you have in mind. You talk to a named Cedar lead from the start.' },
+  { t: 'A first call', b: 'Tell us what you have in mind and ask the team what would be possible.' },
   { t: 'A written plan', b: 'We agree who does what, dates, costs and how results are counted.' },
   { t: 'An agreement', b: 'For ongoing work we sign a memorandum of understanding (MOU) or letter of intent.' },
   { t: 'A report', b: 'Afterwards you get photos, numbers and, where money was involved, a financial report.' },
@@ -44,20 +44,21 @@ export default function PartnerPage() {
   return (
     <>
       <JsonLd data={breadcrumb([{ name: 'Home', path: '/' }, { name: 'Partner', path: '/partner/' }], site.url)} />
-      <PageHero eyebrow="Partner" title="Run a program with us" lead="We work with schools, universities, NGOs and companies that want to reach young people and families in Bangladesh.">
+      <FieldHero title="Run a program with us" lead="A school computer lab. A campus club. A space to collect winter clothes. Tell us what you have in mind, and we can talk about what fits." image="csedweek/rangpur-1" alt="Students and Cedar volunteers at JAAGO Foundation School in Rangpur" caption="JAAGO Foundation School, Rangpur · CSEdWeek 2025">
         <div className="flex flex-col gap-3 xs:flex-row">
-          <Link href="/contact/?subject=Partnership" className="btn-primary">Start a conversation <Icon name="arrow" className="h-4 w-4" /></Link>
+          <Link href={partnerContact('Program')} className="btn-primary">Start a conversation <Icon name="arrow" className="h-4 w-4" /></Link>
           <a href={`mailto:${site.email}?subject=Partnership`} className="btn-glass">Email {site.email}</a>
         </div>
-      </PageHero>
+      </FieldHero>
 
       <section className="pb-[var(--section-y)]">
         <div className="shell">
           <ul className="grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
             {kinds.map((k, i) => (
-              <Reveal as="li" key={k.t} delay={i * 80} className="bg-white p-7">
+              <Reveal as="li" key={k.t} delay={i * 80} className="flex flex-col bg-white p-7">
                 <h2 className="t-h3 text-ink">{k.t}</h2>
-                <p className="mt-3 text-ink-soft">{k.b}</p>
+                <p className="mt-3 flex-1 text-ink-soft">{k.b}</p>
+                <Link href={partnerContact(k.t)} className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-cedar-700 underline underline-offset-4">Talk to us <span className="sr-only">about {k.t.toLowerCase()}</span><Icon name="arrow" className="h-4 w-4 shrink-0" /></Link>
               </Reveal>
             ))}
           </ul>

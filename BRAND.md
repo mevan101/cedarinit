@@ -73,7 +73,7 @@ Body text needs at least 4.5:1 contrast; large text and interface boundaries nee
 
 - Use a 4px base grid. `.shell` is 88rem maximum, increasing to 90rem on very wide displays. Gutter is `clamp(1.25rem, 4.5vw, 4.5rem)`.
 - `.section` uses `clamp(4rem, 8vw, 7.5rem)` vertical padding, with tighter short-screen rules.
-- `--radius-card` is 12px. Shared feature radii derive from it. Buttons use 8px corners; small badges can remain pills.
+- `--radius-card` is 12px. `--radius-frame` is 16px: a 12px paper inset around a 4px image corner. Buttons use 8px corners; small badges can remain pills.
 - Use Paper for the page, white for reading cards, a fine border for separation, Cedar 950 for a strong chapter and Seedling for the closing invitation. No ornamental gradients, grain or glass behind text.
 - Navigation is a persistent solid bar. The mobile menu uses native `<dialog>` for focus containment, Escape and focus return. JavaScript-disabled mobile visitors get ordinary navigation links.
 - `.glass`, `.glass-dark` and `<GlassCard>` are compatibility names for solid surfaces. `.chrome` remains available to existing platform controls; it is not the default design language. `<Aurora>` remains a no-op.
@@ -86,6 +86,13 @@ Body text needs at least 4.5:1 contrast; large text and interface boundaries nee
 - Respect dignity and consent; never use pity imagery or generic stock heroes.
 - Keep the existing processed team portraits: white background, faint contour lines and green shapes. Use the portrait pipeline, not hand-edited replacements.
 - Keep responsive images dimensioned to prevent layout shift.
+- Decision pages use a captioned photograph at its natural ratio beside the headline. Keep the caption below the image and show the same complete image on a phone.
+
+## Useful next steps
+
+- Let volunteers read requirements, benefits and application questions before asking them to create an account. Both role lists come from `lib/opportunities.ts`.
+- A donor or school partner should arrive at Contact with a useful starting message, not a blank form. Ask what they have in mind without promising a program, payment method, receipt or reply time that is not confirmed.
+- Published totals describe the records they cover. Keep planned reach distinct from delivered work, and community membership distinct from program participation. Never add unlike measures together.
 
 ## Motion and resilience
 

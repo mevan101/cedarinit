@@ -13,12 +13,12 @@ import { Badge, Card, DemoBanner, Field, Notice, fmtDate, input } from './ui';
 const AREAS = ['Collection', 'Sorting', 'Distribution', 'Teaching', 'Facilitation', 'Events', 'Mentoring', 'Communications', 'Design', 'Research', 'Data', 'Outreach', 'Leadership', 'Fundraising'];
 const PROGRAMS = ['Ushnota Abhijan', 'CSEdWeek', 'ML Bangladesh', 'Climate', 'Communications', 'Other'];
 
+type AccountData = { owner: string; apps: Application[]; hours: HourEntry[]; docs: Doc[]; msgs: Message[] };
+
 export default function AccountApp() {
   const { p, me, refresh, tick } = usePlatform();
-  const [apps, setApps] = useState<Application[]>([]);
-  const [hours, setHours] = useState<HourEntry[]>([]);
-  const [docs, setDocs] = useState<Doc[]>([]);
-  const [msgs, setMsgs] = useState<Message[]>([]);
+  const [data, setData] = useState<AccountData | null>(null);
+  const [loadFailedFor, setLoadFailedFor] = useState<string | null>(null);
   const [tab, setTab] = useState<'overview' | 'profile' | 'hours' | 'documents' | 'messages'>('overview');
   // Arriving from a password-reset email: ask for the new password first.
   const [recovering, setRecovering] = useState(false);
@@ -35,10 +35,22 @@ export default function AccountApp() {
 
   useEffect(() => {
     if (!me) return;
-    Promise.all([p.myApplications(), p.myHours(), p.myDocuments(), p.myMessages()]).then(([a, h, d, m]) => { setApps(a); setHours(h); setDocs(d); setMsgs(m); });
+    let active = true;
+    // Keep this account's forms mounted during background refreshes so drafts survive session renewal.
+    // A different account is still gated below by data.owner until its own records arrive.
+    setLoadFailedFor(null);
+    Promise.all([p.myApplications(), p.myHours(), p.myDocuments(), p.myMessages()])
+      .then(([apps, hours, docs, msgs]) => {
+        if (active) setData({ owner: me.id, apps, hours, docs, msgs });
+      })
+      .catch(() => {
+        if (active) setLoadFailedFor(me.id);
+      });
+    // A late response from a previous account must not replace the current account's records.
+    return () => { active = false; };
   }, [me, p, tick]);
 
-  if (me === undefined) return <div className="h-64 animate-pulse rounded-[var(--radius-card)] bg-ink/5" />;
+  if (me === undefined) return <p role="status" className="rounded-[var(--radius-card)] bg-ink/5 p-6 text-ink-soft">Checking your sign-in…</p>;
   if (!me)
     return (
       <div className="space-y-5">
@@ -52,6 +64,27 @@ export default function AccountApp() {
 
   if (recovering && p.updatePassword) return <NewPassword onDone={() => { setRecovering(false); history.replaceState(null, '', '/account/'); }} />;
 
+  if (!data || data.owner !== me.id) {
+    const failed = loadFailedFor === me.id;
+    return (
+      <div className="space-y-5">
+        <DemoBanner />
+        <Card title={failed ? 'Your account couldn’t be loaded' : 'Loading your account'}>
+          {failed ? (
+            <>
+              <Notice kind="error">We couldn’t load your applications, hours, certificates or messages. Try again to see your records.</Notice>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button type="button" className="btn-primary" onClick={refresh}>Try again</button>
+                <Link href="/contact/" className="btn-glass">Contact Cedar</Link>
+              </div>
+            </>
+          ) : <p role="status" className="text-ink-soft">Loading your applications, hours, certificates and messages…</p>}
+        </Card>
+      </div>
+    );
+  }
+
+  const { apps, hours, docs, msgs } = data;
   const approved = hours.filter((h) => h.status === 'approved').reduce((a, h) => a + Number(h.hours), 0);
   const pending = hours.filter((h) => h.status === 'pending').reduce((a, h) => a + Number(h.hours), 0);
   const tabs = [['overview', 'Overview'], ['profile', 'Profile'], ['hours', 'Hours'], ['documents', `Certificates & letters (${docs.length})`], ['messages', `Messages (${msgs.length})`]] as const;
@@ -59,6 +92,12 @@ export default function AccountApp() {
   return (
     <div className="space-y-6">
       <DemoBanner />
+      {loadFailedFor === me.id && (
+        <Notice kind="error">
+          We couldn’t refresh your account. The records below may be out of date.
+          <button type="button" onClick={refresh} className="ml-2 min-h-[44px] font-semibold underline underline-offset-4">Try again</button>
+        </Notice>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <Avatar me={me} />
@@ -155,15 +194,21 @@ function Avatar({ me, size = 'h-14 w-14' }: { me: Pick<Profile, 'photo_url' | 'f
 
 function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
   const { p } = usePlatform();
-  const [areas, setAreas] = useState<string[]>(me.areas ?? []);
-  const [photo, setPhoto] = useState(me.photo_url ?? '');
+  // Untouched controls follow refreshed profile data; only explicit local edits are submitted.
+  const [areaDraft, setAreaDraft] = useState<string[] | null>(null);
+  const [photoDraft, setPhotoDraft] = useState<string | undefined>();
+  const areas = areaDraft ?? me.areas ?? [];
+  const photo = photoDraft ?? me.photo_url ?? '';
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const v = (k: string) => String(f.get(k) ?? '').trim() || null;
     try {
-      await p.saveProfile({ full_name: v('full_name') ?? '', handle: v('handle')?.toLowerCase() ?? null, phone: v('phone'), institution: v('institution'), city: v('city'), bio: v('bio'), linkedin: v('linkedin'), areas, photo_url: photo || null, public_profile: f.get('public_profile') === 'on' });
+      await p.saveProfile({ full_name: v('full_name') ?? '', handle: v('handle')?.toLowerCase() ?? null, phone: v('phone'), institution: v('institution'), city: v('city'), bio: v('bio'), linkedin: v('linkedin'), public_profile: f.get('public_profile') === 'on', ...(areaDraft !== null ? { areas } : {}), ...(photoDraft !== undefined ? { photo_url: photo || null } : {}) });
+      // Do not clear any newer edit made while the save was in flight.
+      setAreaDraft((current) => current === areaDraft ? null : current);
+      setPhotoDraft((current) => current === photoDraft ? undefined : current);
       setMsg({ ok: 'Profile saved.' });
       onSaved();
     } catch (x) { setMsg({ error: (x as Error).message }); }
@@ -176,7 +221,7 @@ function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
             <Avatar me={{ ...me, photo_url: photo }} size="h-20 w-20" />
             <label className="btn-glass !min-h-[44px] cursor-pointer">
               Upload photo
-              <input type="file" accept="image/*" className="sr-only" onChange={async (e) => { const file = e.target.files?.[0]; if (file) setPhoto(await p.uploadPhoto(file)); }} />
+              <input type="file" accept="image/*" className="sr-only" onChange={async (e) => { const file = e.target.files?.[0]; if (file) setPhotoDraft(await p.uploadPhoto(file)); }} />
             </label>
           </div>
           <Field id="full_name" text="Full name (as it should appear on certificates)"><input id="full_name" name="full_name" defaultValue={me.full_name} required className={input} /></Field>
@@ -191,7 +236,7 @@ function ProfileForm({ me, onSaved }: { me: Profile; onSaved: () => void }) {
             <div className="mt-3 flex flex-wrap gap-2">
               {AREAS.map((a) => {
                 const on = areas.includes(a);
-                return <button key={a} type="button" aria-pressed={on} onClick={() => setAreas(on ? areas.filter((x) => x !== a) : [...areas, a])} className={`min-h-[40px] rounded-full border px-4 text-sm font-semibold ${on ? 'border-cedar-700 bg-cedar-700 text-white' : 'border-ink/15 text-ink-soft hover:text-ink'}`}>{a}</button>;
+                return <button key={a} type="button" aria-pressed={on} onClick={() => setAreaDraft(on ? areas.filter((x) => x !== a) : [...areas, a])} className={`min-h-[44px] rounded-full border px-4 text-sm font-semibold ${on ? 'border-cedar-700 bg-cedar-700 text-white' : 'border-ink/15 text-ink-soft hover:text-ink'}`}>{a}</button>;
               })}
             </div>
           </fieldset>
@@ -224,12 +269,12 @@ function HoursPanel({ hours, onLogged }: { hours: HourEntry[]; onLogged: () => v
   }
   return (
     <div className="grid gap-6 lg:grid-cols-5">
-      <form onSubmit={submit} className="lg:col-span-2">
+      <form onSubmit={submit} className="min-w-0 lg:col-span-2">
         <Card title="Log hours">
           <div className="space-y-4">
             <Field id="program" text="Program"><select id="program" name="program" required className={input}>{PROGRAMS.map((x) => <option key={x}>{x}</option>)}</select></Field>
             <Field id="area" text="What you did"><select id="area" name="area" required className={input}>{AREAS.map((x) => <option key={x}>{x}</option>)}</select></Field>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Field id="date" text="Date"><input id="date" name="date" type="date" required max={new Date().toISOString().slice(0, 10)} className={input} /></Field>
               <Field id="hours" text="Hours"><input id="hours" name="hours" type="number" min="0.5" max="24" step="0.5" required className={input} /></Field>
             </div>
@@ -240,9 +285,9 @@ function HoursPanel({ hours, onLogged }: { hours: HourEntry[]; onLogged: () => v
           </div>
         </Card>
       </form>
-      <Card title="Your hours" className="lg:col-span-3">
+      <Card title="Your hours" className="min-w-0 lg:col-span-3">
         {hours.length === 0 ? <p className="text-ink-soft">Nothing logged yet.</p> : (
-          <div className="overflow-x-auto">
+          <div role="region" aria-label="Your logged hours" tabIndex={0} className="overflow-x-auto">
             <table className="w-full min-w-[28rem] text-left text-sm">
               <thead className="text-ink-muted"><tr><th className="py-2 pr-3">Date</th><th className="py-2 pr-3">Program · area</th><th className="py-2 pr-3 text-right">Hours</th><th className="py-2 text-right">Status</th></tr></thead>
               <tbody className="divide-y divide-ink/10">

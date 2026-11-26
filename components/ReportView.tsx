@@ -51,8 +51,9 @@ export default function ReportView({ report: r }: { report: Report }) {
             <div><dt className="inline">Period: </dt><dd className="inline font-medium text-ink">{period(r)}</dd></div>
             {r.published && <div><dt className="inline">Published: </dt><dd className="inline font-medium text-ink">{formatDate(r.published)}</dd></div>}
             {r.prepared_by && <div><dt className="inline">Prepared by: </dt><dd className="inline font-medium text-ink">{r.prepared_by}</dd></div>}
-            {r.approved_by && <div><dt className="inline">Approved by: </dt><dd className="inline font-medium text-ink">{r.approved_by}</dd></div>}
+            <div><dt className="inline">Approved by: </dt><dd className="inline font-medium text-ink">{r.approved_by || 'Not listed in this record'}</dd></div>
           </dl>
+          {!r.outputs?.length && <p className="mt-5 max-w-2xl border-l-2 border-ink/20 pl-4 text-sm leading-relaxed text-ink-soft">This financial record does not include participant or outcome counts. It shows where money came from and how it was spent.</p>}
           <div className="no-print mt-8 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
             <PrintButton />
             <a href={csv} download={`${r.slug}.csv`} className="btn-glass"><Icon name="file" className="h-4 w-4" /> Download spreadsheet (CSV)</a>

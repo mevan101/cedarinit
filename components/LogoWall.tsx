@@ -32,8 +32,8 @@ export function LogoGrid({ only, className = '' }: { only?: Sponsor['with']; cla
 export function LogoMarquee() {
   return (
     <div className="relative">
-    <div className="mask-fade-x overflow-hidden">
-      <ul className="marquee flex w-max items-center gap-14 pr-14 motion-reduce:flex-wrap" style={{ ['--marquee-duration' as string]: '70s' }}>
+    <div className="marquee-mask mask-fade-x overflow-hidden">
+      <ul className="marquee flex w-max items-center gap-14 pr-14" style={{ ['--marquee-duration' as string]: '70s' }}>
         {[...sponsors, ...sponsors].map((s, k) => (
           <li key={k} aria-hidden={k >= sponsors.length ? true : undefined} className="logo-mute shrink-0">
             <Logo s={s} h="h-8" />

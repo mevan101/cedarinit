@@ -49,13 +49,12 @@ export default function Gallery({ groups, label = 'Photo gallery' }: { groups: G
   return (
     <div>
       {tabs.length > 1 && (
-        <div role="tablist" aria-label={`${label} filters`} className="mask-fade-x -mx-[var(--gutter)] mb-8 flex gap-2 overflow-x-auto px-[var(--gutter)] pb-2 [scrollbar-width:none]">
+        <div role="group" aria-label={`${label} filters`} className="mask-fade-x -mx-[var(--gutter)] mb-8 flex gap-2 overflow-x-auto px-[var(--gutter)] pb-2 [scrollbar-width:none]">
           {tabs.map((t, i) => (
             <button
               key={t.label}
-              role="tab"
               type="button"
-              aria-selected={tab === i}
+              aria-pressed={tab === i}
               onClick={() => setTab(i)}
               className={`min-h-[44px] shrink-0 rounded-full px-5 text-sm font-semibold transition ${
                 tab === i ? 'bg-cedar-700 text-white shadow-lg shadow-cedar-700/25' : 'glass text-ink-soft hover:text-ink'

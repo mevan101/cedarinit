@@ -1,6 +1,6 @@
 'use client';
 
-import { createElement, useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { createElement, useEffect, useRef, type AriaAttributes, type CSSProperties, type ReactNode } from 'react';
 
 type Variant = 'up' | 'left' | 'right' | 'zoom' | 'mask';
 
@@ -33,7 +33,7 @@ export function useReveal<T extends Element>() {
   return ref;
 }
 
-type Props = {
+type Props = AriaAttributes & {
   children: ReactNode;
   as?: keyof JSX.IntrinsicElements;
   delay?: number;
@@ -43,11 +43,12 @@ type Props = {
   id?: string;
 };
 
-export default function Reveal({ children, as = 'div', delay = 0, variant = 'up', className = '', style, id }: Props) {
+export default function Reveal({ children, as = 'div', delay = 0, variant = 'up', className = '', style, id, ...aria }: Props) {
   const ref = useReveal<HTMLElement>();
   return createElement(
     as,
     {
+      ...aria,
       ref,
       id,
       'data-variant': variant === 'up' ? undefined : variant,

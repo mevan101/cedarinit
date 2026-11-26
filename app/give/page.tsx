@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import Icon from '@/components/Icon';
-import { PageHero } from '@/components/ui';
+import { FieldHero } from '@/components/ui';
 import { giving, site } from '@/lib/site';
 import { reports, money } from '@/lib/finance';
+import { givingContact } from '@/lib/contact';
 
 export const metadata: Metadata = {
   title: 'Give',
@@ -19,18 +20,20 @@ export default function GivePage() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Give"
-        title="Fund the next winter drive and classroom"
-        lead="Your gift pays for warm clothes, transport and teaching materials. We publish a financial report for every campaign."
+      <FieldHero
+        title="Before you give, know the work"
+        lead={ready ? 'Read the reports, understand how giving works and choose how you’d like to help.' : 'Cedar is not yet a registered organisation, and a fiscal sponsor is still being arranged. Talk to us before giving. You can read our published reports first.'}
+        image="ushnota/distribution"
+        alt="Cedar volunteers handing out winter clothes in Karail, Dhaka"
+        caption="Winter clothes distribution, Karail, Dhaka · Ushnota Abhijan 2025"
       >
         <div className="flex flex-col gap-3 xs:flex-row">
-          <Link href={ready ? '#how-title' : '/contact/?subject=Donation'} className="btn-primary">
-            {ready ? 'See how to give' : 'Contact us to give'} <Icon name="arrow" className="h-4 w-4" />
+          <Link href={ready ? '#how-title' : givingContact} className="btn-primary">
+            {ready ? 'See how to give' : 'Ask about supporting Cedar'} <Icon name="arrow" className="h-4 w-4" />
           </Link>
-          <Link href="#status-title" className="btn-glass">Read our legal status</Link>
+          <Link href="/transparency/" className="btn-glass">Read the financial reports</Link>
         </div>
-      </PageHero>
+      </FieldHero>
 
       <section className="section bg-white">
         <div className="shell grid gap-12 lg:grid-cols-12">
@@ -39,7 +42,7 @@ export default function GivePage() {
               <h2 id="status-title" className="t-h3 text-ink">Our legal status</h2>
               <p className="mt-4 max-w-[68ch] text-ink-soft">
                 Cedar Initiative is a volunteer group founded in {site.founded}. We are <strong className="text-ink">not yet a registered
-                organisation</strong>, so we don&rsquo;t take donations into a personal account.{' '}
+                organisation</strong>.{' '}
                 {sponsor ? (
                   <>
                     Gifts are received by our fiscal sponsor,{' '}
@@ -52,15 +55,15 @@ export default function GivePage() {
                   </>
                 ) : (
                   <>
-                    We&rsquo;re setting up a fiscal sponsor: a registered organisation that receives gifts on our behalf and checks how they&rsquo;re spent.
-                    Until that&rsquo;s confirmed, please contact us before giving and we&rsquo;ll tell you exactly where your money goes.
+                    We&rsquo;re arranging a fiscal sponsor: a registered organisation that would receive and hold gifts for Cedar&rsquo;s programs and oversee how they are spent.
+                    No sponsor is confirmed yet. Please contact us to discuss the available options before giving.
                   </>
                 )}
               </p>
             </Reveal>
 
             <Reveal as="section" aria-labelledby="how-title">
-              <h2 id="how-title" className="t-h3 text-ink">How to give</h2>
+              <h2 id="how-title" className="t-h3 text-ink">{ready ? 'How to give' : 'What would you like to support?'}</h2>
               {ready ? (
                 <dl className="mt-5 grid gap-4 sm:grid-cols-2">
                   {methods.map((m) => (
@@ -72,24 +75,25 @@ export default function GivePage() {
                   ))}
                 </dl>
               ) : (
-                <div className="mt-5 flex flex-col gap-3 xs:flex-row">
-                  <Link href="/contact/?subject=Donation" className="btn-primary">
-                    Contact us to give <Icon name="arrow" className="h-4 w-4" />
+                <div className="mt-5 space-y-5">
+                  <p className="text-ink-soft">A few details help us have a useful conversation. Tell us which program you’re interested in, the amount or items you have in mind, the country you’re giving from and any receipt or reporting requirements. It’s fine if you don’t know yet.</p>
+                  <Link href={givingContact} className="btn-primary">
+                    Start a giving conversation <Icon name="arrow" className="h-4 w-4" />
                   </Link>
-                  <a href={`mailto:${site.email}?subject=Donation`} className="btn-glass">
+                  <a href={`mailto:${site.email}?subject=Donation`} className="flex min-h-11 items-center font-semibold text-cedar-700 underline underline-offset-4">
                     Email {site.email}
                   </a>
                 </div>
               )}
               <p className="mt-5 max-w-[68ch] text-sm text-ink-muted">
-                Giving from outside Bangladesh, or as a company? <Link href="/contact/?subject=Donation" className="link-underline font-medium text-cedar-700">Get in touch</Link> and we&rsquo;ll send the right details.
+                Giving from outside Bangladesh, or as a company? <Link href={givingContact} className="link-underline font-medium text-cedar-700">Ask the team what is possible</Link> before making arrangements.
               </p>
             </Reveal>
           </div>
 
           <aside className="lg:col-span-4 lg:col-start-9" aria-labelledby="reports-title">
             <Reveal className="rounded-4xl border border-ink/10 bg-paper/60 p-7">
-              <h2 id="reports-title" className="text-sm font-semibold uppercase tracking-[0.12em] text-cedar-700">Where the money went</h2>
+              <h2 id="reports-title" className="t-h3 text-ink">Where the money went</h2>
               <ul className="mt-5 space-y-4">
                 {reports.map((r) => (
                   <li key={r.slug}>

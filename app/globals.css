@@ -32,6 +32,7 @@
     --ember-soft: 252 236 200;
 
     --radius-card: 0.75rem;
+    --radius-frame: 1rem;
     --shell: 88rem;
     --shell-wide: 120rem; /* photos, galleries and story scenes on QHD/ultrawide */
     --gutter: clamp(1.25rem, 4.5vw, 4.5rem);
@@ -187,9 +188,12 @@
   @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   @keyframes scale-in { from { transform: scale(0.92); border-radius: 3rem; } to { transform: scale(1); } }
 
-  .marquee { animation: marquee var(--marquee-duration, 40s) linear infinite; }
-  .marquee:hover, .marquee:focus-within, .marquee.is-paused { animation-play-state: paused; }
-  .marquee-toggle { @apply absolute -bottom-9 right-[var(--gutter)] min-h-[32px] rounded-full px-3 text-xs font-semibold text-ink-muted underline-offset-4 hover:text-ink hover:underline; }
+  html.motion .marquee { animation: marquee var(--marquee-duration, 40s) linear infinite; }
+  html:not(.motion) .marquee { width: 100%; flex-wrap: wrap; justify-content: center; padding-right: 0; gap: 2rem; }
+  html:not(.motion) .marquee > [aria-hidden="true"] { display: none; }
+  html:not(.motion) .marquee-mask { mask-image: none; }
+  html.motion .marquee:hover, html.motion .marquee:focus-within, html.motion .marquee.is-paused { animation-play-state: paused; }
+  .marquee-toggle { @apply absolute -bottom-11 right-[var(--gutter)] min-h-11 rounded-full px-3 text-xs font-semibold text-ink-muted underline-offset-4 hover:text-ink hover:underline; }
   html:not(.motion) .marquee-toggle { display: none; }
   @keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
 
@@ -533,7 +537,6 @@ html.no-sda .track > *.in { opacity: 1; transform: none; }
    Opening sequence (components/Intro.tsx). Plays when the home page is opened or reloaded (not on in-site navigation).
    ========================================================================== */
 .intro { display: none; }
-html.intro-on body { overflow: hidden; }
 html.intro-on .intro { display: flex; position: fixed; inset: 0; z-index: 95; align-items: center; justify-content: center; pointer-events: none; }
 html.intro-on .intro-logo { animation: intro-out 0.5s var(--ease-out) 1.75s forwards; }
 @keyframes intro-out { to { opacity: 0; transform: scale(0.96); filter: blur(4px); } }
