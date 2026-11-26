@@ -30,7 +30,7 @@ export default function Header({ notice }: { notice?: ReactNode }) {
     dialog.showModal();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const desktop = window.matchMedia('(min-width: 1024px)');
+    const desktop = window.matchMedia('(min-width: 1280px)'); // matches the xl navigation breakpoint
     const onResize = () => {
       if (desktop.matches) setOpen(false);
     };
