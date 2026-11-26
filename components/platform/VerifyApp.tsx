@@ -34,7 +34,7 @@ export default function VerifyApp() {
         <button type="submit" className="btn-primary shrink-0" disabled={busy}>{busy ? 'Checking…' : 'Check'}</button>
       </form>
 
-      {res === null && <Notice kind="error">No Cedar document has that ID. Check for typos, or email info@cedar-initiative.org and we&rsquo;ll confirm by hand.</Notice>}
+      {res === null && <Notice kind="error">{p.mode === 'demo' ? 'That ID isn’t in this browser’s demo data. This does not check whether a real Cedar document exists.' : 'No Cedar document has that ID. Check for typos, or email info@cedar-initiative.org and we’ll confirm by hand.'}</Notice>}
       {res && (
         <div className={`overflow-hidden rounded-[var(--radius-card)] border bg-white ${ok ? 'border-cedar-700/30' : 'border-red-200'}`}>
           <div className={`flex items-center gap-5 p-6 sm:p-8 ${ok ? 'bg-cedar-50' : 'bg-red-50'}`}>
@@ -44,8 +44,8 @@ export default function VerifyApp() {
                 : <path d="M42 42l36 36M78 42L42 78" fill="none" stroke="#b91c1c" strokeWidth="8" strokeLinecap="round" className="seal-draw" style={{ animationDelay: '0.6s' }} />}
             </svg>
             <div className="reveal is-visible" style={{ ['--delay' as string]: '900ms' }}>
-              <p className={`font-display text-4xl uppercase ${ok ? 'text-cedar-800' : 'text-red-800'}`}>{res.status === 'valid' ? 'Valid' : res.status === 'revoked' ? 'Revoked' : 'Expired'}</p>
-              <p className="text-ink-soft">{ok ? 'This document was issued by Cedar Initiative and is in good standing.' : res.status === 'revoked' ? 'Cedar Initiative has withdrawn this document. It should not be relied on.' : 'This document has passed its expiry date.'}</p>
+              <p className={`font-display text-4xl uppercase ${ok ? 'text-cedar-800' : 'text-red-800'}`}>{p.mode === 'demo' && 'Sample: '}{res.status === 'valid' ? 'Valid' : res.status === 'revoked' ? 'Revoked' : 'Expired'}</p>
+              <p className="text-ink-soft">{p.mode === 'demo' ? 'This is a sample result from this browser’s demo data, not a verification of a real Cedar document.' : ok ? 'This document was issued by Cedar Initiative and is in good standing.' : res.status === 'revoked' ? 'Cedar Initiative has withdrawn this document. It should not be relied on.' : 'This document has passed its expiry date.'}</p>
             </div>
           </div>
           <dl className="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
@@ -56,7 +56,7 @@ export default function VerifyApp() {
               <div key={k}><dt className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">{k}</dt><dd className={`mt-1 text-ink ${k === 'Document ID' ? 'font-mono' : 'font-medium'}`}>{v}</dd></div>
             ))}
           </dl>
-          <p className="flex items-center gap-2 border-t border-ink/10 px-6 py-4 text-sm text-ink-muted sm:px-8"><Icon name="check" className="h-4 w-4 text-cedar-700" /> Checked live against Cedar Initiative&rsquo;s records just now.</p>
+          <p className="flex items-center gap-2 border-t border-ink/10 px-6 py-4 text-sm text-ink-muted sm:px-8"><Icon name="check" className="h-4 w-4 shrink-0 text-cedar-700" /> {p.mode === 'demo' ? 'Checked only against sample data in this browser. No live records were queried.' : 'Checked against Cedar Initiative’s records for this lookup.'}</p>
         </div>
       )}
     </div>
