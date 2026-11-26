@@ -122,7 +122,8 @@ export default function ReportView({ report: r }: { report: Report }) {
         <section className="section">
           <div className="shell">
             <h2 className="t-h3 text-ink">Budget against spending</h2>
-            <div className="mt-6 overflow-x-auto">
+            {/* Focusable: on a narrow screen the table scrolls sideways, and a keyboard user must be able to do that (WCAG 2.1.1). */}
+            <div className="mt-6 overflow-x-auto" role="region" aria-label="Budget against spending, scrollable table" tabIndex={0}>
               <table className="w-full min-w-[34rem] text-left text-sm">
                 <thead className="border-b-2 border-ink/15 text-ink-muted"><tr><th className="py-3 pr-4 font-semibold">Category</th><th className="py-3 pr-4 text-right font-semibold">Budget</th><th className="py-3 pr-4 text-right font-semibold">Spent</th><th className="py-3 text-right font-semibold">Difference</th></tr></thead>
                 <tbody className="divide-y divide-ink/10">
@@ -162,7 +163,7 @@ export default function ReportView({ report: r }: { report: Report }) {
       <section className="section pt-0">
         <div className="shell">
           <h2 className="t-h3 text-ink">Every expense</h2>
-          <div className="mt-6 overflow-x-auto">
+          <div className="mt-6 overflow-x-auto" role="region" aria-label="Every expense, scrollable table" tabIndex={0}>
             <table className="w-full min-w-[38rem] text-left text-sm">
               <thead className="border-b-2 border-ink/15 text-ink-muted">
                 <tr><th className="py-3 pr-4 font-semibold">Ref.</th><th className="py-3 pr-4 font-semibold">Category</th><th className="py-3 pr-4 font-semibold">Item</th><th className="py-3 text-right font-semibold">Amount</th></tr>

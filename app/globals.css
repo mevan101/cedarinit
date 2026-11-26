@@ -535,17 +535,17 @@ html.no-sda .track > *.in { opacity: 1; transform: none; }
 .intro { display: none; }
 html.intro-on body { overflow: hidden; }
 html.intro-on .intro { display: flex; position: fixed; inset: 0; z-index: 95; align-items: center; justify-content: center; pointer-events: none; }
-html.intro-on .intro-logo { animation: intro-out 0.5s var(--ease-out) 1.75s forwards; }
+html.intro-on .intro-logo { animation: intro-out 0.4s var(--ease-out) 0.88s forwards; }
 @keyframes intro-out { to { opacity: 0; transform: scale(0.96); filter: blur(4px); } }
 /* Same proportions as the logo file: wordmark 75% of the mark's height, gap 9%. */
 .intro-logo { --h: clamp(72px, 13vmin, 128px); position: relative; z-index: 2; display: flex; align-items: center; gap: calc(var(--h) * 0.088); }
 .intro-mark { height: var(--h); width: auto; overflow: visible; }
 .intro-mark path { fill: #1A502A; transform-box: fill-box; }
-.intro-wedge-l { animation: wedge-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) both 0.1s; }
-.intro-wedge-r { animation: wedge-down 0.8s cubic-bezier(0.23, 1, 0.32, 1) both 0.1s; }
+.intro-wedge-l { animation: wedge-up 0.55s cubic-bezier(0.23, 1, 0.32, 1) both 0.05s; }
+.intro-wedge-r { animation: wedge-down 0.55s cubic-bezier(0.23, 1, 0.32, 1) both 0.05s; }
 @keyframes wedge-up { from { transform: translateY(60%); opacity: 0; } }
 @keyframes wedge-down { from { transform: translateY(-60%); opacity: 0; } }
-.intro-word { display: block; height: calc(var(--h) * 0.75); width: auto; animation: word-in 0.7s var(--ease-out) both 0.45s; }
+.intro-word { display: block; height: calc(var(--h) * 0.75); width: auto; animation: word-in 0.5s var(--ease-out) both 0.22s; }
 @keyframes word-in { from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-10px); } to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; } }
 /* While the photos fly in, the rest of the hero waits, then fades in. */
 html.intro-on :is(.orbit-group, body > header, .chat-launcher) { opacity: 0; }
