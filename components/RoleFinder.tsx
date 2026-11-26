@@ -47,7 +47,7 @@ export default function RoleFinder({ roles }: { roles: Role[] }) {
     (r) =>
       (!program || r.program === program) &&
       words.every((word) =>
-        `${r.title} ${r.summary} ${r.location} ${r.commitment} ${r.areas.join(' ')}`
+        `${r.title} ${r.summary} ${r.program} ${r.location} ${r.commitment} ${r.areas.join(' ')}`
           .toLocaleLowerCase()
           .includes(word),
       ),
