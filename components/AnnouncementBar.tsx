@@ -6,13 +6,30 @@ import fileData from '@/content/settings/announcement.json';
 import { liveSettings, type LiveAnnouncement } from '@/lib/live';
 import { supabaseLazy } from '@/lib/supabase-lazy';
 
-/** Site-wide notice, edited in the staff dashboard (Website → Settings). Changes show without a rebuild. */
+/** What this build was compiled with. Rendered synchronously, so the bar never pops in after first paint. */
+const buildTime: LiveAnnouncement = liveSettings.announcement ?? (fileData as LiveAnnouncement);
+
+/**
+ * Site-wide notice, edited in the staff dashboard (Website → Settings).
+ *
+ * Mounted on every route, so it must be free when there is nothing to show. A build-time announcement
+ * that is off (the usual case) returns null before touching Supabase: loading supabase-js and making a
+ * round trip for a disabled setting cost every visitor a 184 kB chunk and a failed request. When a build
+ * does ship an enabled announcement, the dashboard copy still wins, which keeps "edit the text without
+ * a rebuild" for the one case where it matters.
+ */
 export default function AnnouncementBar() {
-  const [a, setA] = useState<LiveAnnouncement>(liveSettings.announcement ?? (fileData as LiveAnnouncement));
+  const [a, setA] = useState<LiveAnnouncement>(buildTime);
+
   useEffect(() => {
-    supabaseLazy().then((sb) => sb?.from('site_settings').select('value').eq('key', 'announcement').maybeSingle())
-      .then((r) => { if (r?.data?.value) setA(r.data.value as LiveAnnouncement); }, () => {});
+    if (!buildTime.enabled || !buildTime.text) return;
+    let live = true;
+    supabaseLazy()
+      .then((sb) => sb?.from('site_settings').select('value').eq('key', 'announcement').maybeSingle())
+      .then((r) => { if (live && r?.data?.value) setA(r.data.value as LiveAnnouncement); }, () => {});
+    return () => { live = false; };
   }, []);
+
   if (!a.enabled || !a.text) return null;
   const external = a.link && /^https?:/.test(a.link);
   return (
